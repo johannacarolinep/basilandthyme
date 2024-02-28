@@ -62,8 +62,37 @@ The diagram displays the intended consumption of information on the website, and
 
 
 
-<a id="map-of-crud"></a>
-#### Map of CRUD functionality
+<a id="dynamic-crud"></a>
+#### Wireframes showing CRUD functionality and Dynamic content
+
+Below is a PDF with wireframes mapping dynamic content and CRUD functionality on the website.
+
+[Wireframes with CRUD and dynamic content](documentation/wireframes-crud-dynamic.pdf)
+
+As shown in the wireframes, the CRUD functionality on the website can be summarised as follows:
+
+- Commenting: 
+    - A signed-in user can post comments on a recipe.
+    - The user can edit and delete their own comments.
+    - A superuser can review comments and change the default status (approved) to *disapproved*.
+
+<br/>
+
+- Favouriting: 
+    - A signed-in user can add a recipe to their *favourites* as well as remove recipes from their *favourites*.
+    - If a user who is not signed in attempts to add a recipe to favourites, they are not allowed to do so, and instead gets prompted to either sign up or sign in.
+
+<br/>
+
+- Rating:
+    - A signed-in user can give a recipe a rating, as well as remove their rating.
+    - If a user who is not signed in attempts to give a rating they will not be allowed to do so, and instead gets prompted to either sign up or sign in.
+
+<br/>
+
+- Publishing recipes:
+    - A signed-in super user can draft, publish, unpublish, edit and delete recipes on the Django admin panel (not showing in wireframes). 
+
 
 <a id="erd"></a>
 ### Database ERD
