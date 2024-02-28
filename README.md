@@ -8,7 +8,7 @@
     - [Site goals and strategy](#strategy)
     - [User stories](#user-stories)
     - [Information Architecture](#ia)
-        - [Map of CRUD functionality](#map-of-crud)
+        - [Wireframes showing CRUD functionality and Dynamic content](#dynamic-crud)
     - [Database ERD](#erd)
     - [Surface plane Design](#surface-plane-design)
         - [Colours](#colours)
