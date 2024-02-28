@@ -15,7 +15,7 @@
         - [Fonts](#fonts)
         - [Logo](#logo)
         - [Design wireframes](#design-wireframes)
-        - [Agile methodology](#agile-methodology)
+    - [Agile methodology](#agile-methodology)
 - [Tools and technologies](#tools-and-technologies)
 - [Testing](#testing)
 - [Bugs](#bugs)
@@ -97,6 +97,8 @@ As shown in the wireframes, the CRUD functionality on the website can be summari
 <a id="erd"></a>
 ### Database ERD
 
+![ERD](documentation/erd.png)
+
 <a id="surface-plane-design"></a>
 ### Surface plane Design
 
@@ -142,6 +144,11 @@ A simple logo was created for the project, consisting of the company name comple
 
 <a id="agile-methodology"></a>
 ### Agile methodology
+
+#### Sprint 1
+
+![Sprint 1 milestone](documentation/sprint1.png)
+
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
