@@ -3,25 +3,17 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
-CATEGORIES = (
-    (0, "No category selected"),
-    (1, "Chicken"),
-    (2, "Meat"),
-    (3, "Fish"),
-    (4, "Vegetarian")
-    )
-STATUS = ((0, "Draft"), (1, "Published"))
-RATING_CHOICES = [
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
-    ]
-
-
 # Create your models here.
 class Recipe(models.Model):
+    CATEGORIES = (
+        (0, "No category selected"),
+        (1, "Chicken"),
+        (2, "Meat"),
+        (3, "Fish"),
+        (4, "Vegetarian")
+    )
+    STATUS = ((0, "Draft"), (1, "Published"))
+
     title = models.CharField(max_length=70, unique=True)
     slug = models.SlugField(max_length=70, unique=True)
     author = models.ForeignKey(
@@ -58,6 +50,14 @@ class Favourite(models.Model):
 
 
 class Rating(models.Model):
+    RATING_CHOICES = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='user_rating'
     )
