@@ -11,6 +11,13 @@ CATEGORIES = (
     (4, "Vegetarian")
     )
 STATUS = ((0, "Draft"), (1, "Published"))
+RATING_CHOICES = [
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    ]
 
 
 # Create your models here.
@@ -48,3 +55,13 @@ class Favourite(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='favourite_recipe'
     )
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user_rating'
+    )
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='rating_recipe'
+    )
+    rating = models.IntegerField(choices=RATING_CHOICES)
