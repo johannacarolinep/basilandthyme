@@ -29,3 +29,22 @@ class Recipe(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     category = models.IntegerField(choices=CATEGORIES, default=0)
     status = models.IntegerField(choices=STATUS, default=0)
+
+
+class Comment(models.Model):
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='comment_author')
+    body = models.TextField()
+    approved = models.BooleanField(default=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+
+class Favourite(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='favourite_user'
+    )
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='favourite_recipe'
+    )
