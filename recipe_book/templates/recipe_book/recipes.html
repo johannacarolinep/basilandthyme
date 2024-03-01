@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block content %}
 
-<body>
+<h1>Recipes</h1>
+{% for recipe in object_list %}
+<h2>{{ recipe.title }}</h2>
+<p>{{ recipe.teaser }}</p>
+{% endfor %}
 
-    <h1>Recipes</h1>
-    {% for recipe in object_list %}
-    <h2>{{ recipe.title }}</h2>
-    <p>{{ recipe.teaser }}</p>
-    {% endfor %}
-</body>
-
-</html>
+{% endblock %}
