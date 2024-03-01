@@ -1,7 +1,27 @@
-body {
-    background-color: rgb(67, 182, 220);
+/* ----------------------------- Colours */
+
+.bg-brand-green {
+    background-color: #008B20;
 }
 
-.footer-blue {
-    background-color: blue;
+
+/* ----------------------------- Navbar/Header */
+
+.nav-link {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.current {
+    font-weight: 700;
+}
+
+.navbar-brand img {
+    height: 35px;
+    aspect-ratio: 5.66 / 1;
+}
+
+.navbar-toggler-icon {
+    font-weight: 700;
 }
