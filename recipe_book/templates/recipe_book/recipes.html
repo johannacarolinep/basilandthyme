@@ -2,10 +2,24 @@
 
 {% block content %}
 
-<h1>Recipes</h1>
-{% for recipe in object_list %}
-<h2>{{ recipe.title }}</h2>
-<p>{{ recipe.teaser }}</p>
-{% endfor %}
+<section class="container-fluid bg-brand-gray">
+    <div class="container-xl">
+        <h1>Recipes</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 g-xl-5">
+            {% for recipe in object_list %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://dummyimage.com/300x170/09f/fff.png" class="card-img-top"
+                        alt="{{ recipe.alt_text }}">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ recipe.title }}</h3>
+                        <p class="card-text">{{ recipe.teaser }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
 {% endblock %}
