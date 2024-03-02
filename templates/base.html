@@ -72,8 +72,27 @@
         <!-- Page content gets inserted here -->
         {% endblock content %}
     </main>
-    <footer>
-        Footer
+    <!-- Footer -->
+    <footer class="container-fluid bg-brand-brown text-white">
+        <div class="container-xxl line-top ">
+            <div class="row align-items-center">
+                <div class="col-lg text-center text-start-lg">
+                    <p>© Copyright 2024 Basil & Thyme</p>
+                    <p>feedback@basilandthyme.com</p>
+                </div>
+                <div class="col-lg-5 text-center mt-1 mb-3">
+                    <a href="#">
+                        <img src="{% static 'images/logo-round-transp.webp' %}" width="70">
+                    </a>
+                </div>
+                <div class="col-lg text-center text-end-lg">
+                    <p>This project was created for educational purposes only by Johanna Petersson</p>
+                    <p class="fw-bold">Get in touch!</p>
+
+                </div>
+            </div>
+        </div>
+
     </footer>
 
     <!-- Bootstrap -->
