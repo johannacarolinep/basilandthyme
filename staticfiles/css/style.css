@@ -54,6 +54,18 @@ body {
     font-weight: 700;
 }
 
+/* -------------------------------- Recipe cards */
+
+.card {
+    max-width: 370px;
+}
+
+.card-img-top {
+    aspect-ratio: 3/2;
+    object-fit: cover;
+}
+
+
 /* -------------------------------- Footer */
 footer {
     padding: 20px 0;

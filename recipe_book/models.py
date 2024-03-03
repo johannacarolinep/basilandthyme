@@ -8,8 +8,9 @@ class Recipe(models.Model):
     CATEGORIES = (
         (0, "No category selected"),
         (1, "Chicken"),
-        (2, "Meat"),
-        (3, "Fish"),
+        (2, "Pork"),
+        (3, "Beef"),
+        (4, "Fish"),
         (4, "Vegetarian")
     )
     STATUS = ((0, "Draft"), (1, "Published"))

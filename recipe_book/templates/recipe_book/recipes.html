@@ -15,6 +15,22 @@
                     {% else %}
                     <img class="card-img-top" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
                     {% endif %}
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="rating">X X X X X (123)</div>
+                        <div class="category">
+                            {% if recipe.category == 1 %}
+                            <i class="fa-solid fa-drumstick-bite"></i>
+                            {% elif recipe.category == 2 %}
+                            <i class="fa-solid fa-bacon"></i>
+                            {% elif recipe.category == 3 %}
+                            <i class="fa-solid fa-cow"></i>
+                            {% elif recipe.category == 4 %}
+                            <i class="fa-solid fa-fish"></i>
+                            {% elif recipe.category == 5 %}
+                            <i class="fa-brands fa-pagelines"></i>
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="card-body">
                         <h3 class="card-title">{{ recipe.title }}</h3>
                         <p class="card-text">{{ recipe.teaser }}</p>
