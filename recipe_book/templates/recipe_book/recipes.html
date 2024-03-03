@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
@@ -8,9 +9,12 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 g-xl-5">
             {% for recipe in object_list %}
             <div class="col">
-                <div class="card h-100">
-                    <img src="https://dummyimage.com/300x170/09f/fff.png" class="card-img-top"
-                        alt="{{ recipe.alt_text }}">
+                <div class="card h-100 mx-auto">
+                    {% if "placeholder" in recipe.feature_image.url %}
+                    <img class="card-img-top" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
+                    {% else %}
+                    <img class="card-img-top" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
+                    {% endif %}
                     <div class="card-body">
                         <h3 class="card-title">{{ recipe.title }}</h3>
                         <p class="card-text">{{ recipe.teaser }}</p>
