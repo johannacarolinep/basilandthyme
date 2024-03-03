@@ -10,11 +10,11 @@
             {% for recipe in object_list %}
             <div class="col">
                 <div class="card h-100 mx-auto">
-                    <!-- {% if "placeholder" in recipe.feature_image.url %}
+                    {% if "placeholder" in recipe.feature_image.url %}
                     <img class="card-img-top" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
                     {% else %}
                     <img class="card-img-top" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
-                    {% endif %} -->
+                    {% endif %}
                     <!-- <div class="card-header d-flex justify-content-between">
                         <div class="rating">X X X X X (123)</div>
                         <div class="category">
