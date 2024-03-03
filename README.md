@@ -159,6 +159,28 @@ A simple logo was created for the project, consisting of the company name comple
 <a id="bugs"></a>
 ## Bugs
 
+### Solved bugs
+
+#### 2024-03-03: Missed adding CLOUDINARY_URL configuration variable in Heroku
+
+While working on displaying an overview of a recipe in a card format (creating the recipes.html template), I got a 500 error on the deployed version of the site. The error occurred in the first deployment after adding a recipe with a user-uploaded image and code in the template to display recipe images.
+
+##### Troubleshooting
+I started by trying to get a better understanding of the scope of the problem. The homepage, which was set up to display a simple “Hello world” was still working correctly. The admin panel was displaying. However, when trying to add or change a recipe, I would get the 500 error, and on the /recipes page I would also get the 500 error.
+
+I found the issue particularly difficult to troubleshoot since the project was working as intended on localhost on my machine, and the Heroku logs did not provide much explanation for the 500 error.
+
+##### Steps taken:
+First, I tried to comment out the if statements I had been working on leading up to the error and redeploying, but still got the same error.
+
+Next, I tried making a migration of my recipe_book models since I had made a small adjustment to the choices used by the category field in my Recipe model. Once again, I redeployed the project but still got the same error.
+
+At this point I started reflecting more deeply on that the project worked as intended in the local environment and the issue being isolated to the deployed version. This led me to double-check the configuration variables in Heroku. I then found I was missing the CLOUDINARY_URL variable.
+
+##### Solution:
+After correctly adding the CLOUDINARY_URL config variable, I was able to confirm the project worked as intended, on the deployed site as well as the local environment.
+
+
 <a id="credits"></a>
 ## Credits
 
