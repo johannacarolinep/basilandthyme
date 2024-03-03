@@ -142,6 +142,11 @@ A simple logo was created for the project, consisting of the company name comple
 <a id="design-wireframes"></a>
 #### Design wireframes
 
+- [Design wireframes Desktop](documentation/wireframes-design-desktop.pdf)
+- [Design wireframes Tablet](documentation/wireframes-design-tablet.pdf)
+- [Design wireframes Mobile](documentation/wireframes-design-mobile.pdf)
+
+
 <a id="agile-methodology"></a>
 ### Agile methodology
 
