@@ -65,6 +65,32 @@ body {
     object-fit: cover;
 }
 
+.card-title {
+    font-size: 1.3rem;
+}
+
+/* Credit: https://blog.logrocket.com/ways-truncate-text-css/ */
+.truncate-two-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    line-height: 1.5;
+    max-height: 3em;
+}
+
+/* Credit: https://blog.logrocket.com/ways-truncate-text-css/ */
+.truncate-three-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    line-height: 1.5;
+    max-height: 6em;
+}
+
 
 /* -------------------------------- Footer */
 footer {
