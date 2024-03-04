@@ -154,6 +154,26 @@ A simple logo was created for the project, consisting of the company name comple
 
 ![Sprint 1 milestone](documentation/sprint1.png)
 
+##### Sprint 1 wrap-up
+
+Project board at the end of sprint 1:
+![Project board end of sprint 1](documentation/project-board-spr-1.png)
+
+Points completed in Sprint 1: 17
+
+Velocity: 17
+
+**Reflections:**
+- I realised I need to be more careful when selecting items from the backlog to include in my sprints and to make sure I'm not including items that are dependent on other work having been completed beforehand. E.g the user story included for sprint 1 about the main navigation has acceptance criteria that mention how the navigation should change for logged-in/logged-out users. I would need to have completed basic registration and log-in functionality first in order to be able to complete it.
+
+**Actions:**
+- Rewrites: To enable faster progress on the project, I decided to rewrite some of my existing user stories. In short, stories relating to registering and signing in with email were split into smaller, more succinct stories.
+
+- Additional items added to the backlog:
+    - USER STORY: Custom 404 page (Navigation and structure): As a **Site User** I can **see an informative 404 page guiding me back to the main page if I visit a page that does not exist by mistake** so that I can **easily get back to the home page with minimal disruption**.
+
+
+
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
