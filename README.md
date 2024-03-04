@@ -172,7 +172,8 @@ Velocity: 17
 - Additional items added to the backlog:
     - USER STORY: Custom 404 page (Navigation and structure): As a **Site User** I can **see an informative 404 page guiding me back to the main page if I visit a page that does not exist by mistake** so that I can **easily get back to the home page with minimal disruption**.
 
-
+#### Sprint 2
+![Sprint 2 milestone](documentation/sprint2.png)
 
 
 <a id="tools-and-technologies"></a>
