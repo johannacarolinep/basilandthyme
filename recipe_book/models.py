@@ -11,7 +11,7 @@ class Recipe(models.Model):
         (2, "Pork"),
         (3, "Beef"),
         (4, "Fish"),
-        (4, "Vegetarian")
+        (5, "Vegetarian")
     )
     STATUS = ((0, "Draft"), (1, "Published"))
 
