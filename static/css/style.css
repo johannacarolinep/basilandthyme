@@ -85,6 +85,18 @@ body {
     border: #008B20;
 }
 
+.category-btns .btn {
+    background-color: #FFC633;
+    border-radius: 2em;
+}
+
+.category-btns .btn:hover,
+.category-btns .btn:active {
+    background-color: transparent;
+    color: #ffc633;
+    border: 1px solid #ffc633;
+}
+
 
 
 /* -------------------------------- Recipe cards */
