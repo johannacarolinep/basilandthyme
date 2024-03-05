@@ -54,16 +54,94 @@ body {
     font-weight: 700;
 }
 
+
+/* -------------------------------- Hero section with content overlay */
+.hero-section {
+    background-color: #F8F9F8;
+    height: 550px;
+    background: url("../images/hero.webp") no-repeat center top/cover;
+}
+
+.searchbar-outline {
+    border-radius: 15px;
+    padding: 10px;
+    border: 1.5px solid white;
+}
+
+.searchbar {
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.searchbar .btn {
+    background-color: #F8F9F8;
+}
+
+.searchbar .btn:hover {
+    background-color: #008B20;
+}
+
+.searchbar .btn:active {
+    border: #008B20;
+}
+
+
+
 /* -------------------------------- Recipe cards */
 
 .card {
     max-width: 370px;
+    border: 1px solid #dadeda;
+    box-shadow: 6px 6px 12px #e9eae9,
+        -6px -6px 12px #ffffff;
+}
+
+.card i {
+    font-size: 1.2rem;
 }
 
 .card-img-top {
     aspect-ratio: 3/2;
     object-fit: cover;
 }
+
+.card-title {
+    font-size: 1.3rem;
+}
+
+/* Credit: https://blog.logrocket.com/ways-truncate-text-css/ */
+.truncate-two-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    line-height: 1.5;
+    max-height: 3em;
+}
+
+/* Credit: https://blog.logrocket.com/ways-truncate-text-css/ */
+.truncate-three-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    line-height: 1.5;
+    max-height: 6em;
+}
+
+/* Recipe cards pagination */
+.page-link,
+.page-link:hover {
+    color: black;
+}
+
+.active-page .page-link {
+    background-color: #008B20;
+    color: #ffffff;
+}
+
 
 
 /* -------------------------------- Footer */
