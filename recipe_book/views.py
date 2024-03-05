@@ -15,11 +15,23 @@ class RecipeListView(ListView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         if query:
-            # print("Query:-------------", query)
-            object_list = Recipe.objects.filter(
-                Q(title__icontains=query) | Q(ingredients__icontains=query)
-            )
-            return object_list
+            match query:
+                case "all":
+                    return Recipe.objects.all()
+                case "chicken":
+                    return Recipe.objects.filter(category=1)
+                case "pork":
+                    return Recipe.objects.filter(category=2)
+                case "beef":
+                    return Recipe.objects.filter(category=3)
+                case "fish":
+                    return Recipe.objects.filter(category=4)
+                case "vegetarian":
+                    return Recipe.objects.filter(category=5)
+                case _:
+                    return Recipe.objects.filter(
+                        Q(title__icontains=query) | Q(ingredients__icontains=query)
+                    )
         else:
             return Recipe.objects.all()
 
