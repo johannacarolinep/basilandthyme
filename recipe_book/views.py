@@ -8,6 +8,7 @@ from .models import Recipe
 class RecipeListView(ListView):
     queryset = Recipe.objects.all()
     template_name = 'recipe_book/recipes.html'
+    paginate_by = 8
 
 
 def hello(request):

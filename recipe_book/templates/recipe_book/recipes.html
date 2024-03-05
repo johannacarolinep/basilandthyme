@@ -39,6 +39,27 @@
             </div>
             {% endfor %}
         </div>
+        {% if is_paginated %}
+        <nav class="mt-4" aria-label="Navigation for recipes split over multiple pages.">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link"><span
+                            aria-hidden="true">&laquo;</span> PREV</a>
+                </li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == page %}active-page{% endif %}">
+                    <a href="?page={{ page }}" class="page-link">{{ page }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT <span
+                            aria-hidden="true">&raquo;</span></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     </div>
 </section>
 

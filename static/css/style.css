@@ -98,6 +98,18 @@ body {
     max-height: 6em;
 }
 
+/* Recipe cards pagination */
+.page-link,
+.page-link:hover {
+    color: black;
+}
+
+.active-page .page-link {
+    background-color: #008B20;
+    color: #ffffff;
+}
+
+
 
 /* -------------------------------- Footer */
 footer {
