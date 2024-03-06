@@ -19,7 +19,7 @@ function addCategoryQuery(event) {
 
     // If URL does not contain /recipes, append "/recipes/?q=category"
     if (currentUrl.indexOf('/recipes') === -1) {
-        window.location.href = currentUrl.split('?')[0].split('#')[0] + '/recipes/?q=' + category;
+        window.location.href = currentUrl.split('?')[0].split('#')[0] + 'recipes/?q=' + category;
     } else {
         // If URL contains /recipes, remove any existing query string
         const baseUrl = currentUrl.split('?')[0].split('#')[0];
