@@ -1,6 +1,5 @@
 from django.views.generic import ListView
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.db.models import Q
 from .models import Recipe
 
@@ -36,5 +35,6 @@ class RecipeListView(ListView):
             return Recipe.objects.all()
 
 
-def hello(request):
-    return HttpResponse("Hello world!")
+class FeaturesListView(ListView):
+    model = Recipe
+    template_name = 'recipe_book/index.html'
