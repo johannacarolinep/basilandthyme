@@ -3,13 +3,10 @@ document.addEventListener("DOMContentLoaded", initializeScript);
 
 function initializeScript() {
     const categoryButtons = document.getElementsByClassName('btnCategory');
-    const btnAllRecipes = document.getElementById('btnAllRecipes');
 
     for (let i = 0; i < categoryButtons.length; i++) {
         categoryButtons[i].addEventListener('click', addCategoryQuery);
     }
-
-    btnAllRecipes.addEventListener('click', addAllQuery);
 }
 
 function addCategoryQuery(event) {
