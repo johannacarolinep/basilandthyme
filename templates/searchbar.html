@@ -2,7 +2,12 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <h1 class="text-white text-center">Search</h1>
+                {% if request.path == home_page_url %}
+                <h1 class="text-white text-center" id="search-heading">Welcome to Basil & Thyme!</h1>
+                <h2 class="text-white text-center" id="search-heading">Search for your new favourite recipes below:</h2>
+                {%else %}
+                <h1 class="text-white text-center" id="search-heading">{{ searchHeading }}</h1>
+                {% endif %}
             </div>
         </div>
         <div class="row">

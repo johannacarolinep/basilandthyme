@@ -12,9 +12,9 @@ class RecipeListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        query = self.request.GET.get("q")
-        if query:
-            match query:
+        self.query = self.request.GET.get("q")
+        if self.query:
+            match self.query:
                 case "all":
                     return Recipe.objects.all()
                 case "chicken":
@@ -29,10 +29,30 @@ class RecipeListView(ListView):
                     return Recipe.objects.filter(category=5)
                 case _:
                     return Recipe.objects.filter(
-                        Q(title__icontains=query) | Q(ingredients__icontains=query)
+                        Q(title__icontains=self.query) | Q(ingredients__icontains=self.query)
                     )
         else:
             return Recipe.objects.all()
+
+    def get_context_data(self, **kwargs):
+        """
+        Based on https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/#adding-extra-context
+        Adding additional context
+        """
+        context = super().get_context_data(**kwargs)  # building context
+        count = len(self.get_queryset())  # nr of objects found
+
+        if self.query:
+            if self.query == "all":
+                context['searchHeading'] = "Showing all recipes, a total of " + str(count) + "."
+            elif count > 0:
+                context['searchHeading'] = "Showing " + str(count) + " results for '" + self.query + "'."
+            else:
+                context["searchHeading"] = "Sorry, no results for '" + self.query + "'. Please try again."
+        else:
+            context['searchHeading'] = "Search for your new favourite recipes"
+
+        return context
 
 
 class FeaturesListView(ListView):
