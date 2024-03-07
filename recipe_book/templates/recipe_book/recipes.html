@@ -12,6 +12,7 @@
                 Displaying all recipes:{% else %}Results: {{ searchHeading }}{% endif %}
             </h2>
         </div>
+        {% if object_list %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for recipe in object_list %}
             <div class="col">
@@ -45,6 +46,15 @@
             </div>
             {% endfor %}
         </div>
+        {% else %}
+        <div class="height-300-400 d-flex flex-grow-1 justify-content-center align-items-center">
+            <div class="text-center">
+                <img class="img-sq-150-200 mx-auto" src="{% static 'images/logo-round-brown.webp' %}"
+                    alt="Basil and Thyme logo">
+                <p class="mt-4 brand-brown">Sorry, there were no results to display. Please try a different search.</p>
+            </div>
+        </div>
+        {% endif %}
         {% if is_paginated %}
         <nav class="mt-4" aria-label="Navigation for recipes split over multiple pages.">
             <ul class="pagination justify-content-center">

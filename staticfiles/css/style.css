@@ -26,8 +26,22 @@ main {
     background-color: #F8F9F8;
 }
 
+.brand-brown {
+    color: #442A23;
+}
+
 body {
     font-family: "Poppins", sans-serif;
+}
+
+/* ------------------------------ Heights/sizing */
+.height-300-400 {
+    height: 300px;
+}
+
+.img-sq-150-200 {
+    height: 150px;
+    width: 150px;
 }
 
 /* ----------------------------- Navbar/Header */
@@ -98,7 +112,6 @@ body {
 }
 
 
-
 /* -------------------------------- Recipe cards */
 
 .card {
@@ -163,6 +176,16 @@ footer {
 
 /* ---------------------------------- Large screens */
 @media screen and (min-width: 992px) {
+
+    /* ------------------------------ Heights/sizing */
+    .height-300-400 {
+        height: 400px;
+    }
+
+    .img-sq-150-200 {
+        height: 200px;
+        width: 200px;
+    }
 
     /* -------------------------------- Navbar/Header */
     .navbar-brand img {
