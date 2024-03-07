@@ -5,12 +5,13 @@
 
 {% include 'searchbar.html' %}
 
-
-<section class="container-fluid bg-brand-gray">
+<section class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
-        <h2>{% if searchHeading == "Search for your new favourite recipes" %}
-            Displaying all recipes:{% else %}Results: {{ searchHeading }}{% endif %}
-        </h2>
+        <div class="row my-2">
+            <h2>{% if searchHeading == "Search for your new favourite recipes" %}
+                Displaying all recipes:{% else %}Results: {{ searchHeading }}{% endif %}
+            </h2>
+        </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for recipe in object_list %}
             <div class="col">
