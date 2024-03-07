@@ -16,17 +16,17 @@ class RecipeListView(ListView):
         if self.query:
             match self.query:
                 case "all":
-                    return Recipe.objects.all()
+                    return Recipe.objects.filter(status=1)
                 case "chicken":
-                    return Recipe.objects.filter(category=1)
+                    return Recipe.objects.filter(status=1, category=1)
                 case "pork":
-                    return Recipe.objects.filter(category=2)
+                    return Recipe.objects.filter(status=1, category=2)
                 case "beef":
-                    return Recipe.objects.filter(category=3)
+                    return Recipe.objects.filter(status=1, category=3)
                 case "fish":
-                    return Recipe.objects.filter(category=4)
+                    return Recipe.objects.filter(status=1, category=4)
                 case "vegetarian":
-                    return Recipe.objects.filter(category=5)
+                    return Recipe.objects.filter(status=1, category=5)
                 case _:
                     return Recipe.objects.filter(
                         Q(title__icontains=self.query) | Q(ingredients__icontains=self.query)
