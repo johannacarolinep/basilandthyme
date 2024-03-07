@@ -8,7 +8,9 @@
 
 <section class="container-fluid bg-brand-gray">
     <div class="container-xl">
-        <h1>Recipes</h1>
+        <h2>{% if searchHeading == "Search for your new favourite recipes" %}
+            Displaying all recipes:{% else %}Results: {{ searchHeading }}{% endif %}
+        </h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for recipe in object_list %}
             <div class="col">
