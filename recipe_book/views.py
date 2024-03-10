@@ -32,7 +32,7 @@ class RecipeListView(ListView):
                         Q(title__icontains=self.query) | Q(ingredients__icontains=self.query)
                     )
         else:
-            return Recipe.objects.all()
+            return Recipe.objects.filter(status=1)
 
     def get_context_data(self, **kwargs):
         """
