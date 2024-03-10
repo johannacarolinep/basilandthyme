@@ -49,7 +49,7 @@ body {
 }
 
 .img-container {
-    display: flex;
+    max-height: 370px;
 }
 
 .img-cover {
@@ -200,6 +200,13 @@ body {
     color: #ffffff;
 }
 
+/* --------------------------------- Recipe detail page */
+.recipe-container {
+    border: 0.5px solid #dadeda;
+    box-shadow: 6px 6px 12px #e9eae9,
+        -6px -6px 12px #ffffff;
+}
+
 /* -------------------------------- Footer */
 footer {
     padding: 20px 0;
@@ -237,6 +244,10 @@ footer {
 
     .fs-rem-lg-180 {
         font-size: 1.8rem;
+    }
+
+    .img-container {
+        max-height: 450px;
     }
 
     /* -------------------------------- Navbar/Header */

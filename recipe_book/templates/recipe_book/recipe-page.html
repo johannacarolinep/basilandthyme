@@ -5,7 +5,7 @@
 <div class="container-xl g-0">
     <div class="m-3 my-md-4 m-lg-4 p-4 bg-white recipe-container">
         <div class="row">
-            <div class="img-container col-md-7">
+            <div class="img-container d-flex col-md-7">
                 {% if "placeholder" in recipe.feature_image.url %}
                 <img class="img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
                 {% else %}
