@@ -26,15 +26,20 @@
                         <div class="rating">X X X X X (123)</div>
                         <div class="category">
                             {% if recipe.category == 1 %}
-                            <i class="fa-solid fa-drumstick-bite"></i>
+                            <i class="fa-solid fa-drumstick-bite" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "chicken".</span>
                             {% elif recipe.category == 2 %}
-                            <i class="fa-solid fa-bacon"></i>
+                            <i class="fa-solid fa-bacon" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "pork".</span>
                             {% elif recipe.category == 3 %}
-                            <i class="fa-solid fa-cow"></i>
+                            <i class="fa-solid fa-cow" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "beef".</span>
                             {% elif recipe.category == 4 %}
-                            <i class="fa-solid fa-fish"></i>
+                            <i class="fa-solid fa-fish" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "fish".</span>
                             {% elif recipe.category == 5 %}
-                            <i class="fa-brands fa-pagelines"></i>
+                            <i class="fa-brands fa-pagelines" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "fish".</span>
                             {% endif %}
                         </div>
                     </div>
