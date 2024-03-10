@@ -39,6 +39,10 @@ main {
     color: #008B20;
 }
 
+.brand-dark {
+    color: #201425;
+}
+
 body {
     font-family: "Poppins", sans-serif;
 }
@@ -192,6 +196,15 @@ body {
     -webkit-line-clamp: 4;
     line-height: 1.5;
     max-height: 6em;
+}
+
+.card-link {
+    text-decoration: none;
+}
+
+.card-link:hover,
+.card-link:active {
+    text-decoration: underline;
 }
 
 /* Recipe cards pagination */
