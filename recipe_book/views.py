@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import render
 from django.db.models import Q
 from .models import Recipe
@@ -70,3 +70,7 @@ class RecipeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         recipe = self.get_object()
         return context
+
+
+class Favourites(TemplateView):
+    template_name = "recipe_book/favourites.html"
