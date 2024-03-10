@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import render
 from django.db.models import Q
 from .models import Recipe
@@ -58,3 +58,15 @@ class RecipeListView(ListView):
 class FeaturesListView(ListView):
     model = Recipe
     template_name = 'recipe_book/index.html'
+
+
+class RecipeDetailView(DetailView):
+    queryset = Recipe.objects.filter(status=1)
+    template_name = "recipe_book/recipe-page.html"
+    context_object_name = "recipe"
+    slug_url_kwarg = "slug"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recipe = self.get_object()
+        return context

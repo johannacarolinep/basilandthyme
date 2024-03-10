@@ -39,8 +39,10 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title truncate-two-lines">{{ recipe.title }}</h3>
-                        <p class="card-text truncate-three-lines">{{ recipe.teaser }}</p>
+                        <a href="{% url 'recipe_detail' recipe.slug %}">
+                            <h3 class="card-title truncate-two-lines">{{ recipe.title }}</h3>
+                            <p class="card-text truncate-three-lines">{{ recipe.teaser }}</p>
+                        </a>
                     </div>
                 </div>
             </div>
