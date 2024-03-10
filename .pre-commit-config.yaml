@@ -1,0 +1,9 @@
+repos:
+- repo: local
+  hooks:
+  - id: check-debug-setting
+    name: Check DEBUG setting
+    entry: python check_debug.py
+    language: system
+    always_run: true
+    files: 'basilandthyme/settings.py' 
