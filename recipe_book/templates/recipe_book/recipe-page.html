@@ -2,47 +2,54 @@
 {% load static %}
 
 {% block content %}
-<div class="container-xl mt-4 mt-lg-5 bg-white recipe-container">
-    <div class="row">
-        <div class="img-container col-md-6">
-            {% if "placeholder" in recipe.feature_image.url %}
-            <img class="img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
-            {% else %}
-            <img class="img-cover" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
-            {% endif %}
-        </div>
-        <div class="col-md-6">
-            <div class="row d-flex justify-content-between">
-                <div class="col-auto">X X X X X (123)</div>
-                <div class="col-auto">
-                    {% if recipe.category == 1 %}
-                    <i class="fa-solid fa-drumstick-bite"></i>
-                    {% elif recipe.category == 2 %}
-                    <i class="fa-solid fa-bacon"></i>
-                    {% elif recipe.category == 3 %}
-                    <i class="fa-solid fa-cow"></i>
-                    {% elif recipe.category == 4 %}
-                    <i class="fa-solid fa-fish"></i>
-                    {% elif recipe.category == 5 %}
-                    <i class="fa-brands fa-pagelines"></i>
-                    {% endif %}
+<div class="container-xl g-0">
+    <div class="m-3 my-md-4 m-lg-4 p-4 bg-white recipe-container">
+        <div class="row">
+            <div class="img-container col-md-7">
+                {% if "placeholder" in recipe.feature_image.url %}
+                <img class="img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
+                {% else %}
+                <img class="img-cover" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
+                {% endif %}
+            </div>
+            <div class="col-md-5 mt-2 mt-md-0 d-flex flex-column">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-auto fs-rem-150">X X X X X (123)</div>
+                    <div class="col-auto fs-rem-150">
+                        {% if recipe.category == 1 %}
+                        <i class="fa-solid fa-drumstick-bite"></i>
+                        {% elif recipe.category == 2 %}
+                        <i class="fa-solid fa-bacon"></i>
+                        {% elif recipe.category == 3 %}
+                        <i class="fa-solid fa-cow"></i>
+                        {% elif recipe.category == 4 %}
+                        <i class="fa-solid fa-fish"></i>
+                        {% elif recipe.category == 5 %}
+                        <i class="fa-brands fa-pagelines"></i>
+                        {% endif %}
+                    </div>
+                </div>
+                <h1 class="fs-rem-130 fs-rem-lg-180 mt-2">{{ recipe.title }}</h1>
+                <div class="bg-brand-green h-line"> </div>
+                <p class="lead mt-2 fs-rem-110 fs-rem-lg-125">{{ recipe.teaser }}</p>
+                <div class="d-flex justify-content-end align-items-baseline  mt-auto">
+                    <p class="m-0">Saved!</p>
+                    <i class="fa-solid fa-heart mx-1 fs-rem-250"></i>
                 </div>
             </div>
-            <h1>{{ recipe.title }}</h1>
-            <p>{{ recipe.teaser }}</p>
-            <div class="bg-brand-green h-line mx-auto"> </div>
-            <div class="row justify-content-end">
-                <p class="col-auto">Saved!</p>
-                <i class="fa-solid fa-heart col-auto"></i>
+        </div>
+        <div class="bg-brand-green h-line mx-auto mt-3"> </div>
+        <div class="bg-brand-green h-line mx-auto mt-1 mb-3"> </div>
+        <div class="row">
+            <div class="col-md-5 col-lg-4">
+                <h2 class="fs-rem-130 fs-rem-lg-160">Ingredients:</h2>
+                {{ recipe.ingredients | safe }}
+                <div class="d-md-none bg-brand-green h-line mx-auto my-3"> </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            {{ recipe.ingredients | safe }}
-        </div>
-        <div class="col-md-8">
-            {{ recipe.content | safe }}
+            <div class="col-md-7 col-lg-8 ps-md-3 recipe-instructions">
+                <h2 class="fs-rem-130 fs-rem-lg-160">Instructions:</h2>
+                {{ recipe.content | safe }}
+            </div>
         </div>
     </div>
 </div>

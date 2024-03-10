@@ -58,8 +58,23 @@ body {
 }
 
 .h-line {
-    height: 3px;
-    width: 95%;
+    height: 2.5px;
+}
+
+.fs-rem-110 {
+    font-size: 1.1rem;
+}
+
+.fs-rem-130 {
+    font-size: 1.3rem;
+}
+
+.fs-rem-150 {
+    font-size: 1.5rem;
+}
+
+.fs-rem-250 {
+    font-size: 2.5rem;
 }
 
 /* ----------------------------- Navbar/Header */
@@ -185,11 +200,18 @@ body {
     color: #ffffff;
 }
 
-
-
 /* -------------------------------- Footer */
 footer {
     padding: 20px 0;
+}
+
+/* ---------------------------------- Medium screens */
+@media screen and (min-width: 768px) {
+
+    /* --------------------------------- Recipe detail page */
+    .recipe-instructions {
+        border-left: 2.5px solid #008B20;
+    }
 }
 
 /* ---------------------------------- Large screens */
@@ -203,6 +225,18 @@ footer {
     .img-sq-150-200 {
         height: 200px;
         width: 200px;
+    }
+
+    .fs-rem-lg-125 {
+        font-size: 1.25rem;
+    }
+
+    .fs-rem-lg-160 {
+        font-size: 1.6rem;
+    }
+
+    .fs-rem-lg-180 {
+        font-size: 1.8rem;
     }
 
     /* -------------------------------- Navbar/Header */
