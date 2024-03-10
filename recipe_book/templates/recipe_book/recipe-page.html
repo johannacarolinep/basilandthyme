@@ -2,5 +2,49 @@
 {% load static %}
 
 {% block content %}
-Recipe title is: {{ recipe.title }}
+<div class="container-xl mt-4 mt-lg-5 bg-white recipe-container">
+    <div class="row">
+        <div class="img-container col-md-6">
+            {% if "placeholder" in recipe.feature_image.url %}
+            <img class="img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
+            {% else %}
+            <img class="img-cover" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <div class="row d-flex justify-content-between">
+                <div class="col-auto">X X X X X (123)</div>
+                <div class="col-auto">
+                    {% if recipe.category == 1 %}
+                    <i class="fa-solid fa-drumstick-bite"></i>
+                    {% elif recipe.category == 2 %}
+                    <i class="fa-solid fa-bacon"></i>
+                    {% elif recipe.category == 3 %}
+                    <i class="fa-solid fa-cow"></i>
+                    {% elif recipe.category == 4 %}
+                    <i class="fa-solid fa-fish"></i>
+                    {% elif recipe.category == 5 %}
+                    <i class="fa-brands fa-pagelines"></i>
+                    {% endif %}
+                </div>
+            </div>
+            <h1>{{ recipe.title }}</h1>
+            <p>{{ recipe.teaser }}</p>
+            <div class="bg-brand-green h-line mx-auto"> </div>
+            <div class="row justify-content-end">
+                <p class="col-auto">Saved!</p>
+                <i class="fa-solid fa-heart col-auto"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ recipe.ingredients | safe }}
+        </div>
+        <div class="col-md-8">
+            {{ recipe.content | safe }}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

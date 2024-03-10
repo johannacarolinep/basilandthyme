@@ -26,6 +26,10 @@ main {
     background-color: #F8F9F8;
 }
 
+.bg-white {
+    background-color: #ffffff;
+}
+
 .brand-brown {
     color: #442A23;
 }
@@ -42,6 +46,20 @@ body {
 .img-sq-150-200 {
     height: 150px;
     width: 150px;
+}
+
+.img-container {
+    display: flex;
+}
+
+.img-cover {
+    object-fit: cover;
+    width: 100%;
+}
+
+.h-line {
+    height: 3px;
+    width: 95%;
 }
 
 /* ----------------------------- Navbar/Header */
