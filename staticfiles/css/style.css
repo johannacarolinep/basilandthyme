@@ -6,6 +6,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    color: #201425;
 }
 
 main {
@@ -32,6 +33,10 @@ main {
 
 .brand-brown {
     color: #442A23;
+}
+
+.brand-green {
+    color: #008B20;
 }
 
 body {

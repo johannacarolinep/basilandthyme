@@ -15,7 +15,7 @@
             <div class="col-md-5 mt-2 mt-md-0 d-flex flex-column">
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto fs-rem-150">X X X X X (123)</div>
-                    <div class="col-auto fs-rem-150">
+                    <div class="col-auto fs-rem-150 brand-brown">
                         {% if recipe.category == 1 %}
                         <i class="fa-solid fa-drumstick-bite"></i>
                         {% elif recipe.category == 2 %}
@@ -32,7 +32,7 @@
                 <h1 class="fs-rem-130 fs-rem-lg-180 mt-2">{{ recipe.title }}</h1>
                 <div class="bg-brand-green h-line"> </div>
                 <p class="lead mt-2 fs-rem-110 fs-rem-lg-125">{{ recipe.teaser }}</p>
-                <div class="d-flex justify-content-end align-items-baseline  mt-auto">
+                <div class="d-flex justify-content-end align-items-baseline mt-auto brand-green">
                     <p class="m-0">Saved!</p>
                     <i class="fa-solid fa-heart mx-1 fs-rem-250"></i>
                 </div>
