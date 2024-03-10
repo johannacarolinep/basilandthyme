@@ -175,6 +175,11 @@ Velocity: 17
 #### Sprint 2
 ![Sprint 2 milestone](documentation/sprint2.png)
 
+##### Sprint 2 wrap-up
+
+Project board at end of sprint 2:
+![Board end of sprint 2](documentation/project-board-spr-2.png)
+
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
