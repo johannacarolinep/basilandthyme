@@ -180,6 +180,19 @@ Velocity: 17
 Project board at end of sprint 2:
 ![Board end of sprint 2](documentation/project-board-spr-2.png)
 
+Points completed in Sprint 2: 16
+
+Velocity: 16.5
+
+**Actions:**
+- Additional items added to the backlog:
+    - TESTING: Unit tests for models and functions: Add unit tests for models and functions written up until this point to enhance code quality. Add unit tests as part of the pre-commit hook to prevent faulty code from being pushed to GitHub.
+    - DOCUMENTATION: Code comments and docstrings: Add code comments and docstrings to any classes, methods and functions written so far to improve code readability and maintainability.
+    - USER STORY: Sign up/log in with social (Account signup/login): As a **Site User** I can **register an account using an existing social media account** so that I can **have a faster and smoother registration and login experience**.
+    - USER STORY: Email verification (Account/Login): As a **Site User signing up for an account** I can **verify my email** so that I can **feel more secure and trust that my account is protected**.
+
+
+
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
