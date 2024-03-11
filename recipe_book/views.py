@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import render
 from django.db.models import Q
-from .models import Recipe
+from .models import Recipe, Favourite
 
 
 # Create your views here.
@@ -69,6 +69,8 @@ class RecipeDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         recipe = self.get_object()
+        user = self.request.user
+        context['is_favourite'] = Favourite.is_recipe_favourite(user, recipe)
         return context
 
 

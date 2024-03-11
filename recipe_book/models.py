@@ -58,6 +58,10 @@ class Favourite(models.Model):
     def __str__(self):
         return f"{self.user} favourited '{self.recipe}'"
 
+    @classmethod
+    def is_recipe_favourite(cls, user, recipe):
+        return cls.objects.filter(user=user, recipe=recipe).exists()
+
 
 class Rating(models.Model):
     RATING_CHOICES = [
