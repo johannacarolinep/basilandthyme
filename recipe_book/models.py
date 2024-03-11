@@ -60,7 +60,10 @@ class Favourite(models.Model):
 
     @classmethod
     def is_recipe_favourite(cls, user, recipe):
-        return cls.objects.filter(user=user, recipe=recipe).exists()
+        if user.is_authenticated:
+            return cls.objects.filter(user=user, recipe=recipe).exists()
+        else:
+            return False
 
 
 class Rating(models.Model):
