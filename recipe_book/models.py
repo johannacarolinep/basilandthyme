@@ -30,6 +30,9 @@ class Recipe(models.Model):
     category = models.IntegerField(choices=CATEGORIES, default=0)
     status = models.IntegerField(choices=STATUS, default=0)
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Comment(models.Model):
     recipe = models.ForeignKey(
@@ -48,6 +51,12 @@ class Favourite(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='favourite_recipe'
     )
+
+    class Meta:
+        unique_together = ('user', 'recipe')
+
+    def __str__(self):
+        return f"{self.user} favourited '{self.recipe}'"
 
 
 class Rating(models.Model):
