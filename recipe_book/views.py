@@ -6,7 +6,6 @@ from .models import Recipe, Favourite
 
 # Create your views here.
 class RecipeListView(ListView):
-    # queryset = Recipe.objects.all()
     model = Recipe
     template_name = 'recipe_book/recipes.html'
     paginate_by = 8
@@ -51,6 +50,9 @@ class RecipeListView(ListView):
                 context["searchHeading"] = "Sorry, no results for '" + self.query + "'. Please try again."
         else:
             context['searchHeading'] = "Search for your new favourite recipes"
+
+        user = self.request.user
+        context['user_favorites'] = Favourite.get_user_favourite_ids(user)
 
         return context
 

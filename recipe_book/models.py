@@ -65,6 +65,12 @@ class Favourite(models.Model):
         else:
             return False
 
+    @classmethod
+    def get_user_favourite_ids(cls, user):
+        if user.is_authenticated:
+            return cls.objects.filter(user=user).values_list('recipe', flat=True)
+        return []
+
 
 class Rating(models.Model):
     RATING_CHOICES = [
