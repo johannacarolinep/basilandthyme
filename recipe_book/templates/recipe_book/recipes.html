@@ -16,15 +16,25 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for recipe in object_list %}
             <div class="col">
-                <div class="card h-100 mx-auto">
+                <div class="card h-100 mx-auto" style="position: relative;">
                     {% if "placeholder" in recipe.feature_image.url %}
                     <img class="card-img-top" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
                     {% else %}
                     <img class="card-img-top" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
                     {% endif %}
+                    <!-- <div class="card-img-overlay d-flex justify-content-end">
+                        <i class="fa-solid fa-heart mx-1 fs-rem-250"></i>
+                    </div> -->
+                    <div class="card-heart-icon">
+                        {% if recipe.id in user_favorites %}
+                        <i class="fa-solid fa-heart m-3 fs-rem-180"></i>
+                        {% else %}
+                        <i class="fa-regular fa-heart m-3 fs-rem-180"></i>
+                        {% endif %}
+                    </div>
                     <div class="card-header d-flex justify-content-between">
                         <div class="rating">X X X X X (123)</div>
-                        <div class="category">
+                        <div class="category fs-rem-120">
                             {% if recipe.category == 1 %}
                             <i class="fa-solid fa-drumstick-bite" aria-hidden="true"></i>
                             <span class="sr-only">Recipe category is "chicken".</span>
@@ -48,9 +58,6 @@
                             <h3 class="card-title truncate-two-lines">{{ recipe.title }}</h3>
                             <p class="card-text truncate-three-lines">{{ recipe.teaser }}</p>
                         </a>
-                        {% if recipe.id in user_favorites %}
-                        <p>This recipe is in your favorites!</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -74,12 +74,20 @@ body {
     font-size: 1.1rem;
 }
 
+.fs-rem-120 {
+    font-size: 1.2rem;
+}
+
 .fs-rem-130 {
     font-size: 1.3rem;
 }
 
 .fs-rem-150 {
     font-size: 1.5rem;
+}
+
+.fs-rem-180 {
+    font-size: 1.8rem;
 }
 
 .fs-rem-250 {
@@ -163,10 +171,6 @@ body {
         -6px -6px 12px #ffffff;
 }
 
-.card i {
-    font-size: 1.2rem;
-}
-
 .card-img-top {
     aspect-ratio: 3/2;
     object-fit: cover;
@@ -205,6 +209,15 @@ body {
 .card-link:hover,
 .card-link:active {
     text-decoration: underline;
+}
+
+.card-heart-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #ffffff;
+    -webkit-text-stroke: 1.3px #4a3c50;
+    /* Outline color and thickness for WebKit browsers */
 }
 
 /* Recipe cards pagination */
