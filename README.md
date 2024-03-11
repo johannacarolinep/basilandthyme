@@ -202,6 +202,9 @@ Velocity: 16.5
     - USER STORY: Sign up/log in with social (Account signup/login): As a **Site User** I can **register an account using an existing social media account** so that I can **have a faster and smoother registration and login experience**.
     - USER STORY: Email verification (Account/Login): As a **Site User signing up for an account** I can **verify my email** so that I can **feel more secure and trust that my account is protected**.
 
+#### Sprint 3
+![Sprint 3 milestone](documentation/sprint3.png)
+
 
 
 
