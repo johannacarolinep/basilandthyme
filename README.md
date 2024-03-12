@@ -242,5 +242,7 @@ After correctly adding the CLOUDINARY_URL config variable, I was able to confirm
 <a id="credits"></a>
 ## Credits
 
+- Adding extra context: https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/#adding-extra-context
+
 <a id="acknowledgements"></a>
 ## Acknowledgements
