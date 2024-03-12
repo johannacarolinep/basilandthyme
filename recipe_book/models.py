@@ -5,6 +5,26 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class Recipe(models.Model):
+    """
+    Model representing a recipe.
+
+    Attributes:
+    - title (CharField): The unique title of the recipe.
+    - slug (SlugField): A unique slug for the recipe URL.
+    - author (ForeignKey to User): The user who authored the recipe.
+    - feature_image (CloudinaryField): The main image of the recipe.
+    - alt_text (CharField): Alternative text for the feature image.
+    - content (TextField): The detailed content, including recipe instructions.
+    - ingredients (TextField): Ingredients required for the recipe.
+    - teaser (CharField): A short teaser/description of the recipe.
+    - created_on (DateTimeField): Date and time when the recipe was created.
+    - updated_on (DateTimeField): Date and time when the recipe was last
+    updated.
+    - category (IntegerField): Category of the recipe (e.g., Chicken, Pork).
+    - status (IntegerField): Status of the recipe (e.g., Draft, Published).
+    """
+
+    # Choices for the categories and status fields
     CATEGORIES = (
         (0, "No category selected"),
         (1, "Chicken"),
@@ -35,6 +55,17 @@ class Recipe(models.Model):
 
 
 class Comment(models.Model):
+    """
+    Model representing comments on recipes.
+
+    Attributes:
+        recipe (ForeignKey to Recipe): The recipe being commented on.
+        author (ForeignKey to User): The user who wrote the comment.
+        body (TextField): The text content of the comment.
+        approved (BooleanField): Indicates whether the comment has been
+        approved by the site admin. Is True by default.
+        created_on (DateTimeField): The date and time of comment creation.
+    """
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(
@@ -45,6 +76,17 @@ class Comment(models.Model):
 
 
 class Favourite(models.Model):
+    """
+    Model representing the favourites of users for recipes.
+
+    Attributes:
+        user (ForeignKey to User): The user who favourited the recipe.
+        recipe (ForeignKey to Recipe): The recipe favourited by the user.
+
+    Meta:
+        unique_together = ('user', 'recipe'): Ensures that each user can mark a
+        recipe as a favourite only once.
+    """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='favourite_user'
     )
@@ -56,10 +98,26 @@ class Favourite(models.Model):
         unique_together = ('user', 'recipe')
 
     def __str__(self):
+        """
+        Returns a string representation of the Favourite object.
+
+        Returns:
+            str: A string indicating which user favourited which recipe.
+        """
         return f"{self.user} favourited '{self.recipe}'"
 
     @classmethod
     def is_recipe_favourite(cls, user, recipe):
+        """
+        Checks if a recipe is marked as a favourite by a user.
+
+        Args:
+            user (User): The user object.
+            recipe (Recipe): The recipe object.
+
+        Returns:
+            bool: True if the recipe is favourited by the user, else False.
+        """
         if user.is_authenticated:
             return cls.objects.filter(user=user, recipe=recipe).exists()
         else:
@@ -67,6 +125,15 @@ class Favourite(models.Model):
 
     @classmethod
     def get_user_favourite_ids(cls, user):
+        """
+        Retrieves the IDs of recipes favourited by a user.
+
+        Args:
+            user (User): The user object.
+
+        Returns:
+            list: A list of recipe IDs favourited by the user.
+        """
         if user.is_authenticated:
             return cls.objects.filter(user=user).values_list('recipe', flat=True)
         return []
