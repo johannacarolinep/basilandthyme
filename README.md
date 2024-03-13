@@ -243,6 +243,8 @@ After correctly adding the CLOUDINARY_URL config variable, I was able to confirm
 ## Credits
 
 - Adding extra context: https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/#adding-extra-context
+- AssertRaises: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises
+- full_clean(): https://docs.djangoproject.com/en/5.0/ref/forms/validation/
 
 <a id="acknowledgements"></a>
 ## Acknowledgements
