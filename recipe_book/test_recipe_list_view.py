@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-from django.core.paginator import Paginator
 from .models import Recipe, Favourite
 
 
@@ -140,7 +139,7 @@ class TestRecipeListView(TestCase):
 
     def test_recipe_list_page_not_paginated(self):
         """
-        Test to ensure the recipe list page is not paginated when the nu of 
+        Test to ensure the recipe list page is not paginated when the nu of
         recipes is smaller than the paginate_by number. Asserts there is only 1
         page and it has the correct number of recipes.
         """
