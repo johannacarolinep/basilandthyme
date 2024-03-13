@@ -6,4 +6,11 @@ repos:
     entry: python check_debug.py
     language: system
     always_run: true
-    files: 'basilandthyme/settings.py' 
+    files: 'basilandthyme/settings.py'
+  - id: django-tests
+    name: Django Tests
+    entry: python manage.py test
+    language: system
+    always_run: true
+    pass_filenames: false
+    stages: [commit]
