@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
+from django.core.paginator import Paginator
 from .models import Recipe, Favourite
 
 
@@ -103,3 +104,54 @@ class TestRecipeListView(TestCase):
         self.assertTemplateUsed(response, 'recipe_book/recipes.html')
         self.assertIn(b"Test Recipe 1", response.content)
         self.assertNotIn(b"Test Recipe 2", response.content)
+
+    def test_recipe_list_page_pagination(self):
+        """
+        Test pagination on the recipe list page.
+        Ensures a total of 12 recipes would be split over 2 pages, with 8
+        recipes on the first page and 4 on the second page.
+        """
+        # Create 10 additional mock recipes to get to a total of 12
+        for i in range(10):
+            Recipe.objects.create(
+                title=f"Test Recipe {i + 3}",
+                author=self.user,
+                slug=f"test-recipe-{i + 3}",
+                content="Test Recipe Content",
+                status=1,
+            )
+
+        response = self.client.get(reverse('recipe_list_page'))
+        self.assertEqual(response.status_code, 200, msg="Status code not 200")
+        paginator = response.context['paginator']
+
+        # Check if the paginator has the correct number of pages
+        self.assertEqual(paginator.num_pages, 2, msg="No of pages incorrect")
+
+        # Check if the first page contains the correct number of recipes
+        self.assertEqual(
+            len(paginator.page(1).object_list), 8,
+            msg="Incorrect no of results on page 1")
+
+        # Check if the second page contains the correct number of recipes
+        self.assertEqual(
+            len(paginator.page(2).object_list), 4,
+            msg="Incorrect no of results on page 2")
+
+    def test_recipe_list_page_not_paginated(self):
+        """
+        Test to ensure the recipe list page is not paginated when the nu of 
+        recipes is smaller than the paginate_by number. Asserts there is only 1
+        page and it has the correct number of recipes.
+        """
+        response = self.client.get(reverse('recipe_list_page'))
+        self.assertEqual(response.status_code, 200, msg="Status code not 200")
+        paginator = response.context['paginator']
+
+        # Check if the paginator has the correct number of pages
+        self.assertEqual(paginator.num_pages, 1, msg="No of pages incorrect")
+
+        # Check if the first page contains the correct number of recipes
+        self.assertEqual(
+            len(paginator.page(1).object_list), 2,
+            msg="Incorrect no of results on page 1")
