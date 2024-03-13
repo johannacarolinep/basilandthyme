@@ -5,7 +5,7 @@ from .models import Recipe, Favourite
 
 
 # Create your tests here.
-class TestRecipeBookViews(TestCase):
+class TestRecipeDetailView(TestCase):
 
     def setUp(self):
         """
