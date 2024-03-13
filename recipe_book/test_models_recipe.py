@@ -198,3 +198,68 @@ class TestRecipeModel(TestCase):
             self.fail(
                 "ValidationError not raised for an excessively long teaser."
                 )
+
+    def test_category_invalid_choice(self):
+        """
+        Test that a validation error is raised when the category field has an
+        invalid value.
+        """
+        invalid_category = 7
+
+        recipe = Recipe(
+            title="Test Recipe Model x",
+            author=self.user,
+            slug="test-recipe-model-x",
+            alt_text="test-recipe-model-alt-text",
+            content="Test Recipe Content",
+            teaser="Test Recipe Teaser",
+            ingredients="Test recipe model ingredients",
+            status=1,
+            category=invalid_category
+        )
+        try:
+            # Attempt to clean data
+            recipe.full_clean()
+        except ValidationError as e:
+            if 'category' not in e.message_dict:
+                # fail since validation error not relating to slug
+                self.fail(
+                    "ValidationError raised, but not for the 'category' field."
+                    )
+        else:
+            # Fail since no exception is raised
+            self.fail(
+                "ValidationError not raised for an invalid category choice."
+                )
+
+    def test_status_invalid_choice(self):
+        """
+        Test that a validation error is raised when the status field has an
+        invalid value.
+        """
+        invalid_status = 2
+
+        recipe = Recipe(
+            title="Test Recipe Model x",
+            author=self.user,
+            slug="test-recipe-model-x",
+            alt_text="test-recipe-model-alt-text",
+            content="Test Recipe Content",
+            teaser="Test Recipe Teaser",
+            ingredients="Test recipe model ingredients",
+            status=invalid_status
+        )
+        try:
+            # Attempt to clean data
+            recipe.full_clean()
+        except ValidationError as e:
+            if 'status' not in e.message_dict:
+                # fail since validation error not relating to slug
+                self.fail(
+                    "ValidationError raised, but not for the 'status' field."
+                    )
+        else:
+            # Fail since no exception is raised
+            self.fail(
+                "ValidationError not raised for an invalid status choice."
+                )
