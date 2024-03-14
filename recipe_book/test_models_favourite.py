@@ -62,12 +62,43 @@ class TestFavouriteModel(TestCase):
             Favourite.objects.get(user=self.user, recipe=self.recipe)
 
     def test_is_recipe_favourite(self):
+        """
+        Test to ensure the is_recipe_favourite() method returns True when the
+        given recipe is a favourite of the given user, and False when not.
+        """
         # Create favourite
-        favourite = Favourite.objects.create(user=self.user, recipe=self.recipe)
+        favourite = Favourite.objects.create(
+            user=self.user, recipe=self.recipe)
         favourited = Favourite.is_recipe_favourite(self.user, self.recipe)
         self.assertTrue(
             favourited, msg="Recipe not favourited when it should be")
         # Detelete favourite
         favourite.delete()
         not_favourite = Favourite.is_recipe_favourite(self.user, self.recipe)
-        self.assertFalse(not_favourite, msg="Recipe is favourite when it should not be")
+        self.assertFalse(
+            not_favourite, msg="Recipe is favourite when it should not be")
+
+    def test_get_user_favourite_ids(self):
+        """
+        Test to check that get_user_favourite_ids returns the right recipe id's
+        given the user has favourited two recipes.
+        """
+        # create another test recipe
+        recipe2 = Recipe.objects.create(
+            title="Test favourite recipe 2",
+            author=self.super_user,
+            slug="test-favourite-recipe-2",
+            content="Test favourite model content 2",
+            ingredients="Test favourite model ingredients",
+            teaser="Test favourite recipe teaser 2",
+            status=1,
+        )
+
+        # favourite two recipes
+        Favourite.objects.create(user=self.user, recipe=self.recipe)
+        Favourite.objects.create(user=self.user, recipe=recipe2)
+
+        # call method to get the ids of the users favourited recipes
+        recipe_ids = list(Favourite.get_user_favourite_ids(self.user))
+        # assert they are the ids of the two test recipes
+        self.assertEqual(recipe_ids, [self.recipe.id, recipe2.id])
