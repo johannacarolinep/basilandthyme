@@ -95,7 +95,9 @@ class Favourite(models.Model):
     )
 
     class Meta:
-        unique_together = ('user', 'recipe')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'recipe'], name='unique_favourite')
+        ]
 
     def __str__(self):
         """
