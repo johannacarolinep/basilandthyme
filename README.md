@@ -238,6 +238,47 @@ At this point I started reflecting more deeply on that the project worked as int
 ##### Solution:
 After correctly adding the CLOUDINARY_URL config variable, I was able to confirm the project worked as intended, on the deployed site as well as the local environment.
 
+#### 2024-03-14: Missing file ending of test_models_favourite.py and Favourite uniqueness constraint not enforced
+
+This bug was a combination of two factors:
+1. While working on writing tests for the **Favourite model**, I realised the tests were not actually being run, and discovered I had misnamed my file to `test_models_favourite`, instead of `test_models_favourite.py`. This meant that the file was not recognized as a test file and was not run by Django unittest. Adding the ``.py`` file ending fixed this.
+
+2. As the tests ran, I could see that one of the previously written tests in the file was failing. The issue concerned a test for the uniqueness constraint on the Favourite model, meant to ensure the same user can not favourite the same recipe twice: 
+
+The uniqueness constraint in the Recipe model meta class:
+``````python
+class Meta:
+        unique_together = ('user', 'recipe')
+``````
+
+The failing test:
+``````python
+def test_unique_favourite_constraint(self):
+        """
+        Test to make sure the same user can not favourite the same recipe twice
+        """
+        Favourite.objects.create(user=self.user, recipe=self.recipe)
+        with self.assertRaises(IntegrityError):
+            Favourite.objects.create(user=self.user, recipe=self.recipe)
+``````
+##### Steps taken:
+1. By adding print statements, and creating more Favourite objects within the test method, I could confirm that the uniqueness constraint was not being enforced. I was able to create duplicate Favourite objects (same user and recipe), with no errors being raised.
+
+2. Next, I confirmed that the uniqueness constraint **was** being enforced in the _Django admin panel_. As a _super user_, I could create Favourites but not duplicate ones.
+
+3. Next, I had a closer look in the [Django documentation](https://docs.djangoproject.com/en/5.0/ref/models/options/) at how the `unique_together` key worked, which was used in the Meta class of the Favourite model. Reading the documentation brought to my attention that `unique_together` may be deprecated, and recommended the use of `UniqueConstraint` instead.
+
+##### Solution:
+After adding the recommended changes from the Django documentation and migrating, I re-ran the tests to confirm that the test was now raising an `IntegrityError` when attempting to create a duplicate Favourite, as expected.
+
+New implementation of Meta class in Favourite model:
+``````python
+class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'recipe'], name='unique_favourite')
+        ]
+``````
+
 
 <a id="credits"></a>
 ## Credits
