@@ -6,3 +6,19 @@
 {% include 'searchbar.html' %}
 
 {% endblock %}
+
+{% block customscript %}
+<script type="text/javascript">
+    // Convert Django variables to JavaScript variables
+    const userId = '{{ user.id | safe }}';
+    // Wait for the DOM to load
+    document.addEventListener('DOMContentLoaded', function () {
+        // Loop through object_list and add event listeners to each heart button
+        '{% for obj in object_list %}'
+        // Use index of for loop to attach event listener and pass the recipeId
+        document.querySelectorAll('.icon-button')['{{ forloop.counter0 }}'].addEventListener('click', (event) => favouritingBtnListener(event, '{{ obj.id }}'));
+        '{% endfor %}'
+    });
+</script>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{% endblock customscript %}
