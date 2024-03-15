@@ -26,11 +26,15 @@
                         <i class="fa-solid fa-heart mx-1 fs-rem-250"></i>
                     </div> -->
                     <div class="card-heart-icon">
-                        {% if recipe.id in user_favorites %}
+                        <!-- {% if recipe.id in user_favorites %}
                         <i class="fa-solid fa-heart m-3 fs-rem-180"></i>
                         {% else %}
                         <i class="fa-regular fa-heart m-3 fs-rem-180"></i>
-                        {% endif %}
+                        {% endif %} -->
+                        <button class="icon-button" data-object-index="{{ forloop.counter0 }}">
+                            <i
+                                class="fa{% if recipe.id in user_favorites %} fa-solid {% else %} fa-regular {% endif %} fa-heart m-3 fs-rem-180"></i>
+                        </button>
                     </div>
                     <div class="card-header d-flex justify-content-between">
                         <div class="rating">X X X X X (123)</div>
@@ -97,3 +101,22 @@
 </section>
 
 {% endblock %}
+
+{% block extrascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function createClickListener(objectId) {
+            return function () {
+                console.log('Card with Object ID ' + objectId + ' was clicked.');
+                // Perform actions using the objectId, like redirecting to a detail page
+
+            };
+        }
+        '{% for obj in object_list %}'
+        console.log('HEY');
+        document.querySelectorAll('.icon-button')['{{ forloop.counter0 }}'].addEventListener('click', createClickListener('{{ obj.id }}'));
+        '{% endfor %}'
+    });
+</script>
+{% endblock extrascript %}

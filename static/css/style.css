@@ -211,7 +211,8 @@ body {
     text-decoration: underline;
 }
 
-.card-heart-icon {
+.card-heart-icon,
+.card-heart-icon button {
     position: absolute;
     top: 0;
     right: 0;
