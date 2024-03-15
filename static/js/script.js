@@ -7,13 +7,8 @@ function initializeScript() {
         categoryButtons[i].addEventListener('click', addCategoryQuery);
     }
 
-    const favouriteButton = document.getElementById('favourite-btn');
-    const unfavouriteButton = document.getElementById('unfavourite-btn');
-    if (favouriteButton) {
-        favouriteButton.addEventListener('click', favouritingBtnListener);
-    } else if (unfavouriteButton) {
-        unfavouriteButton.addEventListener('click', favouritingBtnListener);
-    }
+    const favouritingButton = document.getElementById('favouriting-btn');
+    favouritingButton.addEventListener('click', favouritingBtnListener);
 }
 
 function addCategoryQuery(event) {
@@ -49,7 +44,7 @@ function favouritingBtnListener(event) {
     // Retrieve the CSRF token from meta tag in HTML head
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const button = event.currentTarget;
-
+    let favouriteParagraph = document.getElementById('favourite-msg');
     // Create an object to send the data
     const data = {
         recipeId: recipeId, // recipeId passed in script tag fr template
@@ -70,8 +65,17 @@ function favouritingBtnListener(event) {
         // Using the json response to make appropriate changes to frontend (WIP)
         .then(data => {
             console.log(data);
-            if (data.message === 'It worked') {
-                button.innerHTML = '<i class="fa-solid fa-heart mx-1 fs-rem-250 brand-green"></i>'
+            if (data.message === 'Favourite removed') {
+                // button.innerHTML = '<i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>'
+                button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
+                if (favouriteParagraph) {
+                    favouriteParagraph.innerText = "Removed!";
+                }
+            } else if (data.message === 'Favourite created') {
+                button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
+                if (favouriteParagraph) {
+                    favouriteParagraph.innerText = "Saved!";
+                }
             }
         })
 }

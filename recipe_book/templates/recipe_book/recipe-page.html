@@ -38,16 +38,11 @@
                 <p class="lead mt-2 fs-rem-110 fs-rem-lg-125">{{ recipe.teaser }}</p>
                 <div class="d-flex justify-content-end align-items-baseline mt-auto brand-green">
                     <!-- Need improved accessibility -->
-                    {% if is_favourite %}
-                    <p class="m-0">Saved!</p>
-                    <button id="unfavourite-btn" class="icon-button">
-                        <i class="fa-solid fa-heart mx-1 fs-rem-250 brand-green"></i>
+                    <p id="favourite-msg" class="m-0"></p>
+                    <button id="favouriting-btn" class="icon-button">
+                        <i
+                            class="fa{% if is_favourite %} fa-solid {% else %} fa-regular {% endif %} fa-heart mx-1 fs-rem-250 brand-green"></i>
                     </button>
-                    {% else %}
-                    <button id="favourite-btn" class="icon-button">
-                        <i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>
-                    </button>
-                    {% endif %}
                 </div>
             </div>
         </div>
