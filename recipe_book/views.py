@@ -1,3 +1,4 @@
+import json
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.decorators.http import require_POST
 from django.shortcuts import render
@@ -125,8 +126,30 @@ def add_remove_favourite(request):
     View to handle POST request (Favourites buttons)
     """
     if request.method == 'POST':
-        print("Received request")
-        return JsonResponse({"status": "success", "message": "It worked"}, status=200)
+        print("Received request", request.body)
+
+        try:
+            data = json.loads(request.body)
+            recipe_id = data.get("recipeId")
+            user_id = data.get("userId")
+            is_favourite = Favourite.is_recipe_favourite_by_ids(
+                user_id, recipe_id)
+            # handle case where recipe is a favourite of the user
+            if (is_favourite):
+                print("Recipe is favourite")
+                return JsonResponse(
+                    {"status": "success", "message": "Is favourite"},
+                    status=200)
+            # handle case where recipe is not a favourite of the user
+            else:
+                print("Recipe is not favourite of user")
+                return JsonResponse(
+                    {"status": "success", "message": "Not favourite"},
+                    status=200)
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid JSON"},
+                status=400)
 
 
 class Favourites(TemplateView):

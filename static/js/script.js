@@ -50,10 +50,11 @@ function favouritingBtnListener(event) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const button = event.currentTarget;
 
-    // Create a FormData object to send the data
-    const formData = new FormData();
-    formData.append('recipeId', recipeId); // recipeId passed in script tag fr template
-    formData.append('userId', userId); // userId passed in script tag fr template
+    // Create an object to send the data
+    const data = {
+        recipeId: recipeId, // recipeId passed in script tag fr template
+        userId: userId // userId passed in script tag fr template
+    };
 
     // Send POST request to the server
     fetch('/add-remove-favourite/', {
@@ -62,7 +63,7 @@ function favouritingBtnListener(event) {
                 'Content-Type': 'application/x-www-form-urlencoded;',
                 'X-CSRFToken': csrfToken
             },
-            body: formData
+            body: JSON.stringify(data)
         })
         // Once data received, convert it to json
         .then(response => response.json())

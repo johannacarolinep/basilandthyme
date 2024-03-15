@@ -126,6 +126,25 @@ class Favourite(models.Model):
             return False
 
     @classmethod
+    def is_recipe_favourite_by_ids(cls, user_id, recipe_id):
+        """
+        Checks if a recipe is marked as a favourite by a user, given user ID
+        and recipe ID.
+
+        Args:
+            user_id (int): The ID of the user.
+            recipe_id (int): The ID of the recipe.
+
+        Returns:
+            bool: True if the recipe is favourited by the user, else False.
+        """
+        if user_id:
+            return cls.objects.filter(
+                user_id=user_id, recipe_id=recipe_id).exists()
+        else:
+            return False
+
+    @classmethod
     def get_user_favourite_ids(cls, user):
         """
         Retrieves the IDs of recipes favourited by a user.
