@@ -137,15 +137,19 @@ def add_remove_favourite(request):
             # handle case where recipe is a favourite of the user
             if (is_favourite):
                 print("Recipe is favourite")
-                return JsonResponse(
-                    {"status": "success", "message": "Is favourite"},
-                    status=200)
+                confirm = Favourite.delete_favourite(user_id, recipe_id)
+                if (confirm):
+                    return JsonResponse(
+                        {"status": "success", "message": "Favourite removed"},
+                        status=200)
             # handle case where recipe is not a favourite of the user
             else:
                 print("Recipe is not favourite of user")
-                return JsonResponse(
-                    {"status": "success", "message": "Not favourite"},
-                    status=200)
+                confirm = Favourite.create_favourite(user_id, recipe_id)
+                if (confirm):
+                    return JsonResponse(
+                        {"status": "success", "message": "Favourite created"},
+                        status=200)
         except json.JSONDecodeError:
             return JsonResponse(
                 {"status": "error", "message": "Invalid JSON"},

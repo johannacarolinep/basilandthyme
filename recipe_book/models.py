@@ -159,6 +159,47 @@ class Favourite(models.Model):
             return cls.objects.filter(user=user).values_list('recipe', flat=True)
         return []
 
+    @classmethod
+    def create_favourite(cls, user_id, recipe_id):
+        """
+        Create a Favourite object given a user id and recipe id, given that
+        the favourite object does not already exist.
+
+        Args:
+            user_id (int): The id of the user.
+            recipe_id (int): The id of the recipe.
+
+        Returns:
+            bool: True if Favourite was created, else False.
+        """
+        user = User.objects.get(pk=user_id)
+        recipe = Recipe.objects.get(pk=recipe_id)
+        if not cls.objects.filter(user=user, recipe=recipe).exists():
+            cls.objects.create(user=user, recipe=recipe)
+            return True
+        return False
+
+    @classmethod
+    def delete_favourite(cls, user_id, recipe_id):
+        """
+        Delete a Favourite object given a user id and recipe id, given that
+        the favourite object exists.
+
+        Args:
+            user_id (int): The id of the user.
+            recipe_id (int): The id of the recipe.
+
+        Returns:
+            bool: True if Favourite was deleted, else False.
+        """
+        user = User.objects.get(pk=user_id)
+        recipe = Recipe.objects.get(pk=recipe_id)
+        if cls.objects.filter(user=user, recipe=recipe).exists():
+            favourite = cls.objects.get(user=user, recipe=recipe)
+            favourite.delete()
+            return True
+        return False
+
 
 class Rating(models.Model):
     RATING_CHOICES = [
