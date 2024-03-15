@@ -3,9 +3,16 @@ document.addEventListener("DOMContentLoaded", initializeScript);
 
 function initializeScript() {
     const categoryButtons = document.getElementsByClassName('btnCategory');
-
     for (let i = 0; i < categoryButtons.length; i++) {
         categoryButtons[i].addEventListener('click', addCategoryQuery);
+    }
+
+    const favouriteButton = document.getElementById('favourite-btn');
+    const unfavouriteButton = document.getElementById('unfavourite-btn');
+    if (favouriteButton) {
+        favouriteButton.addEventListener('click', favouritingBtnListener);
+    } else if (unfavouriteButton) {
+        unfavouriteButton.addEventListener('click', favouritingBtnListener);
     }
 }
 
@@ -28,4 +35,13 @@ function addCategoryQuery(event) {
             window.location.href = baseUrl + '/?q=' + category;
         }
     }
+}
+
+function favouritingBtnListener(event) {
+    console.log("Hello!");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const favouriteButton = document.getElementById('favourite-btn');
+    const recipeId = favouriteButton.dataset.recipeId;
+    const userId = favouriteButton.dataset.userId;
+    console.log("RecipeID: ", recipeId, "User ID: ", userId);
 }

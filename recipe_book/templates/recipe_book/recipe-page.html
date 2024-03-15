@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block token %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock token %}
+
 {% block content %}
 <div class="container-xl g-0">
     <div class="m-3 my-md-4 m-lg-4 p-4 bg-white recipe-container">
@@ -35,10 +39,14 @@
                 <div class="d-flex justify-content-end align-items-baseline mt-auto brand-green">
                     <!-- Need improved accessibility -->
                     {% if is_favourite %}
-                    <!-- <p class="m-0">Saved!</p> -->
-                    <button class="icon-button"><i class="fa-solid fa-heart mx-1 fs-rem-250 brand-green"></i></button>
+                    <p class="m-0">Saved!</p>
+                    <button id="unfavourite-btn" class="icon-button">
+                        <i class="fa-solid fa-heart mx-1 fs-rem-250 brand-green"></i>
+                    </button>
                     {% else %}
-                    <button class="icon-button"><i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i></button>
+                    <button id="favourite-btn" class="icon-button">
+                        <i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>
+                    </button>
                     {% endif %}
                 </div>
             </div>
@@ -60,3 +68,11 @@
 </div>
 
 {% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript">
+    // Convert Django variables to JavaScript variables
+    let recipeId = '{{ recipe.id |safe }}';
+    let userId = '{{ user.id | safe }}'
+</script>
+{% endblock extrascript %}
