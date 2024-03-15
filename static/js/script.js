@@ -37,8 +37,40 @@ function addCategoryQuery(event) {
     }
 }
 
+/**
+ * Handles the click event on favourite/unfavourite buttons.
+ * Retrieves the CSRF token, then sends a POST request to the server with the
+ * CSRF token, recipe id, and user id.
+ *
+ * @param {Event} event - The click event triggering the function.
+ * @returns {void}
+ */
 function favouritingBtnListener(event) {
+    // Retrieve the CSRF token from meta tag in HTML head
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const button = event.currentTarget;
-    console.log("CSRF: ", csrfToken, "RecipeID: ", recipeId, "User ID: ", userId);
+
+    // Create a FormData object to send the data
+    const formData = new FormData();
+    formData.append('recipeId', recipeId); // recipeId passed in script tag fr template
+    formData.append('userId', userId); // userId passed in script tag fr template
+
+    // Send POST request to the server
+    fetch('/add-remove-favourite/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;',
+                'X-CSRFToken': csrfToken
+            },
+            body: formData
+        })
+        // Once data received, convert it to json
+        .then(response => response.json())
+        // Using the json response to make appropriate changes to frontend (WIP)
+        .then(data => {
+            console.log(data);
+            if (data.message === 'It worked') {
+                button.innerHTML = '<i class="fa-solid fa-heart mx-1 fs-rem-250 brand-green"></i>'
+            }
+        })
 }

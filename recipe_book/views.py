@@ -1,5 +1,7 @@
 from django.views.generic import ListView, DetailView, TemplateView
+from django.views.decorators.http import require_POST
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.db.models import Q
 from .models import Recipe, Favourite
 
@@ -115,6 +117,16 @@ class RecipeDetailView(DetailView):
         user = self.request.user
         context['is_favourite'] = Favourite.is_recipe_favourite(user, recipe)
         return context
+
+
+@require_POST
+def add_remove_favourite(request):
+    """
+    View to handle POST request (Favourites buttons)
+    """
+    if request.method == 'POST':
+        print("Received request")
+        return JsonResponse({"status": "success", "message": "It worked"}, status=200)
 
 
 class Favourites(TemplateView):
