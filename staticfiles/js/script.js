@@ -7,12 +7,9 @@ function initializeScript() {
         categoryButtons[i].addEventListener('click', addCategoryQuery);
     }
 
-    const favouriteButton = document.getElementById('favourite-btn');
-    const unfavouriteButton = document.getElementById('unfavourite-btn');
-    if (favouriteButton) {
-        favouriteButton.addEventListener('click', favouritingBtnListener);
-    } else if (unfavouriteButton) {
-        unfavouriteButton.addEventListener('click', favouritingBtnListener);
+    const favouritingButton = document.getElementById('favouriting-btn');
+    if (favouritingButton) {
+        favouritingButton.addEventListener('click', (event) => favouritingBtnListener(event, recipeId));
     }
 }
 
@@ -37,11 +34,49 @@ function addCategoryQuery(event) {
     }
 }
 
-function favouritingBtnListener(event) {
-    console.log("Hello!");
+/**
+ * Handles the click event on favourite/unfavourite buttons.
+ * Retrieves the CSRF token, then sends a POST request to the server with the
+ * CSRF token, recipe id, and user id.
+ *
+ * @param {Event} event - The click event triggering the function.
+ * @returns {void}
+ */
+function favouritingBtnListener(event, eventRecipeId) {
+    // Retrieve the CSRF token from meta tag in HTML head
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const favouriteButton = document.getElementById('favourite-btn');
-    const recipeId = favouriteButton.dataset.recipeId;
-    const userId = favouriteButton.dataset.userId;
-    console.log("RecipeID: ", recipeId, "User ID: ", userId);
+    const button = event.currentTarget;
+    let favouriteParagraph = document.getElementById('favourite-msg');
+    // Create an object to send the data
+    const data = {
+        recipeId: eventRecipeId, // recipeId passed in script tag fr template
+        userId: userId // userId passed in script tag fr template
+    };
+
+    // Send POST request to the server
+    fetch('/add-remove-favourite/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data)
+        })
+        // Once data received, convert it to json
+        .then(response => response.json())
+        // Using the json response to make appropriate changes to frontend (WIP)
+        .then(data => {
+            if (data.message === 'Favourite removed') {
+                // button.innerHTML = '<i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>'
+                button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
+                if (favouriteParagraph) {
+                    favouriteParagraph.innerText = "Removed!";
+                }
+            } else if (data.message === 'Favourite created') {
+                button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
+                if (favouriteParagraph) {
+                    favouriteParagraph.innerText = "Saved!";
+                }
+            }
+        })
 }

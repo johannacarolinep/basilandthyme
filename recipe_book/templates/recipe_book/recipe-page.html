@@ -64,10 +64,12 @@
 
 {% endblock %}
 
-{% block extrascript %}
+{% block customscript %}
 <script type="text/javascript">
     // Convert Django variables to JavaScript variables
-    let recipeId = '{{ recipe.id |safe }}';
-    let userId = '{{ user.id | safe }}'
+    const recipeId = '{{ recipe.id | safe }}';
+    const userId = '{{ user.id | safe }}';
 </script>
-{% endblock extrascript %}
+<script type="text/javascript" src="{% static 'js/script.js' %}">
+</script>
+{% endblock customscript %}

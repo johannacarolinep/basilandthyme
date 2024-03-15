@@ -8,7 +8,9 @@ function initializeScript() {
     }
 
     const favouritingButton = document.getElementById('favouriting-btn');
-    favouritingButton.addEventListener('click', favouritingBtnListener);
+    if (favouritingButton) {
+        favouritingButton.addEventListener('click', (event) => favouritingBtnListener(event, recipeId));
+    }
 }
 
 function addCategoryQuery(event) {
@@ -40,14 +42,14 @@ function addCategoryQuery(event) {
  * @param {Event} event - The click event triggering the function.
  * @returns {void}
  */
-function favouritingBtnListener(event) {
+function favouritingBtnListener(event, eventRecipeId) {
     // Retrieve the CSRF token from meta tag in HTML head
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const button = event.currentTarget;
     let favouriteParagraph = document.getElementById('favourite-msg');
     // Create an object to send the data
     const data = {
-        recipeId: recipeId, // recipeId passed in script tag fr template
+        recipeId: eventRecipeId, // recipeId passed in script tag fr template
         userId: userId // userId passed in script tag fr template
     };
 
@@ -64,7 +66,6 @@ function favouritingBtnListener(event) {
         .then(response => response.json())
         // Using the json response to make appropriate changes to frontend (WIP)
         .then(data => {
-            console.log(data);
             if (data.message === 'Favourite removed') {
                 // button.innerHTML = '<i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>'
                 button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
