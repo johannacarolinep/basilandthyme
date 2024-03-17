@@ -6,7 +6,42 @@
 {% endblock token %}
 
 {% block content %}
-
+<section class="hero-section-wallpaper container-fluid d-flex align-items-center">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 col-xl-7 p-3 mx-auto bg-white justify-content-center">
+                {% if user.is_authenticated %}
+                <h1 class="text-center">Find all your <span class="fw-bold">favourite</span> recipes below
+                    <i class="fa fa-solid fa-heart m-1" aria-hidden="true"></i>
+                    <i class=" fa fa-solid fa-heart m-1" aria-hidden="true"></i>
+                    <i class="fa fa-solid fa-heart m-1" aria-hidden="true"></i>
+                </h1>
+                <h2 class="text-center fw-bold">Enjoy!</h2>
+                {% else %}
+                <h1 class="text-center">Log in or Sign up in order to save your favourite recipes
+                    <i class="fa fa-solid fa-heart m-1" aria-hidden="true"></i>
+                </h1>
+                <p class="text-center">As a signed in user you'll be able to favourite recipes and easily find your way
+                    back to them by visiting this page.</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn fave-signin-btn d-inline-block me-2" href="{% url 'account_login' %}"
+                        aria-label="Go to the sign in page to log in">
+                        Sign In
+                    </a>
+                    <a class="btn fave-signup-btn d-inline-block ms-2" href="{% url 'account_signup' %}"
+                        aria-label="Go to the sign up page to register">
+                        Sign Up
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+            </div>
+        </div>
+    </div>
+</section>
 <section class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
         <div class="row my-2">
@@ -74,6 +109,7 @@
         </div>
         {% endif %}
         {% else %}
+        <!-- Content displayed for non logged in user -->
         <p>Content to display for non logged in users</p>
         {% endif %}
         {% if is_paginated %}
