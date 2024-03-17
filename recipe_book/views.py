@@ -154,5 +154,15 @@ def add_remove_favourite(request):
                 status=400)
 
 
-class Favourites(TemplateView):
+class Favourites(ListView):
+    model = Recipe
     template_name = "recipe_book/favourites.html"
+    paginate_by = 8
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            favourite_recipes = Favourite.get_user_favourite_ids(user)
+            return Recipe.objects.filter(id__in=favourite_recipes)
+        else:
+            return Recipe.objects.none()

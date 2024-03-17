@@ -4,5 +4,11 @@
 {% block content %}
 
 This is the favourites page!
+{% if object_list %}
+{% for recipe in object_list %}
+<p>{{ recipe.title }}</p>
+{% endfor %}
+
+{% endif%}
 
 {% endblock %}
