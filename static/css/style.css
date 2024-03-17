@@ -233,6 +233,31 @@ body {
     padding: 0;
 }
 
+.unfavourited-card {
+    position: relative;
+}
+
+.unfavourited-card::after {
+    content: "";
+    /* Create a pseudo-element to act as the overlay */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(61, 56, 56, 0.835);
+    z-index: 1;
+}
+
+.unfavourited-p {
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+
 /* Recipe cards pagination */
 .page-link,
 .page-link:hover {

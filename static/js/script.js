@@ -66,14 +66,25 @@ function favouritingBtnListener(event, eventRecipeId) {
         // Using the json response to make appropriate changes to frontend (WIP)
         .then(data => {
             if (data.message === 'Favourite removed') {
-                // button.innerHTML = '<i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>'
-                button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
-                button.parentNode.querySelector('p').innerText = "Removed";
-                // favouriteParagraph.innerText = "Removed!";
+                if (window.location.pathname === "/favourites/") {
+                    // code for when favourite removed from favourites page
+                    const card = button.closest('.card');
+                    const paragraph = card.querySelector('p');
+                    const cardChildren = card.querySelectorAll('*');
+                    card.classList.add('unfavourited-card');
+                    paragraph.className = paragraph.className.replace('d-none', 'unfavourited-p');
+                    // Apply aria-hidden to each child element of card
+                    cardChildren.forEach(child => {
+                        child.setAttribute('aria-hidden', 'true');
+                    });
+                    card.setAttribute('aria-label', 'Removed recipe');
+                } else {
+                    button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
+                    button.parentNode.querySelector('p').innerText = "Removed";
+                }
             } else if (data.message === 'Favourite created') {
                 button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
                 button.parentNode.querySelector('p').innerText = "Saved!";
-
             }
         })
 }

@@ -22,13 +22,13 @@
             {% for recipe in object_list %}
             <div class="col">
                 <div class="card h-100 mx-auto" style="position: relative;">
+                    <p class="d-none fs-rem-130 text-center text-white">Recipe removed from favourites</p>
                     {% if "placeholder" in recipe.feature_image.url %}
                     <img class="card-img-top" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
                     {% else %}
                     <img class="card-img-top" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
                     {% endif %}
                     <div class="card-heart-icon d-flex align-items-center text-center m-2">
-                        <p class="mb-0 me-1"></p>
                         <button class="icon-button me-2" data-object-index="{{ forloop.counter0 }}">
                             <i class="fa fa-solid fa-heart m-1 fs-rem-180"></i>
                         </button>
