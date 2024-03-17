@@ -146,3 +146,29 @@ class TestFavouriteModel(TestCase):
             Recipe.DoesNotExist,
                 msg="Error not raised when recipe does not exist"):
             Favourite.create_favourite(user_id, recipe_id)
+
+    def test_delete_favourite(self):
+        """
+        Test if method returns true when favourite is deleted and false when
+        favourite is not deleted due to either not existing or if recipe id
+        does not exist.
+        """
+        # Test if the method returns True when a favorite is deleted
+        Favourite.objects.create(user=self.user, recipe=self.recipe)
+        user_id = self.user.id
+        recipe_id = self.recipe.id
+        self.assertTrue(
+            Favourite.delete_favourite(user_id, recipe_id),
+            msg="Favourite should have been deleted")
+
+        # Test if the method returns False when a favorite does not exist
+        self.assertFalse(
+            Favourite.delete_favourite(user_id, recipe_id),
+            msg="Should have returned False since Favourite non existing")
+
+        # Test if exception is raised when recipe does not exist
+        recipe_id = 999  # A recipe with this ID does not exist
+        with self.assertRaises(
+            Recipe.DoesNotExist,
+                msg="Exception not raised when recipe id does not exist"):
+            Favourite.delete_favourite(user_id, recipe_id)
