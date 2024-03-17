@@ -48,7 +48,7 @@
             {% if user.is_authenticated %}
             <h2>Your favourites:</h2>
             {% else %}
-            <h2>You're not logged in!</h2>
+            <h2>As a signed in user, your favourite recipes would be displayed here.</h2>
             {% endif %}
         </div>
         {% if user.is_authenticated %}
@@ -104,13 +104,27 @@
             <div class="text-center">
                 <img class="img-sq-150-200 mx-auto" src="{% static 'images/logo-round-brown.webp' %}"
                     alt="Basil and Thyme logo">
-                <p class="mt-4 brand-brown">You should add some favourites!</p>
+                <p class="mt-4 brand-brown">
+                    You should add some favourites!<br>
+                    To add a recipe to your favourites, just click the heart-shaped button.<br>
+                    You'll find it on all recipe cards and recipe pages.<br>
+                    If you change your mind, just click the button a second time.
+                </p>
             </div>
         </div>
         {% endif %}
         {% else %}
         <!-- Content displayed for non logged in user -->
-        <p>Content to display for non logged in users</p>
+        <h3>How favouriting works:</h3>
+        <p><span class="fw-bold">It's easy!</span> Just click the heart-shaped button on the recipe you'd like to add
+            to your favourites.
+            <br>You will find the heart button in the upper right corner of all recipe cards, or on the recipe page.
+            <br>If you change you're mind and would like to remove a recipe from your favourites, just click
+            the heart-shaped button a second time.
+        </p>
+        <p>The only caveat is that you need to be signed in to favourite recipes, so if you haven't already,
+            <span class="fw-bold">sign up for a free account today!</span>
+        </p>
         {% endif %}
         {% if is_paginated %}
         <nav class="mt-4" aria-label="Navigation for recipes split over multiple pages.">
