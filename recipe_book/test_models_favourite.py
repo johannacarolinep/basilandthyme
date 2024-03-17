@@ -78,6 +78,25 @@ class TestFavouriteModel(TestCase):
         self.assertFalse(
             not_favourite, msg="Recipe is favourite when it should not be")
 
+    def test_is_recipe_favourite_by_ids(self):
+        """
+        Test to ensure method returns true when passed a recipeId and userId
+        when recipe is a favourite of the user, and false when not.
+        """
+        favourite = Favourite.objects.create(
+            user=self.user, recipe=self.recipe)
+
+        is_favourite = Favourite.is_recipe_favourite_by_ids(
+            self.user.id, self.recipe.id)
+        self.assertTrue(is_favourite, msg="Recipe should be favourite of user")
+
+        favourite.delete()
+
+        is_false_favourite = Favourite.is_recipe_favourite_by_ids(
+            self.user.id, self.recipe.id)
+        self.assertFalse(
+            is_false_favourite, msg="Recipe should NOT be favourite of user")
+
     def test_get_user_favourite_ids(self):
         """
         Test to check that get_user_favourite_ids returns the right recipe id's
