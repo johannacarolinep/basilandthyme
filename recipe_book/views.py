@@ -154,7 +154,7 @@ def add_remove_favourite(request):
                 status=400)
 
 
-class Favourites(ListView):
+class FavouritesList(ListView):
     model = Recipe
     template_name = "recipe_book/favourites.html"
     paginate_by = 8

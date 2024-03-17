@@ -3,12 +3,97 @@
 
 {% block content %}
 
-This is the favourites page!
-{% if object_list %}
-{% for recipe in object_list %}
-<p>{{ recipe.title }}</p>
-{% endfor %}
-
-{% endif%}
+<section class="container-fluid bg-brand-gray py-4">
+    <div class="container-xl">
+        <div class="row my-2">
+            {% if user.is_authenticated %}
+            <h2>Your favourites:</h2>
+            {% else %}
+            <h2>You're not logged in!</h2>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        {% if object_list %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            {% for recipe in object_list %}
+            <div class="col">
+                <div class="card h-100 mx-auto" style="position: relative;">
+                    {% if "placeholder" in recipe.feature_image.url %}
+                    <img class="card-img-top" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
+                    {% else %}
+                    <img class="card-img-top" src="{{ recipe.feature_image.url }}" alt="{{ recipe.alt_text }}">
+                    {% endif %}
+                    <div class="card-heart-icon d-flex align-items-center text-center m-2">
+                        <p class="mb-0 me-1"></p>
+                        <button class="icon-button me-2" data-object-index="{{ forloop.counter0 }}">
+                            <i class="fa fa-solid fa-heart m-1 fs-rem-180"></i>
+                        </button>
+                    </div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="rating">X X X X X (123)</div>
+                        <div class="category fs-rem-120">
+                            {% if recipe.category == 1 %}
+                            <i class="fa-solid fa-drumstick-bite" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "chicken".</span>
+                            {% elif recipe.category == 2 %}
+                            <i class="fa-solid fa-bacon" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "pork".</span>
+                            {% elif recipe.category == 3 %}
+                            <i class="fa-solid fa-cow" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "beef".</span>
+                            {% elif recipe.category == 4 %}
+                            <i class="fa-solid fa-fish" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "fish".</span>
+                            {% elif recipe.category == 5 %}
+                            <i class="fa-brands fa-pagelines" aria-hidden="true"></i>
+                            <span class="sr-only">Recipe category is "fish".</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a class="brand-dark card-link" href="{% url 'recipe_detail' recipe.slug %}">
+                            <h3 class="card-title truncate-two-lines">{{ recipe.title }}</h3>
+                            <p class="card-text truncate-three-lines">{{ recipe.teaser }}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="height-300-400 d-flex flex-grow-1 justify-content-center align-items-center">
+            <div class="text-center">
+                <img class="img-sq-150-200 mx-auto" src="{% static 'images/logo-round-brown.webp' %}"
+                    alt="Basil and Thyme logo">
+                <p class="mt-4 brand-brown">You should add some favourites!</p>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <p>Content to display for non logged in users</p>
+        {% endif %}
+        {% if is_paginated %}
+        <nav class="mt-4" aria-label="Navigation for recipes split over multiple pages.">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link"><span
+                            aria-hidden="true">&laquo;</span> PREV</a>
+                </li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == page %}active-page{% endif %}">
+                    <a href="?page={{ page }}" class="page-link">{{ page }}</a>
+                </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT <span
+                            aria-hidden="true">&raquo;</span></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
 
 {% endblock %}
