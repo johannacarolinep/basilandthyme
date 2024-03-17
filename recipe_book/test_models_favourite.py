@@ -121,3 +121,28 @@ class TestFavouriteModel(TestCase):
         recipe_ids = list(Favourite.get_user_favourite_ids(self.user))
         # assert they are the ids of the two test recipes
         self.assertEqual(recipe_ids, [self.recipe.id, recipe2.id])
+
+    def test_create_favourite(self):
+        """
+        Test if method returns true when favourite is created and false when
+        favourite is not created due to either being a duplicate or recipe id
+        does not exist.
+        """
+        # Test if the method returns True when a favorite is created
+        user_id = self.user.id
+        recipe_id = self.recipe.id
+        self.assertTrue(
+            Favourite.create_favourite(user_id, recipe_id),
+            msg="Should have created favourite and returned true")
+
+        # Test if the method returns False when favorite would be duplicate
+        self.assertFalse(
+            Favourite.create_favourite(user_id, recipe_id),
+            msg="Should have returned false since favourite already exists")
+
+        # Test if method returns False when recipe ID does not exist
+        recipe_id = 999
+        with self.assertRaises(
+            Recipe.DoesNotExist,
+                msg="Error not raised when recipe does not exist"):
+            Favourite.create_favourite(user_id, recipe_id)
