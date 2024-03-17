@@ -211,14 +211,26 @@ body {
     text-decoration: underline;
 }
 
-.card-heart-icon,
-.card-heart-icon button {
+.card-heart-icon {
     position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.card-heart-icon p {
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1.3px #4a3c50;
+}
+
+.card-heart-icon button {
     top: 0;
     right: 0;
     color: #ffffff;
     -webkit-text-stroke: 1.3px #4a3c50;
     /* Outline color and thickness for WebKit browsers */
+    padding: 0;
 }
 
 /* Recipe cards pagination */

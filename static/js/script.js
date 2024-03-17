@@ -46,7 +46,6 @@ function favouritingBtnListener(event, eventRecipeId) {
     // Retrieve the CSRF token from meta tag in HTML head
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const button = event.currentTarget;
-    let favouriteParagraph = document.getElementById('favourite-msg');
     // Create an object to send the data
     const data = {
         recipeId: eventRecipeId, // recipeId passed in script tag fr template
@@ -69,14 +68,12 @@ function favouritingBtnListener(event, eventRecipeId) {
             if (data.message === 'Favourite removed') {
                 // button.innerHTML = '<i class="fa-regular fa-heart mx-1 fs-rem-250 brand-green"></i>'
                 button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
-                if (favouriteParagraph) {
-                    favouriteParagraph.innerText = "Removed!";
-                }
+                button.parentNode.querySelector('p').innerText = "Removed";
+                // favouriteParagraph.innerText = "Removed!";
             } else if (data.message === 'Favourite created') {
                 button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
-                if (favouriteParagraph) {
-                    favouriteParagraph.innerText = "Saved!";
-                }
+                button.parentNode.querySelector('p').innerText = "Saved!";
+
             }
         })
 }
