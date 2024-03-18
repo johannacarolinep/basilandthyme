@@ -214,6 +214,15 @@ Points completed: 18
 
 Velocity: 17
 
+**Actions**:
+- Moved 3 User Stories back to the backlog
+- Reprioritised backlog
+- Re-evaluated points for some backlog items
+
+#### Sprint 4
+
+![Sprint 4 milestone](documentation/sprint4.png)
+
 
 
 <a id="tools-and-technologies"></a>
