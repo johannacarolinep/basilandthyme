@@ -205,6 +205,14 @@ Velocity: 16.5
 #### Sprint 3
 ![Sprint 3 milestone](documentation/sprint3.png)
 
+##### Sprint 3 wrap-up
+
+Project board at end of sprint 3:
+![End of sprint 3 project board](documentation/project-board-spr-3.png)
+
+Points completed: 18
+
+Velocity: 17
 
 
 
