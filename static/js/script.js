@@ -91,23 +91,42 @@ function favouritingBtnListener(event, eventRecipeId) {
                 }
             })
     } else {
-        console.log("User not logged in");
+        // User is not logged in
         const modal = document.getElementById("sign-up-modal");
-        modal.classList.add('show');
-        modal.style.display = "block";
-        modal.setAttribute('aria-hidden', 'false');
-        modal.setAttribute('aria-modal', 'true');
-
         const closeModalBtn = document.getElementById("close-modal-btn");
-        closeModalBtn.addEventListener('click', function () {
-            modal.style.display = "none";
-            modal.classList.remove('show');
-            modal.setAttribute('aria-hidden', 'true');
-            modal.removeAttribute('aria-modal');
-            button.focus();
-        })
-        trapFocusInModal(modal);
+        openModal(modal);
+        closeModalBtn.addEventListener('click', () => closeModal(modal, button));
     }
+}
+
+/**
+ * Opens a modal by applying the correct classes/styles. Sets aria attributes
+ * to reflect the modal is open. Calls function to trap the tab-focus inside modal.
+ * 
+ * @param {HTMLElement} modal - The modal to be opened.
+ */
+function openModal(modal) {
+    modal.classList.add('show');
+    modal.style.display = "block";
+    modal.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('aria-modal', 'true');
+    trapFocusInModal(modal);
+}
+
+/**
+ * Closes a modal by adjusting css styles/classes. Adjusts aria to reflect modal
+ * is closed. Sets the focus on the element passed as parameter lastFocusElement
+ * 
+ * @param {HTMLElement} modal - The modal to be closed.
+ * @param {HTMLElement} lastFocusElement - The element to receive focus after
+ * closing the modal.
+ */
+function closeModal(modal, lastFocusElement) {
+    modal.style.display = "none";
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+    lastFocusElement.focus();
 }
 
 // Function to trap focus within the modal
