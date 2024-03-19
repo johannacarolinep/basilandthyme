@@ -46,45 +46,88 @@ function favouritingBtnListener(event, eventRecipeId) {
     // Retrieve the CSRF token from meta tag in HTML head
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const button = event.currentTarget;
-    // Create an object to send the data
-    const data = {
-        recipeId: eventRecipeId, // recipeId passed in script tag fr template
-        userId: userId // userId passed in script tag fr template
-    };
 
-    // Send POST request to the server
-    fetch('/add-remove-favourite/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;',
-                'X-CSRFToken': csrfToken
-            },
-            body: JSON.stringify(data)
-        })
-        // Once data received, convert it to json
-        .then(response => response.json())
-        // Using the json response to make appropriate changes to frontend (WIP)
-        .then(data => {
-            if (data.message === 'Favourite removed') {
-                if (window.location.pathname === "/favourites/") {
-                    // code for when favourite removed from favourites page
-                    const card = button.closest('.card');
-                    const paragraph = card.querySelector('p');
-                    const cardChildren = card.querySelectorAll('*');
-                    card.classList.add('unfavourited-card');
-                    paragraph.className = paragraph.className.replace('d-none', 'unfavourited-p');
-                    // Apply aria-hidden to each child element of card
-                    cardChildren.forEach(child => {
-                        child.setAttribute('aria-hidden', 'true');
-                    });
-                    card.setAttribute('aria-label', 'Removed recipe');
-                } else {
-                    button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
-                    button.parentNode.querySelector('p').innerText = "Removed";
+    console.log("User ID:", userId);
+    if (userId !== "None") {
+        // Create an object to send the data
+        const data = {
+            recipeId: eventRecipeId, // recipeId passed in script tag fr template
+            userId: userId // userId passed in script tag fr template
+        };
+
+        // Send POST request to the server
+        fetch('/add-remove-favourite/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify(data)
+            })
+            // Once data received, convert it to json
+            .then(response => response.json())
+            // Using the json response to make appropriate changes to frontend (WIP)
+            .then(data => {
+                if (data.message === 'Favourite removed') {
+                    if (window.location.pathname === "/favourites/") {
+                        // code for when favourite removed from favourites page
+                        const card = button.closest('.card');
+                        const paragraph = card.querySelector('p');
+                        const cardChildren = card.querySelectorAll('*');
+                        card.classList.add('unfavourited-card');
+                        paragraph.className = paragraph.className.replace('d-none', 'unfavourited-p');
+                        // Apply aria-hidden to each child element of card
+                        cardChildren.forEach(child => {
+                            child.setAttribute('aria-hidden', 'true');
+                        });
+                        card.setAttribute('aria-label', 'Removed recipe');
+                    } else {
+                        button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
+                        button.parentNode.querySelector('p').innerText = "Removed";
+                    }
+                } else if (data.message === 'Favourite created') {
+                    button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
+                    button.parentNode.querySelector('p').innerText = "Saved!";
                 }
-            } else if (data.message === 'Favourite created') {
-                button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
-                button.parentNode.querySelector('p').innerText = "Saved!";
-            }
+            })
+    } else {
+        console.log("User not logged in");
+        const modal = document.getElementById("sign-up-modal");
+        modal.classList.add('show');
+        modal.style.display = "block";
+        modal.setAttribute('aria-hidden', 'false');
+        modal.setAttribute('aria-modal', 'true');
+
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        closeModalBtn.addEventListener('click', function () {
+            modal.style.display = "none";
+            modal.classList.remove('show');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.removeAttribute('aria-modal');
+            button.focus();
         })
+        trapFocusInModal(modal);
+    }
+}
+
+// Function to trap focus within the modal
+function trapFocusInModal(modal) {
+    const focusableElements = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    const firstFocusableElement = focusableElements[0];
+    const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+    modal.addEventListener('keydown', function (event) {
+        const isTabPressed = event.key === 'Tab' || event.keyCode === 9;
+
+        if (isTabPressed) {
+            console.log("Tab!");
+            if (document.activeElement === lastFocusableElement) {
+                firstFocusableElement.focus(); // Jump back to the first element
+                event.preventDefault();
+            }
+        }
+    });
+
+    // When the modal is open, move focus to the first focusable element
+    firstFocusableElement.focus();
 }

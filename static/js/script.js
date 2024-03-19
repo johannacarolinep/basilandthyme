@@ -95,10 +95,39 @@ function favouritingBtnListener(event, eventRecipeId) {
         const modal = document.getElementById("sign-up-modal");
         modal.classList.add('show');
         modal.style.display = "block";
+        modal.setAttribute('aria-hidden', 'false');
+        modal.setAttribute('aria-modal', 'true');
+
         const closeModalBtn = document.getElementById("close-modal-btn");
         closeModalBtn.addEventListener('click', function () {
             modal.style.display = "none";
             modal.classList.remove('show');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.removeAttribute('aria-modal');
+            button.focus();
         })
+        trapFocusInModal(modal);
     }
+}
+
+// Function to trap focus within the modal
+function trapFocusInModal(modal) {
+    const focusableElements = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    const firstFocusableElement = focusableElements[0];
+    const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+    modal.addEventListener('keydown', function (event) {
+        const isTabPressed = event.key === 'Tab' || event.keyCode === 9;
+
+        if (isTabPressed) {
+            console.log("Tab!");
+            if (document.activeElement === lastFocusableElement) {
+                firstFocusableElement.focus(); // Jump back to the first element
+                event.preventDefault();
+            }
+        }
+    });
+
+    // When the modal is open, move focus to the first focusable element
+    firstFocusableElement.focus();
 }
