@@ -36,68 +36,99 @@ function addCategoryQuery(event) {
 
 /**
  * Handles the click event on favourite/unfavourite buttons.
- * Retrieves the CSRF token, then sends a POST request to the server with the
- * CSRF token, recipe id, and user id.
+ * If the user is logged in, sends a POST request to add/remove favourite
+ * and updates the frontend based on the response.
+ * If the user is not logged in, opens a modal to sign up or sign in.
  *
  * @param {Event} event - The click event triggering the function.
  * @returns {void}
  */
-function favouritingBtnListener(event, eventRecipeId) {
-    // Retrieve the CSRF token from meta tag in HTML head
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const button = event.currentTarget;
+async function favouritingBtnListener(event, eventRecipeId) {
 
-    console.log("User ID:", userId);
+    const heartButton = event.currentTarget;
+
     if (userId !== "None") {
-        // Create an object to send the data
+        // User is logged in, prepare POST request
+        const postAddress = '/add-remove-favourite/';
         const data = {
             recipeId: eventRecipeId, // recipeId passed in script tag fr template
             userId: userId // userId passed in script tag fr template
         };
 
-        // Send POST request to the server
-        fetch('/add-remove-favourite/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;',
-                    'X-CSRFToken': csrfToken
-                },
-                body: JSON.stringify(data)
-            })
-            // Once data received, convert it to json
-            .then(response => response.json())
-            // Using the json response to make appropriate changes to frontend (WIP)
-            .then(data => {
-                if (data.message === 'Favourite removed') {
-                    if (window.location.pathname === "/favourites/") {
-                        // code for when favourite removed from favourites page
-                        const card = button.closest('.card');
-                        const paragraph = card.querySelector('p');
-                        const cardChildren = card.querySelectorAll('*');
-                        card.classList.add('unfavourited-card');
-                        paragraph.className = paragraph.className.replace('d-none', 'unfavourited-p');
-                        // Apply aria-hidden to each child element of card
-                        cardChildren.forEach(child => {
-                            child.setAttribute('aria-hidden', 'true');
-                        });
-                        card.setAttribute('aria-label', 'Removed recipe');
-                    } else {
-                        button.querySelector('i').className = button.querySelector('i').className.replace('fa-solid', 'fa-regular');
-                        button.parentNode.querySelector('p').innerText = "Removed";
-                    }
-                } else if (data.message === 'Favourite created') {
-                    button.querySelector('i').className = button.querySelector('i').className.replace('fa-regular', 'fa-solid');
-                    button.parentNode.querySelector('p').innerText = "Saved!";
-                }
-            })
+        // Send POST request and await response
+        const postResponse = await sendPostRequest(postAddress, data);
+
+        // If favourite was removed
+        if (postResponse.message === 'Favourite removed') {
+            if (window.location.pathname === "/favourites/") {
+                removeFavouriteOnFavouritesPage(heartButton);
+            } else {
+                heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-solid', 'fa-regular');
+                heartButton.parentNode.querySelector('p').innerText = "Removed";
+            }
+            // If favourite was created
+        } else if (postResponse.message === 'Favourite created') {
+            heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
+            heartButton.parentNode.querySelector('p').innerText = "Saved!";
+        }
     } else {
-        // User is not logged in
+        // User is not logged in, open "Sign in" modal
         const modal = document.getElementById("sign-up-modal");
         const closeModalBtn = document.getElementById("close-modal-btn");
         openModal(modal);
-        closeModalBtn.addEventListener('click', () => closeModal(modal, button));
+        closeModalBtn.addEventListener('click', () => closeModal(modal, heartButton));
     }
 }
+
+
+/**
+ * Sends a POST request to the specified URL (in the parameter) with the
+ * provided data, including the CSRF token.
+ *
+ * @param {string} postAddress - The URL to send the POST request to.
+ * @param {object} data - The data to include in the request body.
+ * @returns {object} data - the response data from the server.
+ */
+function sendPostRequest(postAddress, data) {
+    // Retrieve the CSRF token from meta tag in HTML head
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // Send POST request to the server
+    return fetch(postAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data)
+        })
+        // Once response received, convert it to json
+        .then(response => response.json())
+        .then(data => {
+            return data // Return the response data
+        })
+}
+
+/**
+ * Styles the recipe card which the button belongs to, and updates the aria
+ * attributes, to reflect the recipe has been removed from the users favourites.
+ *
+ * @param {HTMLElement} button - The button element clicked to remove the recipe from favorites.
+ */
+function removeFavouriteOnFavouritesPage(button) {
+    // Get the card which the button belongs to
+    const card = button.closest('.card');
+    const paragraph = card.querySelector('p');
+    const cardChildren = card.querySelectorAll('*');
+    card.classList.add('unfavourited-card');
+    paragraph.className = paragraph.className.replace('d-none', 'unfavourited-p');
+    // Apply aria-hidden to each child element of card
+    cardChildren.forEach(child => {
+        child.setAttribute('aria-hidden', 'true');
+    });
+    card.setAttribute('aria-label', 'Removed recipe');
+}
+
 
 /**
  * Opens a modal by applying the correct classes/styles. Sets aria attributes
@@ -129,19 +160,24 @@ function closeModal(modal, lastFocusElement) {
     lastFocusElement.focus();
 }
 
-// Function to trap focus within the modal
+/**
+ * Traps focus within the modal to prevent it from moving outside.
+ * 
+ * @param {HTMLElement} modal - The modal element to trap focus within.
+ */
 function trapFocusInModal(modal) {
+    // Get the focusable elements within the modal
     const focusableElements = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
     const firstFocusableElement = focusableElements[0];
     const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
+    // Add event listener for keydown events in the modal
     modal.addEventListener('keydown', function (event) {
-        const isTabPressed = event.key === 'Tab' || event.keyCode === 9;
-
+        const isTabPressed = event.key === 'Tab';
         if (isTabPressed) {
-            console.log("Tab!");
+            // If focus is on the last focusable element, move it to the first
             if (document.activeElement === lastFocusableElement) {
-                firstFocusableElement.focus(); // Jump back to the first element
+                firstFocusableElement.focus();
                 event.preventDefault();
             }
         }
