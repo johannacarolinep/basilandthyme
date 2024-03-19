@@ -1,0 +1,28 @@
+<div class="modal fade bg-modal" id="sign-up-modal" role="dialog" tabindex="-1" aria-labelledby="sign-up-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center position-relative p-4">
+                <h1 class="modal-title fs-6 fw-normal" id="sign-up-modal-label">
+                    You need to be signed in to favourite or rate recipes
+                </h1>
+                <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" id="close-modal-btn"
+                    aria-label="Close"></button>
+                <p class="fs-5 fw-bold mt-2">
+                    As a signed in user your can save recipes to your favourites, rate recipes, and post comments.
+                </p>
+                <p>Sign in or sign up for a <span class="fw-bold">free</span> account!</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn fave-signin-btn d-inline-block me-2" href="{% url 'account_login' %}"
+                        aria-label="Go to the sign in page to log in">
+                        Sign In
+                    </a>
+                    <a class="btn fave-signup-btn d-inline-block ms-2" href="{% url 'account_signup' %}"
+                        aria-label="Go to the sign up page to register">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

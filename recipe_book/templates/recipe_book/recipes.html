@@ -96,9 +96,11 @@
         {% endif %}
     </div>
 </section>
-
-
 {% endblock %}
+
+{% block modal %}
+{% include 'signupmodal.html' %}
+{% endblock modal %}
 
 {% block customscript %}
 <script type="text/javascript">
