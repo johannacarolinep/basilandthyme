@@ -86,8 +86,16 @@
                         users.</p>
                     {% endif %}
                 </div>
-                <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body">
+                <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
                     <p class="text-break fst-italic fs-small">{{ comment.body }}</p>
+                    <div>
+                        <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">
+                            Edit
+                        </button>
+                        <button class="py-1 px-2 comment-delete  mx-1" aria-label="Edit comment">
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </div>
             {% endif %}

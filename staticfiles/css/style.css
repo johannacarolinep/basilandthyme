@@ -352,6 +352,38 @@ body {
     color: #a90606;
 }
 
+.comment-edit,
+.comment-delete {
+    box-shadow: 6px 6px 12px #f1f2f1,
+        -6px -6px 12px #ffffff;
+    border-radius: 2em;
+    background-color: white;
+}
+
+.comment-delete {
+    border: 2px solid #a90606;
+
+}
+
+.comment-delete:hover,
+.comment-delete:active {
+    background-color: #a90606;
+    color: white;
+    box-shadow: 6px 6px 12px #d3d4d3,
+        -6px -6px 12px #ffffff;
+}
+
+.comment-edit {
+    border: 2px solid #FFC633;
+}
+
+.comment-edit:hover,
+.comment-edit:active {
+    background-color: #FFC633;
+    box-shadow: 6px 6px 12px #d3d4d3,
+        -6px -6px 12px #ffffff;
+}
+
 
 
 /* -------------------------------- Footer */
