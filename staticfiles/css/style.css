@@ -341,6 +341,17 @@ body {
     -webkit-text-stroke: 1px #065f1b;
 }
 
+/* --------------------------------------- Comments */
+
+
+.comment-inactive p {
+    color: #9b969e;
+}
+
+.comment-inactive .small {
+    color: #a90606;
+}
+
 
 
 /* -------------------------------- Footer */
