@@ -61,12 +61,30 @@
         </div>
         <div class="bg-brand-green h-line mx-auto mt-3"> </div>
         <div class="bg-brand-green h-line mx-auto mt-1 mb-3"> </div>
-        <div class="row">
-            <p>Number of comments: {{ no_of_comments }}</p>
+        <section>
+            {% if no_of_comments is not 0 %}
+            <h3 class="fs-rem-130 fs-rem-lg-160">{{ no_of_comments }} comment{% if no_of_comments > 1 %}s{% endif %}
+            </h3>
+            {% else %}
+            <h3 class="fs-rem-130 fs-rem-lg-160">This recipe has recived no comments yet.</h3>
+            {% endif %}
+
             {% for comment in comments %}
-            <p>{{ comment.body }}, written by {{ comment.author }} on {{ comment.created_on }}</p>
+            <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
+            <div class="row mx-auto my-2 py-3 bg-brand-gray">
+                <div class="col-12 col-md-3">
+                    <p class="mb-0">
+                        On {{ comment.created_on|date:"Y-m-d" }}
+                        <span class="fw-bold">{{ comment.author }}</span> said:
+                    </p>
+                    <div class="bg-brand-green h-line d-md-none"> </div>
+                </div>
+                <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body">
+                    <p class="text-break fst-italic fs-small">{{ comment.body }}</p>
+                </div>
+            </div>
             {% endfor %}
-        </div>
+        </section>
     </div>
 </div>
 

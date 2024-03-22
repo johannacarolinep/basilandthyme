@@ -333,19 +333,15 @@ body {
 
 .icon-button-stroke {
     color: #008B20;
-    -webkit-text-stroke: 1.5px #008B20;
 }
 
 .icon-button-stroke:hover,
-.icon-button-stroke:focus {
-    color: #008B20;
-    -webkit-text-stroke: 1.5px #076c1f;
-}
-
 .icon-button-stroke:active {
     color: #076c1f;
-    -webkit-text-stroke: 1.5px #076c1f;
+    -webkit-text-stroke: 1px #065f1b;
 }
+
+
 
 /* -------------------------------- Footer */
 footer {
@@ -358,6 +354,12 @@ footer {
     /* --------------------------------- Recipe detail page */
     .recipe-instructions {
         border-left: 2.5px solid #008B20;
+    }
+
+    /* ---------------------------------- Comments */
+
+    .comment-body {
+        border-left: 2px solid #008B20;
     }
 }
 
