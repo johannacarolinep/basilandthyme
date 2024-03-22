@@ -1,10 +1,11 @@
 import json
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Q
 from .models import Recipe, Favourite
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -118,6 +119,8 @@ class RecipeDetailView(DetailView):
         user = self.request.user
         comments = recipe.comments.all().order_by("-created_on")
         no_of_comments = comments.filter(approved=True).count()
+        comment_form = CommentForm()
+        context['comment_form'] = comment_form
         context['comments'] = comments
         context['no_of_comments'] = no_of_comments
         context['is_favourite'] = Favourite.is_recipe_favourite(user, recipe)

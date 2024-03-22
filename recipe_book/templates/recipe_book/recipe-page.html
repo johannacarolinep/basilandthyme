@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block token %}
 <meta name="csrf-token" content="{{ csrf_token }}">
@@ -68,6 +69,11 @@
             {% else %}
             <h3 class="fs-rem-130 fs-rem-lg-160">This recipe has recived no comments yet.</h3>
             {% endif %}
+
+            <form id="comments-input" method="post">
+                {{ comment_form | crispy }}
+                <button id="comment-submit-btn" type="submit">Send</button>
+            </form>
 
             {% for comment in comments %}
             {% if comment.approved or comment.author == user %}
