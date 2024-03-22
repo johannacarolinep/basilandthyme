@@ -116,6 +116,10 @@ class RecipeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         recipe = self.get_object()
         user = self.request.user
+        comments = recipe.comments.all().order_by("-created_on")
+        no_of_comments = comments.filter(approved=True).count()
+        context['comments'] = comments
+        context['no_of_comments'] = no_of_comments
         context['is_favourite'] = Favourite.is_recipe_favourite(user, recipe)
         return context
 
