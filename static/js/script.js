@@ -11,7 +11,34 @@ function initializeScript() {
     if (favouritingButton) {
         favouritingButton.addEventListener('click', (event) => favouritingBtnListener(event, recipeId));
     }
+
+    const commentForm = document.getElementById("comments-input");
+    if (commentForm) {
+        commentForm.addEventListener("submit", (event) => submitCommentForm(event, commentForm));
+    }
 }
+
+function submitCommentForm(event, commentForm) {
+    event.preventDefault();
+
+    const formData = new FormData(commentForm);
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    // https://testdriven.io/blog/django-ajax-xhr/
+    fetch(commentForm.action, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        });
+
+};
 
 function addCategoryQuery(event) {
     const currentUrl = window.location.href;
