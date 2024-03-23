@@ -16,6 +16,37 @@ function initializeScript() {
     if (commentForm) {
         commentForm.addEventListener("submit", (event) => submitCommentForm(event, commentForm));
     }
+
+    const commentDeleteBtns = document.getElementsByClassName("comment-delete");
+    for (let btn of commentDeleteBtns) {
+        btn.addEventListener("click", confirmCommentDeletion);
+    }
+}
+
+function confirmCommentDeletion(event) {
+    const button = event.currentTarget;
+    console.log(button);
+    const commentId = button.getAttribute("data-comment-id");
+    const modal = document.getElementById("delete-modal");
+    const closeModalBtn1 = document.getElementById("close-delete-modal");
+    const closeModalBtn2 = document.getElementById("cancel-delete-btn");
+    const confirmDeleteBtn = document.getElementById("delete-comment-btn");
+
+    openModal(modal);
+    closeModalBtn1.addEventListener('click', () => closeModal(modal, button));
+    closeModalBtn2.addEventListener('click', () => closeModal(modal, button));
+
+    // pass through named function to remove event listener
+    function prepDeleteComment(event) {
+        deleteComment(event, commentId);
+        confirmDeleteBtn.removeEventListener('click', onDeleteComment);
+    }
+
+    confirmDeleteBtn.addEventListener('click', prepDeleteComment);
+}
+
+function deleteComment(event, commentId) {
+    console.log("Deleting " + commentId);
 }
 
 function submitCommentForm(event, commentForm) {

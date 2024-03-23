@@ -353,7 +353,7 @@ body {
 }
 
 .comment-edit,
-.comment-delete,
+.delete,
 .comment-delete-cancel {
     box-shadow: 6px 6px 12px #f1f2f1,
         -6px -6px 12px #ffffff;
@@ -361,13 +361,13 @@ body {
     background-color: white;
 }
 
-.comment-delete {
+.delete {
     border: 2px solid #a90606;
 
 }
 
-.comment-delete:hover,
-.comment-delete:active {
+.delete:hover,
+.delete:active {
     background-color: #a90606;
     color: white;
     box-shadow: 6px 6px 12px #d3d4d3,
