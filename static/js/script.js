@@ -14,8 +14,13 @@ function initializeScript() {
 
     const commentForm = document.getElementById("comments-input");
     if (commentForm) {
-        commentForm.addEventListener("submit", (event) => submitCommentForm(event, commentForm));
+        commentForm.addEventListener("submit", prepCommentForm);
     }
+
+    //function prepCommentForm(event) {
+    //submitCommentForm(event, commentForm);
+    // commentForm.removeEventListener('click', prepEditComment);
+    //() }
 
     const commentDeleteBtns = document.getElementsByClassName("comment-delete");
     for (let btn of commentDeleteBtns) {
@@ -28,6 +33,12 @@ function initializeScript() {
     }
 }
 
+function prepCommentForm(event) {
+    const commentForm = document.getElementById("comments-input");
+    submitCommentForm(event, commentForm);
+    // commentForm.removeEventListener('click', prepEditComment);
+}
+
 function startEditComment(event) {
     const editBtn = event.currentTarget;
     const commentId = editBtn.getAttribute("data-edit-comment-id");
@@ -35,9 +46,50 @@ function startEditComment(event) {
     const commentForm = document.getElementById("comments-input");
     const formTextArea = document.getElementById("id_body");
     const submitBtn = document.getElementById("comment-submit-btn");
+    commentForm.removeEventListener("submit", prepCommentForm);
 
+    commentForm.addEventListener("submit", prepEditForm);
     formTextArea.value = commentBody;
     submitBtn.innerText = "Update";
+    commentForm.setAttribute("data-comment-id", commentId);
+}
+
+function prepEditForm(event) {
+    const commentForm = document.getElementById("comments-input");
+    editCommentForm(event, commentForm);
+}
+
+function editCommentForm(event, commentForm) {
+    event.preventDefault();
+    const commentId = commentForm.getAttribute("data-comment-id");
+    const formData = new FormData(commentForm);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    data['commentId'] = commentId;
+
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // https://testdriven.io/blog/django-ajax-xhr/
+    fetch(commentForm.action, {
+            method: "PUT",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log("Success!")
+            } else {
+                // handle not successful
+            }
+        });
 
 }
 
@@ -145,7 +197,7 @@ function buildComment(data) {
             <p class="text-break fst-italic fs-small">${data.body}</p>
             <div>
                 <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">Edit</button>
-                <button class="py-1 px-2 comment-delete mx-1" aria-label="Edit comment">Delete</button>
+                <button class="py-1 px-2 comment-delete delete mx-1" aria-label="Edit comment">Delete</button>
             </div>
         </div>
     </div>

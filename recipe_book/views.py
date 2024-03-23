@@ -161,6 +161,23 @@ class RecipeDetailView(DetailView):
         else:
             return JsonResponse({'success': False, 'data': "not allowed"})
 
+    def put(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        comment_id = data["commentId"]
+        recipe = self.get_object()
+        comment = recipe.comments.filter(id=comment_id).first()
+
+        if comment is None:
+            return JsonResponse(
+                {'success': False, 'error': 'Comment not found'})
+
+        if comment.author == request.user and data["body"] != "":
+            comment.body = data["body"]
+            comment.save()
+            return JsonResponse({'success': True, 'data': "Comment updated"})
+
+        return JsonResponse({'success': False, 'data': "Comment not updated"})
+
 
 @require_POST
 def add_remove_favourite(request):
