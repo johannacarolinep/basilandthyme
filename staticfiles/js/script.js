@@ -25,7 +25,7 @@ function initializeScript() {
 
 function confirmCommentDeletion(event) {
     const button = event.currentTarget;
-    const commentId = button.getAttribute("data-comment-id");
+    const commentId = button.getAttribute("data-delete-comment-id");
     const modal = document.getElementById("delete-modal");
     const closeModalBtn1 = document.getElementById("close-delete-modal");
     const closeModalBtn2 = document.getElementById("cancel-delete-btn");
@@ -63,12 +63,12 @@ function deleteComment(event, commentId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const deleteButton = document.querySelector(`[data-comment-id="${commentId}"]`);
+                const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
                 const comment = deleteButton.closest(".comment-container");
                 comment.innerHTML = '<p class="mx-auto mb-0 text-center brand-green">Comment was successfully deleted.</p>';
             } else {
                 // handle not successful
-                const deleteButton = document.querySelector(`[data-comment-id="${commentId}"]`);
+                const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
                 const comment = deleteButton.closest(".comment-container");
                 comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
             }
