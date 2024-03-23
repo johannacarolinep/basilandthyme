@@ -353,7 +353,8 @@ body {
 }
 
 .comment-edit,
-.comment-delete {
+.comment-delete,
+.comment-delete-cancel {
     box-shadow: 6px 6px 12px #f1f2f1,
         -6px -6px 12px #ffffff;
     border-radius: 2em;
@@ -380,6 +381,18 @@ body {
 .comment-edit:hover,
 .comment-edit:active {
     background-color: #FFC633;
+    box-shadow: 6px 6px 12px #d3d4d3,
+        -6px -6px 12px #ffffff;
+}
+
+.comment-delete-cancel {
+    border: 2px solid #9e9696;
+
+}
+
+.comment-delete-cancel:hover,
+.comment-delete-cancel:active {
+    background-color: #9e9696;
     box-shadow: 6px 6px 12px #d3d4d3,
         -6px -6px 12px #ffffff;
 }

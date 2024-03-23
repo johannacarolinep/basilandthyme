@@ -144,9 +144,8 @@ class RecipeDetailView(DetailView):
                 return JsonResponse({'success': True, 'data': response_data})
 
             # If the form is invalid
-            errors = comment_form.errors.as_json()
             return JsonResponse(
-                {'success': False, 'errors': errors}, status=400)
+                {'success': False})
 
 
 @require_POST
