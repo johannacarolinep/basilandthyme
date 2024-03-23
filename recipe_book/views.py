@@ -135,10 +135,18 @@ class RecipeDetailView(DetailView):
                 comment.author = request.user
                 comment.recipe = self.get_object()
                 comment.save()
+                print("Boojah!", comment)
+                response_data = {
+                    "body": comment.body,
+                    "comment_id": comment.id,
+                }
 
-                return HttpResponseRedirect(request.path)
+                return JsonResponse({'success': True, 'data': response_data})
 
-            return self.get(request, *args, **kwargs)
+            # If the form is invalid
+            errors = comment_form.errors.as_json()
+            return JsonResponse(
+                {'success': False, 'errors': errors}, status=400)
 
 
 @require_POST
