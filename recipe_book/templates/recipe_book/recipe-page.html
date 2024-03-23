@@ -72,6 +72,7 @@
 
             <form id="comments-input" method="post">
                 {{ comment_form | crispy }}
+                {% csrf_token %}
                 <button id="comment-submit-btn" type="submit">Send</button>
             </form>
 

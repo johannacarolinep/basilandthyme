@@ -8,4 +8,5 @@ urlpatterns = [
     path('recipes/<slug:slug>/', views.RecipeDetailView.as_view(), name='recipe_detail'),
     path('favourites/', views.FavouritesList.as_view(), name='favourites_page'),
     path('add-remove-favourite/', views.add_remove_favourite, name='add_remove_favourite'),
+    # path('recipes/<slug:slug>/', views.receive_comment, name="post_comment"),
 ]

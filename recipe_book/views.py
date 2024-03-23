@@ -2,7 +2,7 @@ import json
 from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q
 from .models import Recipe, Favourite
 from .forms import CommentForm
@@ -125,6 +125,20 @@ class RecipeDetailView(DetailView):
         context['no_of_comments'] = no_of_comments
         context['is_favourite'] = Favourite.is_recipe_favourite(user, recipe)
         return context
+
+    def post(self, request, *args, **kwargs):
+        comment_form = CommentForm(request.POST)
+
+        if request.user.is_authenticated:
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.author = request.user
+                comment.recipe = self.get_object()
+                comment.save()
+
+                return HttpResponseRedirect(request.path)
+
+            return self.get(request, *args, **kwargs)
 
 
 @require_POST
