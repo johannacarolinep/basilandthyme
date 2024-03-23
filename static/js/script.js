@@ -39,7 +39,7 @@ function confirmCommentDeletion(event) {
     // pass through named function to remove event listener
     function prepDeleteComment(event) {
         deleteComment(event, commentId);
-        confirmDeleteBtn.removeEventListener('click', onDeleteComment);
+        confirmDeleteBtn.removeEventListener('click', prepDeleteComment);
     }
 
     confirmDeleteBtn.addEventListener('click', prepDeleteComment);
@@ -47,6 +47,30 @@ function confirmCommentDeletion(event) {
 
 function deleteComment(event, commentId) {
     console.log("Deleting " + commentId);
+    const commentForm = document.getElementById("comments-input");
+
+    const url = commentForm.action.slice(0, -1) + "?commentId=" + commentId;
+
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    console.log(csrfToken);
+    // https://testdriven.io/blog/django-ajax-xhr/
+    fetch(url, {
+            method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+            },
+            body: commentId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log(data);
+            } else {
+                // handle not successful
+            }
+        });
 }
 
 function submitCommentForm(event, commentForm) {

@@ -147,6 +147,20 @@ class RecipeDetailView(DetailView):
             return JsonResponse(
                 {'success': False})
 
+    def delete(self, request, *args, **kwargs):
+        # get commentId from request url
+        comment_id = request.GET.get("commentId")
+        recipe = self.get_object()
+        comment = recipe.comments.filter(id=comment_id).first()
+        if comment is None:
+            return JsonResponse({'success': False, 'error': 'Comment not found or not authorized to delete'})
+
+        if comment.author == request.user:
+            comment.delete()
+            return JsonResponse({'success': True, 'data': "comment deleted"})
+        else:
+            return JsonResponse({'success': False, 'data': "not allowed"})
+
 
 @require_POST
 def add_remove_favourite(request):
