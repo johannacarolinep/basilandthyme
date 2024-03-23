@@ -78,9 +78,10 @@
             <div id="comments-list">
                 {% for comment in comments %}
                 {% if comment.approved or comment.author == user %}
+
                 <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
                 <div
-                    class="row mx-auto my-2 py-3 bg-brand-gray {% if not comment.approved %}comment-inactive{% endif %}">
+                    class="row comment-container mx-auto my-2 py-3 bg-brand-gray {% if not comment.approved %}comment-inactive{% endif %}">
                     <div class="col-12 col-md-3">
                         <p class="mb-0">
                             On {{ comment.created_on|date:"Y-m-d" }}

@@ -25,7 +25,6 @@ function initializeScript() {
 
 function confirmCommentDeletion(event) {
     const button = event.currentTarget;
-    console.log(button);
     const commentId = button.getAttribute("data-comment-id");
     const modal = document.getElementById("delete-modal");
     const closeModalBtn1 = document.getElementById("close-delete-modal");
@@ -39,6 +38,7 @@ function confirmCommentDeletion(event) {
     // pass through named function to remove event listener
     function prepDeleteComment(event) {
         deleteComment(event, commentId);
+        closeModal(modal);
         confirmDeleteBtn.removeEventListener('click', prepDeleteComment);
     }
 
@@ -46,13 +46,10 @@ function confirmCommentDeletion(event) {
 }
 
 function deleteComment(event, commentId) {
-    console.log("Deleting " + commentId);
     const commentForm = document.getElementById("comments-input");
-
     const url = commentForm.action.slice(0, -1) + "?commentId=" + commentId;
-
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    console.log(csrfToken);
+
     // https://testdriven.io/blog/django-ajax-xhr/
     fetch(url, {
             method: "DELETE",
@@ -66,9 +63,14 @@ function deleteComment(event, commentId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log(data);
+                const deleteButton = document.querySelector(`[data-comment-id="${commentId}"]`);
+                const comment = deleteButton.closest(".comment-container");
+                comment.innerHTML = '<p class="mx-auto mb-0 text-center brand-green">Comment was successfully deleted.</p>';
             } else {
                 // handle not successful
+                const deleteButton = document.querySelector(`[data-comment-id="${commentId}"]`);
+                const comment = deleteButton.closest(".comment-container");
+                comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
             }
         });
 }
@@ -273,12 +275,14 @@ function openModal(modal) {
  * @param {HTMLElement} lastFocusElement - The element to receive focus after
  * closing the modal.
  */
-function closeModal(modal, lastFocusElement) {
+function closeModal(modal, lastFocusElement = undefined) {
     modal.style.display = "none";
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
-    lastFocusElement.focus();
+    if (lastFocusElement) {
+        lastFocusElement.focus();
+    }
 }
 
 /**

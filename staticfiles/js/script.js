@@ -11,7 +11,130 @@ function initializeScript() {
     if (favouritingButton) {
         favouritingButton.addEventListener('click', (event) => favouritingBtnListener(event, recipeId));
     }
+
+    const commentForm = document.getElementById("comments-input");
+    if (commentForm) {
+        commentForm.addEventListener("submit", (event) => submitCommentForm(event, commentForm));
+    }
+
+    const commentDeleteBtns = document.getElementsByClassName("comment-delete");
+    for (let btn of commentDeleteBtns) {
+        btn.addEventListener("click", confirmCommentDeletion);
+    }
 }
+
+function confirmCommentDeletion(event) {
+    const button = event.currentTarget;
+    const commentId = button.getAttribute("data-comment-id");
+    const modal = document.getElementById("delete-modal");
+    const closeModalBtn1 = document.getElementById("close-delete-modal");
+    const closeModalBtn2 = document.getElementById("cancel-delete-btn");
+    const confirmDeleteBtn = document.getElementById("delete-comment-btn");
+
+    openModal(modal);
+    closeModalBtn1.addEventListener('click', () => closeModal(modal, button));
+    closeModalBtn2.addEventListener('click', () => closeModal(modal, button));
+
+    // pass through named function to remove event listener
+    function prepDeleteComment(event) {
+        deleteComment(event, commentId);
+        closeModal(modal);
+        confirmDeleteBtn.removeEventListener('click', prepDeleteComment);
+    }
+
+    confirmDeleteBtn.addEventListener('click', prepDeleteComment);
+}
+
+function deleteComment(event, commentId) {
+    const commentForm = document.getElementById("comments-input");
+    const url = commentForm.action.slice(0, -1) + "?commentId=" + commentId;
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // https://testdriven.io/blog/django-ajax-xhr/
+    fetch(url, {
+            method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+            },
+            body: commentId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const deleteButton = document.querySelector(`[data-comment-id="${commentId}"]`);
+                const comment = deleteButton.closest(".comment-container");
+                comment.innerHTML = '<p class="mx-auto mb-0 text-center brand-green">Comment was successfully deleted.</p>';
+            } else {
+                // handle not successful
+                const deleteButton = document.querySelector(`[data-comment-id="${commentId}"]`);
+                const comment = deleteButton.closest(".comment-container");
+                comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
+            }
+        });
+}
+
+function submitCommentForm(event, commentForm) {
+    event.preventDefault();
+
+    const formData = new FormData(commentForm);
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    // https://testdriven.io/blog/django-ajax-xhr/
+    fetch(commentForm.action, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                buildComment(data.data);
+            } else {
+                // handle not successful
+            }
+        });
+
+};
+
+function buildComment(data) {
+    // Prepare date for html
+    const createdOn = new Date(data.date);
+    const year = createdOn.getFullYear();
+    const month = `0${createdOn.getMonth() + 1}`.slice(-2);
+    const day = `0${createdOn.getDate()}`.slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // Get comments parent container
+    const commentsList = document.querySelector("#comments-list");
+
+    // Create new comment in HTML
+    const newComment = `
+    <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
+    <div class="row mx-auto my-2 py-3 bg-brand-gray">
+        <div class="col-12 col-md-3">
+            <p class="mb-0">
+                On ${formattedDate} 
+                <span class="fw-bold">you</span> said:
+            </p>
+            <div class="bg-brand-green h-line d-md-none"></div> 
+        </div>
+        <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
+            <p class="text-break fst-italic fs-small">${data.body}</p>
+            <div>
+                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">Edit</button>
+                <button class="py-1 px-2 comment-delete mx-1" aria-label="Edit comment">Delete</button>
+            </div>
+        </div>
+    </div>
+`;
+    // Attach the new html to the parent container
+    commentsList.innerHTML = newComment + commentsList.innerHTML;
+};
 
 function addCategoryQuery(event) {
     const currentUrl = window.location.href;
@@ -152,12 +275,14 @@ function openModal(modal) {
  * @param {HTMLElement} lastFocusElement - The element to receive focus after
  * closing the modal.
  */
-function closeModal(modal, lastFocusElement) {
+function closeModal(modal, lastFocusElement = undefined) {
     modal.style.display = "none";
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
-    lastFocusElement.focus();
+    if (lastFocusElement) {
+        lastFocusElement.focus();
+    }
 }
 
 /**
