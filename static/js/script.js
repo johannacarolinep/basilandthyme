@@ -35,9 +35,48 @@ function submitCommentForm(event, commentForm) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if (data.success) {
+                buildComment(data.data);
+            } else {
+                // handle not successful
+            }
         });
 
+};
+
+function buildComment(data) {
+    // Prepare date for html
+    const createdOn = new Date(data.date);
+    const year = createdOn.getFullYear();
+    const month = `0${createdOn.getMonth() + 1}`.slice(-2);
+    const day = `0${createdOn.getDate()}`.slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // Get comments parent container
+    const commentsList = document.querySelector("#comments-list");
+
+    // Create new comment in HTML
+    const newComment = `
+    <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
+    <div class="row mx-auto my-2 py-3 bg-brand-gray">
+        <div class="col-12 col-md-3">
+            <p class="mb-0">
+                On ${formattedDate} 
+                <span class="fw-bold">you</span> said:
+            </p>
+            <div class="bg-brand-green h-line d-md-none"></div> 
+        </div>
+        <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
+            <p class="text-break fst-italic fs-small">${data.body}</p>
+            <div>
+                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">Edit</button>
+                <button class="py-1 px-2 comment-delete mx-1" aria-label="Edit comment">Delete</button>
+            </div>
+        </div>
+    </div>
+`;
+    // Attach the new html to the parent container
+    commentsList.innerHTML = newComment + commentsList.innerHTML;
 };
 
 function addCategoryQuery(event) {

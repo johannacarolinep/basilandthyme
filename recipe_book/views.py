@@ -135,10 +135,10 @@ class RecipeDetailView(DetailView):
                 comment.author = request.user
                 comment.recipe = self.get_object()
                 comment.save()
-                print("Boojah!", comment)
                 response_data = {
                     "body": comment.body,
                     "comment_id": comment.id,
+                    "date": comment.created_on,
                 }
 
                 return JsonResponse({'success': True, 'data': response_data})

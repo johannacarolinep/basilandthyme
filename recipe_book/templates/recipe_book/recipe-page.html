@@ -75,38 +75,40 @@
                 {% csrf_token %}
                 <button id="comment-submit-btn" type="submit">Send</button>
             </form>
-
-            {% for comment in comments %}
-            {% if comment.approved or comment.author == user %}
-            <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
-            <div class="row mx-auto my-2 py-3 bg-brand-gray {% if not comment.approved %}comment-inactive{% endif %}">
-                <div class="col-12 col-md-3">
-                    <p class="mb-0">
-                        On {{ comment.created_on|date:"Y-m-d" }}
-                        <span class="fw-bold">{% if comment.author == user %}you {% else %}{{ comment.author }}
-                            {% endif %}</span> said:
-                    </p>
-                    <div class="bg-brand-green h-line d-md-none"> </div>
-                    {% if not comment.approved %}
-                    <br>
-                    <p class="small">This comment has been <strong>disapproved</strong>. It is not visible to other
-                        users.</p>
-                    {% endif %}
-                </div>
-                <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
-                    <p class="text-break fst-italic fs-small">{{ comment.body }}</p>
-                    <div>
-                        <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">
-                            Edit
-                        </button>
-                        <button class="py-1 px-2 comment-delete  mx-1" aria-label="Edit comment">
-                            Delete
-                        </button>
+            <div id="comments-list">
+                {% for comment in comments %}
+                {% if comment.approved or comment.author == user %}
+                <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
+                <div
+                    class="row mx-auto my-2 py-3 bg-brand-gray {% if not comment.approved %}comment-inactive{% endif %}">
+                    <div class="col-12 col-md-3">
+                        <p class="mb-0">
+                            On {{ comment.created_on|date:"Y-m-d" }}
+                            <span class="fw-bold">{% if comment.author == user %}you {% else %}{{ comment.author }}
+                                {% endif %}</span> said:
+                        </p>
+                        <div class="bg-brand-green h-line d-md-none"> </div>
+                        {% if not comment.approved %}
+                        <br>
+                        <p class="small">This comment has been <strong>disapproved</strong>. It is not visible to other
+                            users.</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
+                        <p class="text-break fst-italic fs-small">{{ comment.body }}</p>
+                        <div>
+                            <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">
+                                Edit
+                            </button>
+                            <button class="py-1 px-2 comment-delete  mx-1" aria-label="Edit comment">
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
             </div>
-            {% endif %}
-            {% endfor %}
         </section>
     </div>
 </div>
