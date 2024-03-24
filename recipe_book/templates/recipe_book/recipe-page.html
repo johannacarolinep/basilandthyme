@@ -62,6 +62,7 @@
         </div>
         <div class="bg-brand-green h-line mx-auto mt-3"> </div>
         <div class="bg-brand-green h-line mx-auto mt-1 mb-3"> </div>
+        <!-- Comments section -->
         <section>
             {% if no_of_comments is not 0 %}
             <h3 class="fs-rem-130 fs-rem-lg-160 mt-4">
@@ -71,6 +72,7 @@
             <h3 class="fs-rem-130 fs-rem-lg-160 mt-4">This recipe has recived no comments yet.</h3>
             {% endif %}
             <div class="bg-brand-gray p-4">
+                <!-- Comment form, if user is logged in -->
                 {% if user.is_authenticated %}
                 <div class="row">
                     <div class="col-12 col-md-3 d-flex flex-md-column justify-content-md-center">
@@ -90,7 +92,7 @@
                         <button id="comment-submit-btn" class="submit-btn py-1 px-2" type="submit">Send</button>
                     </form>
                 </div>
-
+                <!-- Links to sign up sign in, ig user not logged in -->
                 {% else %}
                 <p class="text-center fs-5">Log in to post your own comments</p>
                 <div class="d-flex justify-content-center">
@@ -105,11 +107,11 @@
                 </div>
                 {% endif %}
             </div>
-
+            <!-- Existing comments, show unapproved comments only if user = comment author -->
             <div id="comments-list">
                 {% for comment in comments %}
                 {% if comment.approved or comment.author == user %}
-
+                <!-- Start of individual comment -->
                 <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
                 <div
                     class="row comment-container mx-auto my-2 py-3 bg-brand-gray {% if not comment.approved %}comment-inactive{% endif %}">
@@ -129,6 +131,7 @@
                     </div>
                     <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
                         <p class="text-break fst-italic fs-small">{{ comment.body }}</p>
+                        <!-- Comment edit and delete button, show only if user is comment author -->
                         {% if comment.author == user %}
                         <div>
                             <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment"
@@ -145,6 +148,7 @@
                 </div>
                 {% endif %}
                 {% endfor %}
+                <!-- End of individual comment -->
             </div>
         </section>
     </div>
@@ -153,8 +157,10 @@
 {% endblock content %}
 
 {% block modal %}
+<!-- Modal to prompt sign in or sign up -->
 {% include 'signupmodal.html' %}
 
+<!-- Modal for confirming deletion of comment -->
 <div class="modal fade bg-modal" id="delete-modal" role="dialog" tabindex="-1" aria-labelledby="delete-modal-label"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

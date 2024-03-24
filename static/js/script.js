@@ -17,65 +17,102 @@ function initializeScript() {
         commentForm.addEventListener("submit", prepCommentForm);
     }
 
-    //function prepCommentForm(event) {
-    //submitCommentForm(event, commentForm);
-    // commentForm.removeEventListener('click', prepEditComment);
-    //() }
-
     const commentDeleteBtns = document.getElementsByClassName("comment-delete");
-    for (let btn of commentDeleteBtns) {
-        btn.addEventListener("click", confirmCommentDeletion);
+    if (commentDeleteBtns) {
+        for (let btn of commentDeleteBtns) {
+            btn.addEventListener("click", confirmCommentDeletion);
+        }
     }
 
     const commentEditBtns = document.getElementsByClassName("comment-edit");
-    for (let btn of commentEditBtns) {
-        btn.addEventListener("click", startEditComment);
+    if (commentEditBtns) {
+        for (let btn of commentEditBtns) {
+            btn.addEventListener("click", startEditComment);
+        }
     }
 }
 
 function prepCommentForm(event) {
     const commentForm = document.getElementById("comments-input");
     submitCommentForm(event, commentForm);
-    // commentForm.removeEventListener('click', prepEditComment);
 }
 
+/**
+ * Starts the process of editing a comment, after click on "edit" buttons.
+ * Updates the form, switches out event listener on form button, and populates
+ * the form field with existing comment body.
+ * 
+ * @param {Event} click on edit button
+ * @returns {void}
+ */
 function startEditComment(event) {
+    // Get the edit button and comment ID
     const editBtn = event.currentTarget;
     const commentId = editBtn.getAttribute("data-edit-comment-id");
+
+    // Get the existing comment body
     const commentBody = editBtn.closest(".comment-body").querySelector('p').innerText;
+
+    // Get the form and related elements
     const commentForm = document.getElementById("comments-input");
     const formTextArea = document.getElementById("id_body");
     const submitBtn = document.getElementById("comment-submit-btn");
     const formParagraph = commentForm.parentElement.querySelector("p");
-    commentForm.removeEventListener("submit", prepCommentForm);
 
+    // Switch out event listener on form button to use form for editing
+    commentForm.removeEventListener("submit", prepCommentForm);
     commentForm.addEventListener("submit", prepEditForm);
+
+    // Set forms textare to existing comment body text
     formTextArea.value = commentBody;
+
+    // Change styles and content to reflect form in edit mode
     submitBtn.innerText = "Update";
     submitBtn.className = submitBtn.className.replace("submit-btn", "update-btn");
     commentForm.setAttribute("data-comment-id", commentId);
     formParagraph.innerHTML = 'You can now edit your comment:';
 }
 
+
 function prepEditForm(event) {
     const commentForm = document.getElementById("comments-input");
     editCommentForm(event, commentForm);
 }
 
+
+/**
+ * Handles the submission of an edited comment form with AJAX. Prepares the data
+ * to send, does a PUT request, and handles the response, updating the frontend
+ * to reflect a successful or unsuccessful edit of a comment.
+ * 
+ * @param {Event} form submitted while in "edit mode"
+ * @param {HTMLFormElement} commentForm - the form element containing the comment data
+ * @returns {void}
+ */
 function editCommentForm(event, commentForm) {
+    // Prevent default form submission behaviour
     event.preventDefault();
+
+    // Get commentId from the forms attribute 
     const commentId = commentForm.getAttribute("data-comment-id");
+
+    // Create FormData object with data from the form
     const formData = new FormData(commentForm);
+
+    // Convert the form data to JSON and add commentId
     const data = {};
     formData.forEach((value, key) => {
         data[key] = value;
     });
     data['commentId'] = commentId;
+
+    // Save the submitted form "body"
     const newComment = data['body'];
 
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    // https://testdriven.io/blog/django-ajax-xhr/
+    // Credit: https://testdriven.io/blog/django-ajax-xhr/
+    // Send PUT request to update the comment
     fetch(commentForm.action, {
             method: "PUT",
             credentials: "same-origin",
@@ -88,20 +125,20 @@ function editCommentForm(event, commentForm) {
         })
         .then(response => response.json())
         .then(data => {
+            // Handle server response
             if (data.success) {
+                // Add success message and update comment body
                 const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
                 const message = document.createElement("p")
                 message.className = "small brand-green mt-2";
                 message.innerText = "Comment was updated!";
                 const container = editBtn.closest(".comment-container");
                 container.querySelector("div").appendChild(message);
-
-                // Update body text
                 const commentBody = editBtn.closest(".comment-body");
                 commentBody.querySelector("p").innerText = newComment;
 
             } else {
-                // handle not successful
+                // Add failure message and
                 const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
                 const message = document.createElement("p")
                 message.className = "small red mt-2";
@@ -109,7 +146,7 @@ function editCommentForm(event, commentForm) {
                 const container = editBtn.closest(".comment-container");
                 container.querySelector("div").appendChild(message);
             }
-            // Reset form
+            // Reset form: empty textearea, remove comment id, update button and paragraph
             document.getElementById("id_body").value = "";
             commentForm.removeAttribute("data-comment-id");
             const submitBtn = document.getElementById("comment-submit-btn");
@@ -117,14 +154,22 @@ function editCommentForm(event, commentForm) {
             paragraph.innerHTML = 'Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.';
             submitBtn.innerText = "Send";
             submitBtn.className = submitBtn.className.replace("update-btn", "submit-btn");
+            // Switch event listener back, to post comments
             commentForm.removeEventListener("submit", prepEditForm);
             commentForm.addEventListener("submit", prepCommentForm);
         });
-
-
 }
 
+
+/**
+ * Handles the confirmation of comment deletion. Displays modal, and adds event
+ * listeners to close modal and/or delete comment.
+ * 
+ * @param {Event} click on delete button of a comment.
+ * @returns {void}
+ */
 function confirmCommentDeletion(event) {
+
     const button = event.currentTarget;
     const commentId = button.getAttribute("data-delete-comment-id");
     const modal = document.getElementById("delete-modal");
@@ -132,13 +177,16 @@ function confirmCommentDeletion(event) {
     const closeModalBtn2 = document.getElementById("cancel-delete-btn");
     const confirmDeleteBtn = document.getElementById("delete-comment-btn");
 
+    // Displays the confirmation modal
     openModal(modal);
+    // Adds eventlistener to cancel buttons, to close modal and reset focus
     closeModalBtn1.addEventListener('click', () => closeModal(modal, button));
     closeModalBtn2.addEventListener('click', () => closeModal(modal, button));
 
-    // pass through named function to remove event listener
-    function prepDeleteComment(event) {
-        deleteComment(event, commentId);
+    // Add event listener to confirm delete btn, pass through named function to remove event listener
+    function prepDeleteComment() {
+        deleteComment(commentId);
+        // close modal and remove event listener
         closeModal(modal);
         confirmDeleteBtn.removeEventListener('click', prepDeleteComment);
     }
@@ -146,12 +194,25 @@ function confirmCommentDeletion(event) {
     confirmDeleteBtn.addEventListener('click', prepDeleteComment);
 }
 
-function deleteComment(event, commentId) {
+
+/**
+ * Handles the request to delete a comment with AJAX using a DELETE request.
+ * Creates the reuqest URL by attaching the commentId as a parameter to the forms
+ * action url. Handles the request response, updating the frontend to reflect a 
+ * successful deletion.
+ * @param {string} commentId - the comments unique identifier
+ * @returns {void}
+ */
+function deleteComment(commentId) {
+    // Create the delete request URL
     const commentForm = document.getElementById("comments-input");
     const url = commentForm.action.slice(0, -1) + "?commentId=" + commentId;
+
+    // Grab the csrf token
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // https://testdriven.io/blog/django-ajax-xhr/
+    // Send a delete request to delete the comment
     fetch(url, {
             method: "DELETE",
             credentials: "same-origin",
@@ -159,16 +220,17 @@ function deleteComment(event, commentId) {
                 "X-Requested-With": "XMLHttpRequest",
                 "X-CSRFToken": csrfToken,
             },
-            body: commentId
         })
         .then(response => response.json())
         .then(data => {
+            // Handle the response data
             if (data.success) {
+                // If comment deleted, update frontend to reflect deletion
                 const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
                 const comment = deleteButton.closest(".comment-container");
                 comment.innerHTML = '<p class="mx-auto mb-0 text-center brand-green">Comment was successfully deleted.</p>';
             } else {
-                // handle not successful
+                // If comment not deleted, add paragraph to signal to user
                 const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
                 const comment = deleteButton.closest(".comment-container");
                 comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
@@ -176,12 +238,25 @@ function deleteComment(event, commentId) {
         });
 }
 
+
+/**
+ * Prepares and submits the comment form data to the server with an AJAX POST request.
+ * Handles the response data.
+ * 
+ * @param {Event} submission of comment form while in submit mode (vs edit mode)
+ * @param {HTMLFormElement} commentForm - The comment form element
+ * @returns {void}
+ */
 function submitCommentForm(event, commentForm) {
+    // Prevent default form submission behaviour
     event.preventDefault();
 
+    // Prepare data to post
     const formData = new FormData(commentForm);
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
     // https://testdriven.io/blog/django-ajax-xhr/
+    // Send a POST request to create a comment with the form data
     fetch(commentForm.action, {
             method: "POST",
             credentials: "same-origin",
@@ -193,7 +268,9 @@ function submitCommentForm(event, commentForm) {
         })
         .then(response => response.json())
         .then(data => {
+            // Handle the response
             if (data.success) {
+                // If comment was created, call function to update frontend
                 buildComment(data.data);
             } else {
                 // handle not successful
@@ -203,6 +280,14 @@ function submitCommentForm(event, commentForm) {
         });
 };
 
+
+/**
+ * Builds and inserts a new comment in the HTML template using the provided data.
+ * 
+ * @param {Object} data - The data object received as part of POST request response,
+ * containing comment details.
+ * @returns {void}
+ */
 function buildComment(data) {
     // Prepare date for html
     const createdOn = new Date(data.date);
@@ -214,7 +299,7 @@ function buildComment(data) {
     // Get comments parent container
     const commentsList = document.querySelector("#comments-list");
 
-    // Create new comment in HTML
+    // Create new comment in HTML using a string literal
     const newComment = `
     <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
     <div class="comment-container row mx-auto my-2 py-3 bg-brand-gray">
@@ -234,12 +319,14 @@ function buildComment(data) {
         </div>
     </div>
 `;
-    // Attach the new html to the parent container
+    // Attach the new html comment to the parent container
     commentsList.innerHTML = newComment + commentsList.innerHTML;
+
+    // Add event listeners to the new comments buttons
     commentsList.querySelector(`[data-edit-comment-id="${data.comment_id}"]`).addEventListener("click", startEditComment);
     commentsList.querySelector(`[data-delete-comment-id="${data.comment_id}"]`).addEventListener("click", confirmCommentDeletion);
-
 };
+
 
 function addCategoryQuery(event) {
     const currentUrl = window.location.href;
