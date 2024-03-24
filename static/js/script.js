@@ -59,6 +59,11 @@ function startEditComment(event) {
     const submitBtn = document.getElementById("comment-submit-btn");
     const formParagraph = commentForm.parentElement.querySelector("p");
 
+    // Scroll up to the form
+    commentForm.scrollIntoView({
+        block: "center"
+    });
+
     // Switch out event listener on form button to use form for editing
     commentForm.removeEventListener("submit", prepCommentForm);
     commentForm.addEventListener("submit", prepEditForm);
@@ -136,6 +141,10 @@ function editCommentForm(event, commentForm) {
                 container.querySelector("div").appendChild(message);
                 const commentBody = editBtn.closest(".comment-body");
                 commentBody.querySelector("p").innerText = newComment;
+                // scroll to the comment body
+                commentBody.scrollIntoView({
+                    block: "center"
+                });
 
             } else {
                 // Add failure message and

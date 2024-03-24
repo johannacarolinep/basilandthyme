@@ -47,8 +47,16 @@ main {
     color: #008B20;
 }
 
+.brand-yellow {
+    color: #FFC633;
+}
+
 .brand-dark {
     color: #201425;
+}
+
+.red {
+    color: #a90606;
 }
 
 body {
@@ -367,14 +375,11 @@ body {
     color: #9b969e;
 }
 
-.comment-inactive .small {
-    color: #a90606;
-}
-
 .comment-edit,
 .delete,
 .comment-delete-cancel,
-.submit-btn {
+.submit-btn,
+.update-btn {
     box-shadow: 6px 6px 12px #f1f2f1,
         -6px -6px 12px #ffffff;
     border-radius: 2em;
@@ -393,12 +398,15 @@ body {
         -6px -6px 12px #ffffff;
 }
 
-.comment-edit {
+.comment-edit,
+.update-btn {
     border: 2px solid #FFC633;
 }
 
 .comment-edit:hover,
-.comment-edit:active {
+.comment-edit:active,
+.update-btn:hover,
+.update-btn:active {
     background-color: #FFC633;
     box-shadow: 6px 6px 12px #d3d4d3,
         -6px -6px 12px #ffffff;
