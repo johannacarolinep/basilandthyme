@@ -153,7 +153,12 @@ class RecipeDetailView(DetailView):
 
             # If the form is invalid
             return JsonResponse(
-                {'success': False})
+                {'success': False, 'message': "Comment invalid"}, status=400)
+
+        # If the form is invalid
+        return JsonResponse(
+            {'success': False, 'message': "You must be logged in to comment"},
+            status=401)
 
     def delete(self, request, *args, **kwargs):
         """
@@ -169,13 +174,17 @@ class RecipeDetailView(DetailView):
         # get the comment with matching id
         comment = recipe.comments.filter(id=comment_id).first()
         if comment is None:
-            return JsonResponse({'success': False, 'error': 'Comment not found or not authorized to delete'})
+            return JsonResponse(
+                {'success': False,
+                    'error': 'Comment not found or not authorized to delete'},
+                status=400)
 
         if comment.author == request.user:
             comment.delete()
             return JsonResponse({'success': True, 'data': "comment deleted"})
         else:
-            return JsonResponse({'success': False, 'data': "not allowed"})
+            return JsonResponse(
+                {'success': False, 'data': "not allowed"}, status=401)
 
     def put(self, request, *args, **kwargs):
         """
@@ -192,10 +201,13 @@ class RecipeDetailView(DetailView):
 
         if comment is None:
             return JsonResponse(
-                {'success': False, 'error': 'Comment not found'})
+                {'success': False, 'error': 'Comment not found'}, status=400)
 
-        if (comment.author == request.user and data["body"] != "" and data["body"] != comment.body):
+        if comment.author != request.user:
+            return JsonResponse(
+                {'success': False, 'error': 'Not authorised'}, status=401)
 
+        elif data["body"] != "" and data["body"] != comment.body:
             comment.body = data["body"]
             if not comment.approved:
                 comment.approved = True
@@ -203,7 +215,8 @@ class RecipeDetailView(DetailView):
             return JsonResponse(
                 {'success': True, 'data': "Comment updated"})
 
-        return JsonResponse({'success': False, 'data': "Comment not updated"})
+        return JsonResponse(
+            {'success': False, 'data': "Comment not updated"}, status=400)
 
 
 @require_POST
