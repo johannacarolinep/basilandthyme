@@ -64,20 +64,48 @@
         <div class="bg-brand-green h-line mx-auto mt-1 mb-3"> </div>
         <section>
             {% if no_of_comments is not 0 %}
-            <h3 class="fs-rem-130 fs-rem-lg-160">{{ no_of_comments }} comment{% if no_of_comments > 1 %}s{% endif %}
+            <h3 class="fs-rem-130 fs-rem-lg-160 mt-4">
+                This recipe has received {{ no_of_comments }} comment{% if no_of_comments > 1 %}s{% endif %}
             </h3>
             {% else %}
-            <h3 class="fs-rem-130 fs-rem-lg-160">This recipe has recived no comments yet.</h3>
+            <h3 class="fs-rem-130 fs-rem-lg-160 mt-4">This recipe has recived no comments yet.</h3>
             {% endif %}
-            {% if user.is_authenticated %}
-            <form id="comments-input" method="post">
-                {{ comment_form | crispy }}
-                {% csrf_token %}
-                <button id="comment-submit-btn" type="submit">Send</button>
-            </form>
-            {% else %}
-            Log in to post your own comments
-            {% endif %}
+            <div class="bg-brand-gray p-4">
+                {% if user.is_authenticated %}
+                <div class="row">
+                    <div class="col-12 col-md-3 d-flex flex-md-column justify-content-md-center">
+                        {% if no_of_comments > 1 %}
+                        <p class="fs-5 fw-bold text-md-center">
+                            Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.
+                        </p>
+                        {% else %}
+                        <p class="fs-5 fw-bold text-md-center">
+                            Be the first one to tell us what you think!
+                        </p>
+                        {% endif %}
+                    </div>
+                    <form class="col-12 col-md-9" id="comments-input" method="post">
+                        {{ comment_form | crispy }}
+                        {% csrf_token %}
+                        <button id="comment-submit-btn" class="submit-btn py-1 px-2" type="submit">Send</button>
+                    </form>
+                </div>
+
+                {% else %}
+                <p class="text-center fs-5">Log in to post your own comments</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn fave-signin-btn d-inline-block me-2" href="{% url 'account_login' %}"
+                        aria-label="Go to the sign in page to log in">
+                        Sign In
+                    </a>
+                    <a class="btn fave-signup-btn d-inline-block ms-2" href="{% url 'account_signup' %}"
+                        aria-label="Go to the sign up page to register">
+                        Sign Up
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
             <div id="comments-list">
                 {% for comment in comments %}
                 {% if comment.approved or comment.author == user %}

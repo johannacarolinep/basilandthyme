@@ -343,6 +343,25 @@ body {
 
 /* --------------------------------------- Comments */
 
+#comments-input textarea {
+    height: 150px;
+}
+
+#comments-input label {
+    font-weight: 600;
+}
+
+.submit-btn {
+    border: 2px solid #008B20;
+}
+
+.submit-btn:hover,
+.submit-btn:active {
+    background-color: #008B20;
+    color: white;
+    box-shadow: 6px 6px 12px #d3d4d3,
+        -6px -6px 12px #ffffff;
+}
 
 .comment-inactive p {
     color: #9b969e;
@@ -354,7 +373,8 @@ body {
 
 .comment-edit,
 .delete,
-.comment-delete-cancel {
+.comment-delete-cancel,
+.submit-btn {
     box-shadow: 6px 6px 12px #f1f2f1,
         -6px -6px 12px #ffffff;
     border-radius: 2em;
@@ -363,7 +383,6 @@ body {
 
 .delete {
     border: 2px solid #a90606;
-
 }
 
 .delete:hover,
