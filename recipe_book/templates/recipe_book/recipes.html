@@ -33,8 +33,29 @@
                                 class="fa{% if recipe.id in user_favorites %} fa-solid {% else %} fa-regular {% endif %} fa-heart m-1 fs-rem-180"></i>
                         </button>
                     </div>
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="rating">X X X X X {{ recipe.avg_rating }}({{ recipe.ratings_count }})</div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <!-- Improve accessibility? -->
+                        <div class="rating">
+                            {% for i in stars_range %}
+                            {% if recipe.avg_rating >= i %}
+                            <button class="icon-button" data-rating-value="{{ i }}"
+                                aria-label="Give a {{ i }} star rating. Avg rating is {{ recipe.avg_rating }}">
+                                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            </button>
+                            {% elif recipe.avg_rating > i|add:"-1" %}
+                            <button class="icon-button" data-rating-value="{{ i }}"
+                                aria-label="Give a {{ i }} star rating. Avg rating is {{ recipe.avg_rating }}">
+                                <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
+                            </button>
+                            {% else %}
+                            <button class="icon-button" data-rating-value="{{ i }}"
+                                aria-label="Give a {{ i }} star rating. Avg rating is {{ recipe.avg_rating }}">
+                                <i class="fa-regular fa-star" aria-hidden="true"></i>
+                            </button>
+                            {% endif %}
+                            {% endfor %}
+                            ({{ recipe.ratings_count }})
+                        </div>
                         <div class="category fs-rem-120">
                             {% if recipe.category == 1 %}
                             <i class="fa-solid fa-drumstick-bite" aria-hidden="true"></i>

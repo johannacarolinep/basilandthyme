@@ -81,6 +81,7 @@ class RecipeListView(ListView):
 
         user = self.request.user
         context['user_favorites'] = Favourite.get_user_favourite_ids(user)
+        context['stars_range'] = range(1, 6)
 
         return context
 
