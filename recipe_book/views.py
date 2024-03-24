@@ -171,10 +171,14 @@ class RecipeDetailView(DetailView):
             return JsonResponse(
                 {'success': False, 'error': 'Comment not found'})
 
-        if comment.author == request.user and data["body"] != "":
+        if (comment.author == request.user and data["body"] != "" and data["body"] != comment.body):
+
             comment.body = data["body"]
+            if not comment.approved:
+                comment.approved = True
             comment.save()
-            return JsonResponse({'success': True, 'data': "Comment updated"})
+            return JsonResponse(
+                {'success': True, 'data': "Comment updated"})
 
         return JsonResponse({'success': False, 'data': "Comment not updated"})
 

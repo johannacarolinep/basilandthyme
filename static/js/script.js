@@ -68,6 +68,7 @@ function editCommentForm(event, commentForm) {
         data[key] = value;
     });
     data['commentId'] = commentId;
+    const newComment = data['body'];
 
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -85,11 +86,36 @@ function editCommentForm(event, commentForm) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log("Success!")
+                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+                const message = document.createElement("p")
+                message.className = "small brand-green mt-2";
+                message.innerText = "Comment was updated!";
+                const container = editBtn.closest(".comment-container");
+                container.querySelector("div").appendChild(message);
+
+                // Update body text
+                const commentBody = editBtn.closest(".comment-body");
+                commentBody.querySelector("p").innerText = newComment;
+
             } else {
                 // handle not successful
+                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+                const message = document.createElement("p")
+                message.className = "small mt-2";
+                message.innerText = "Comment was not updated!";
+                const container = editBtn.closest(".comment-container");
+                container.querySelector("div").appendChild(message);
             }
+            // Reset form
+            document.getElementById("id_body").value = "";
+            commentForm.removeAttribute("data-comment-id");
+            const submitBtn = document.getElementById("comment-submit-btn");
+            submitBtn.innerText = "Send";
+            commentForm.removeEventListener("submit", prepEditForm);
+            commentForm.addEventListener("submit", prepCommentForm);
+
         });
+
 
 }
 
@@ -167,6 +193,8 @@ function submitCommentForm(event, commentForm) {
             } else {
                 // handle not successful
             }
+            // clear the form
+            document.getElementById("id_body").value = "";
         });
 
 };
