@@ -1,4 +1,5 @@
 import json
+from django.db import models
 from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST
 from django.shortcuts import render
@@ -27,26 +28,31 @@ class RecipeListView(ListView):
             Queryset: A filtered queryset of Recipe objects.
         """
         self.query = self.request.GET.get("q")
+        # https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate
+        base_queryset = Recipe.objects.filter(status=1).annotate(
+            avg_rating=models.Avg('rating_recipe__rating'),  # Assume 'rating' is a field in the Rating model for the score
+            ratings_count=models.Count('rating_recipe')  # Count ratings using the ID of the Rating model
+        )
         if self.query:
             match self.query:
                 case "all":
-                    return Recipe.objects.filter(status=1)
+                    return base_queryset
                 case "chicken":
-                    return Recipe.objects.filter(status=1, category=1)
+                    return base_queryset.filter(category=1)
                 case "pork":
-                    return Recipe.objects.filter(status=1, category=2)
+                    return base_queryset.filter(category=2)
                 case "beef":
-                    return Recipe.objects.filter(status=1, category=3)
+                    return base_queryset.filter(category=3)
                 case "fish":
-                    return Recipe.objects.filter(status=1, category=4)
+                    return base_queryset.filter(category=4)
                 case "vegetarian":
-                    return Recipe.objects.filter(status=1, category=5)
+                    return base_queryset.filter(category=5)
                 case _:
-                    return Recipe.objects.filter(
+                    return base_queryset.filter(
                         Q(title__icontains=self.query) | Q(ingredients__icontains=self.query)
                     )
         else:
-            return Recipe.objects.filter(status=1)
+            return base_queryset
 
     def get_context_data(self, **kwargs):
         """

@@ -34,7 +34,7 @@
                         </button>
                     </div>
                     <div class="card-header d-flex justify-content-between">
-                        <div class="rating">X X X X X (123)</div>
+                        <div class="rating">X X X X X {{ recipe.avg_rating }}({{ recipe.ratings_count }})</div>
                         <div class="category fs-rem-120">
                             {% if recipe.category == 1 %}
                             <i class="fa-solid fa-drumstick-bite" aria-hidden="true"></i>
