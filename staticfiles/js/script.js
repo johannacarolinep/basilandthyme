@@ -68,6 +68,7 @@ function editCommentForm(event, commentForm) {
         data[key] = value;
     });
     data['commentId'] = commentId;
+    const newComment = data['body'];
 
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -85,11 +86,36 @@ function editCommentForm(event, commentForm) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log("Success!")
+                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+                const message = document.createElement("p")
+                message.className = "small brand-green mt-2";
+                message.innerText = "Comment was updated!";
+                const container = editBtn.closest(".comment-container");
+                container.querySelector("div").appendChild(message);
+
+                // Update body text
+                const commentBody = editBtn.closest(".comment-body");
+                commentBody.querySelector("p").innerText = newComment;
+
             } else {
                 // handle not successful
+                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+                const message = document.createElement("p")
+                message.className = "small mt-2";
+                message.innerText = "Comment was not updated!";
+                const container = editBtn.closest(".comment-container");
+                container.querySelector("div").appendChild(message);
             }
+            // Reset form
+            document.getElementById("id_body").value = "";
+            commentForm.removeAttribute("data-comment-id");
+            const submitBtn = document.getElementById("comment-submit-btn");
+            submitBtn.innerText = "Send";
+            commentForm.removeEventListener("submit", prepEditForm);
+            commentForm.addEventListener("submit", prepCommentForm);
+
         });
+
 
 }
 
@@ -167,8 +193,9 @@ function submitCommentForm(event, commentForm) {
             } else {
                 // handle not successful
             }
+            // clear the form
+            document.getElementById("id_body").value = "";
         });
-
 };
 
 function buildComment(data) {
@@ -185,7 +212,7 @@ function buildComment(data) {
     // Create new comment in HTML
     const newComment = `
     <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
-    <div class="row mx-auto my-2 py-3 bg-brand-gray">
+    <div class="comment-container row mx-auto my-2 py-3 bg-brand-gray">
         <div class="col-12 col-md-3">
             <p class="mb-0">
                 On ${formattedDate} 
@@ -196,14 +223,17 @@ function buildComment(data) {
         <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
             <p class="text-break fst-italic fs-small">${data.body}</p>
             <div>
-                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">Edit</button>
-                <button class="py-1 px-2 comment-delete delete mx-1" aria-label="Edit comment">Delete</button>
+                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment" data-edit-comment-id="${data.comment_id}">Edit</button>
+                <button class="py-1 px-2 comment-delete delete mx-1" aria-label="Edit comment" data-delete-comment-id="${data.comment_id}">Delete</button>
             </div>
         </div>
     </div>
 `;
     // Attach the new html to the parent container
     commentsList.innerHTML = newComment + commentsList.innerHTML;
+    commentsList.querySelector(`[data-edit-comment-id="${data.comment_id}"]`).addEventListener("click", startEditComment);
+    commentsList.querySelector(`[data-delete-comment-id="${data.comment_id}"]`).addEventListener("click", confirmCommentDeletion);
+
 };
 
 function addCategoryQuery(event) {

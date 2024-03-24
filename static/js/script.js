@@ -196,7 +196,6 @@ function submitCommentForm(event, commentForm) {
             // clear the form
             document.getElementById("id_body").value = "";
         });
-
 };
 
 function buildComment(data) {
@@ -213,7 +212,7 @@ function buildComment(data) {
     // Create new comment in HTML
     const newComment = `
     <div class="bg-brand-green h-line mx-auto my-3 d-none d-md-block"> </div>
-    <div class="row mx-auto my-2 py-3 bg-brand-gray">
+    <div class="comment-container row mx-auto my-2 py-3 bg-brand-gray">
         <div class="col-12 col-md-3">
             <p class="mb-0">
                 On ${formattedDate} 
@@ -224,14 +223,17 @@ function buildComment(data) {
         <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
             <p class="text-break fst-italic fs-small">${data.body}</p>
             <div>
-                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment">Edit</button>
-                <button class="py-1 px-2 comment-delete delete mx-1" aria-label="Edit comment">Delete</button>
+                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment" data-edit-comment-id="${data.comment_id}">Edit</button>
+                <button class="py-1 px-2 comment-delete delete mx-1" aria-label="Edit comment" data-delete-comment-id="${data.comment_id}">Delete</button>
             </div>
         </div>
     </div>
 `;
     // Attach the new html to the parent container
     commentsList.innerHTML = newComment + commentsList.innerHTML;
+    commentsList.querySelector(`[data-edit-comment-id="${data.comment_id}"]`).addEventListener("click", startEditComment);
+    commentsList.querySelector(`[data-delete-comment-id="${data.comment_id}"]`).addEventListener("click", confirmCommentDeletion);
+
 };
 
 function addCategoryQuery(event) {
