@@ -127,6 +127,14 @@ class RecipeDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests to add a new comment to the recipe.
+
+        Returns:
+            JsonResponse: JSON response indicating success or failure of
+            comment creation. If successful, also passes response_data with the
+            comment details.
+        """
         comment_form = CommentForm(request.POST)
 
         if request.user.is_authenticated:
@@ -148,9 +156,17 @@ class RecipeDetailView(DetailView):
                 {'success': False})
 
     def delete(self, request, *args, **kwargs):
+        """
+        Handles DELETE requests to delete a comment of the recipe.
+
+        Returns:
+            JsonResponse: JSON response indicating success or failure of
+            comment deletion.
+        """
         # get commentId from request url
         comment_id = request.GET.get("commentId")
         recipe = self.get_object()
+        # get the comment with matching id
         comment = recipe.comments.filter(id=comment_id).first()
         if comment is None:
             return JsonResponse({'success': False, 'error': 'Comment not found or not authorized to delete'})
@@ -162,6 +178,13 @@ class RecipeDetailView(DetailView):
             return JsonResponse({'success': False, 'data': "not allowed"})
 
     def put(self, request, *args, **kwargs):
+        """
+        Handles PUT requests to update a comment of the recipe.
+
+        Returns:
+            JsonResponse: JSON response indicating success or failure of
+            comment update.
+        """
         data = json.loads(request.body)
         comment_id = data["commentId"]
         recipe = self.get_object()
