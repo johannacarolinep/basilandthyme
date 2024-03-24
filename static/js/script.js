@@ -46,12 +46,15 @@ function startEditComment(event) {
     const commentForm = document.getElementById("comments-input");
     const formTextArea = document.getElementById("id_body");
     const submitBtn = document.getElementById("comment-submit-btn");
+    const formParagraph = commentForm.parentElement.querySelector("p");
     commentForm.removeEventListener("submit", prepCommentForm);
 
     commentForm.addEventListener("submit", prepEditForm);
     formTextArea.value = commentBody;
     submitBtn.innerText = "Update";
+    submitBtn.className = submitBtn.className.replace("submit-btn", "update-btn");
     commentForm.setAttribute("data-comment-id", commentId);
+    formParagraph.innerHTML = 'You can now edit your comment:';
 }
 
 function prepEditForm(event) {
@@ -101,7 +104,7 @@ function editCommentForm(event, commentForm) {
                 // handle not successful
                 const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
                 const message = document.createElement("p")
-                message.className = "small mt-2";
+                message.className = "small red mt-2";
                 message.innerText = "Comment was not updated!";
                 const container = editBtn.closest(".comment-container");
                 container.querySelector("div").appendChild(message);
@@ -110,10 +113,12 @@ function editCommentForm(event, commentForm) {
             document.getElementById("id_body").value = "";
             commentForm.removeAttribute("data-comment-id");
             const submitBtn = document.getElementById("comment-submit-btn");
+            const paragraph = commentForm.parentElement.querySelector("p");
+            paragraph.innerHTML = 'Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.';
             submitBtn.innerText = "Send";
+            submitBtn.className = submitBtn.className.replace("update-btn", "submit-btn");
             commentForm.removeEventListener("submit", prepEditForm);
             commentForm.addEventListener("submit", prepCommentForm);
-
         });
 
 
