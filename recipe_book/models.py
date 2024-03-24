@@ -217,3 +217,31 @@ class Rating(models.Model):
         Recipe, on_delete=models.CASCADE, related_name='rating_recipe'
     )
     rating = models.IntegerField(choices=RATING_CHOICES)
+
+    @classmethod
+    def get_recipe_avg_rating(cls, recipe_id):
+        """
+        Calculates the average rating for a given recipe.
+
+        Args:
+            recipe_id (int): The ID of the recipe.
+
+        Returns:
+            float or None: The average rating of the recipe, or None if no
+            the recipe has no ratings.
+        """
+        ratings = cls.objects.filter(recipe=recipe_id)
+        return ratings.aggregate(avg_rating=models.Avg('rating'))['avg_rating']
+
+    @classmethod
+    def get_recipe_no_of_ratings(cls, recipe_id):
+        """
+        Gets the number of ratings for a given recipe.
+
+        Args:
+            recipe_id (int): The ID of the recipe.
+
+        Returns:
+            Integer: The number of ratings for a given recipe.
+        """
+        return cls.objects.filter(recipe=recipe_id).count()

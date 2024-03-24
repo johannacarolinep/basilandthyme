@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q
-from .models import Recipe, Favourite
+from .models import Recipe, Favourite, Rating
 from .forms import CommentForm
 
 
@@ -124,6 +124,8 @@ class RecipeDetailView(DetailView):
         context['comments'] = comments
         context['no_of_comments'] = no_of_comments
         context['is_favourite'] = Favourite.is_recipe_favourite(user, recipe)
+        context['avg_rating'] = Rating.get_recipe_avg_rating(recipe.id)
+        context['rating_count'] = Rating.get_recipe_no_of_ratings(recipe.id)
         return context
 
     def post(self, request, *args, **kwargs):
