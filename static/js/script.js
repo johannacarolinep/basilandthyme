@@ -79,7 +79,10 @@ function selectRating(event) {
 
 
 async function submitRating(rating) {
-    console.log("Submitting rating of ", rating);
+
+    const ratingsDisplay = document.getElementById("init-rate-btn");
+    const starIcons = ratingsDisplay.querySelectorAll("i");
+    const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
 
     // prepare POST request
     const postAddress = '/add-update-rating/';
@@ -90,9 +93,25 @@ async function submitRating(rating) {
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
+    if (postResponse.success) {
+        console.log("Rating either updated or added");
+        ratingsCount.innerHTML = `(${postResponse.count})`;
+        console.log(ratingsCount);
+        averageRating = postResponse.average;
+        let counter = 1;
+        for (icon of starIcons) {
+            if (averageRating >= counter) {
+                icon.className = "fa-solid fa-star"; // Add a full star
+            } else if (averageRating > counter - 1) {
+                icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
+            } else {
+                icon.className = "fa-regular fa-star"; // Add an empty star
+            }
+            counter++;
+        }
 
-    if (postResponse.message === 'Post received') {
-        console.log("Response received in script");
+    } else {
+        console.log("Bad request");
     }
 }
 

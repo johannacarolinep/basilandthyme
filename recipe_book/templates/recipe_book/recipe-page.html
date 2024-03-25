@@ -33,9 +33,10 @@
                                 <i class="fa-regular fa-star" aria-hidden="true"></i>
                                 {% endif %}
                                 {% endfor %}
+                                <span class="ratings-count">({{ rating_count }})</span>
                             </button>
                         </div>
-                        ({{ rating_count }})
+
                     </div>
                     <div class="col-auto fs-rem-150 brand-brown">
                         {% if recipe.category == 1 %}
