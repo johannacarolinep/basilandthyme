@@ -233,6 +233,18 @@ Points completed: 14
 
 Velocity: 16.25
 
+**Actions**:
+- Moved 2 User Stories back to the backlog
+- Reprioritised backlog
+- Added 2 new User Stories to the backlog:
+    - USER STORY: Experience on screen readers (ACCESSIBILITY): As a **Site User utilizing a screen reader** I can **listen to descriptive text representing any visual element on the website** so that I can **be included, navigate on the website, access the content, and use all core functionality**.
+    - USER STORY: Experience for keyboard users (ACCESSIBILITY): As a **Site User not able to utilize a mouse** I can **focus on and access all interactive elements on the website using a keyboard** so that I can **be included, navigate on the website, access the content, and use all core functionality**.
+- Added additional backlog items related to TESTING.
+
+#### Sprint 5:
+
+![Sprint 5 milestone](documentation/sprint5.png)
+
 
 
 
