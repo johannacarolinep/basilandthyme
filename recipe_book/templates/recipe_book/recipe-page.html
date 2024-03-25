@@ -201,17 +201,17 @@
                 <div class="d-flex fs-1 my-3 justify-content-center">
                     {% for i in stars_range %}
                     {% if user_rating != None and user_rating >= i %}
-                    <button class="icon-button mx-1" data-rating-value="{{ i }}"
+                    <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
                         aria-label="Give a {{ i }} star rating. Avg rating is {{ avg_rating }}">
                         <i class="fa-solid fa-star" aria-hidden="true"></i>
                     </button>
                     {% elif user_rating != None and user_rating > i|add:"-1" %}
-                    <button class="icon-button mx-1" data-rating-value="{{ i }}"
+                    <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
                         aria-label="Give a {{ i }} star rating. Avg rating is {{ avg_rating }}">
                         <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
                     </button>
                     {% else %}
-                    <button class="icon-button mx-1" data-rating-value="{{ i }}"
+                    <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
                         aria-label="Give a {{ i }} star rating. Avg rating is {{ avg_rating }}">
                         <i class="fa-regular fa-star" aria-hidden="true"></i>
                     </button>
@@ -235,7 +235,7 @@
                     </button>
                     {% endif %}
                     <button class="btn mt-2 d-inline-block ms-2 submit-btn" aria-label="Submit rating"
-                        id="submit-rating-btn">
+                        id="submit-rating-btn" disabled>
                         Submit
                     </button>
                 </div>

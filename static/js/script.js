@@ -44,13 +44,44 @@ function initalizeRating(event) {
     const closeModalBtn1 = document.getElementById("close-rating-btn");
     const closeModalBtn2 = document.getElementById("cancel-rating-btn");
     const lastFocusElement = event.currentTarget;
+    const starBtns = document.getElementsByClassName("star-btn");
 
     openModal(ratingModal);
     // Adds eventlistener to cancel buttons, to close modal and reset focus
     closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
     closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
+
+    // add event listener to star buttons
+    for (let btn of starBtns) {
+        btn.addEventListener('click', selectRating);
+    }
 }
 
+function selectRating(event) {
+    selectedRating = event.currentTarget.getAttribute("data-rating-value");
+    const submitRatingBtn = document.getElementById("submit-rating-btn");
+    submitRatingBtn.removeAttribute("disabled");
+    console.log("Rating is ", selectedRating);
+
+    // style buttons to show selection
+    const starBtns = document.getElementsByClassName("star-btn");
+    for (let btn of starBtns) {
+        if (selectedRating >= btn.getAttribute("data-rating-value")) {
+            btn.classList.add("selected");
+        } else {
+            btn.classList.remove("selected");
+        }
+    }
+
+    // Add event listener to submitbutton
+    submitRatingBtn.addEventListener('click', () => submitRating(selectedRating))
+}
+
+
+function submitRating(rating) {
+    console.log("Submitting rating of ", rating);
+
+}
 
 function prepCommentForm(event) {
     const commentForm = document.getElementById("comments-input");
