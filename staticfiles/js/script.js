@@ -12,6 +12,11 @@ function initializeScript() {
         favouritingButton.addEventListener('click', (event) => favouritingBtnListener(event, recipeId));
     }
 
+    const openRatingsBtn = document.getElementById("init-rate-btn");
+    if (openRatingsBtn) {
+        openRatingsBtn.addEventListener('click', initalizeRating)
+    }
+
     const commentForm = document.getElementById("comments-input");
     if (commentForm) {
         commentForm.addEventListener("submit", prepCommentForm);
@@ -31,6 +36,21 @@ function initializeScript() {
         }
     }
 }
+
+
+function initalizeRating(event) {
+    // open modal
+    const ratingModal = document.getElementById("ratings-modal");
+    const closeModalBtn1 = document.getElementById("close-rating-btn");
+    const closeModalBtn2 = document.getElementById("cancel-rating-btn");
+    const lastFocusElement = event.currentTarget;
+
+    openModal(ratingModal);
+    // Adds eventlistener to cancel buttons, to close modal and reset focus
+    closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
+    closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
+}
+
 
 function prepCommentForm(event) {
     const commentForm = document.getElementById("comments-input");
