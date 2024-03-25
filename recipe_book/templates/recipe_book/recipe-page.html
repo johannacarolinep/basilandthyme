@@ -99,7 +99,7 @@
                 {% if user.is_authenticated %}
                 <div class="row">
                     <div class="col-12 col-md-3 d-flex flex-md-column justify-content-md-center">
-                        {% if no_of_comments > 1 %}
+                        {% if no_of_comments > 0 %}
                         <p class="fs-5 fw-bold text-md-center">
                             Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.
                         </p>
@@ -115,7 +115,7 @@
                         <button id="comment-submit-btn" class="submit-btn py-1 px-2" type="submit">Send</button>
                     </form>
                 </div>
-                <!-- Links to sign up sign in, ig user not logged in -->
+                <!-- Links to sign up sign in, if user not logged in -->
                 {% else %}
                 <p class="text-center fs-5">Log in to post your own comments</p>
                 <div class="d-flex justify-content-center">
