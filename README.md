@@ -223,6 +223,17 @@ Velocity: 17
 
 ![Sprint 4 milestone](documentation/sprint4.png)
 
+##### Sprint 4 wrap-up
+
+Project board at end of sprint 4:
+
+![End of sprint 4 project board](documentation/project-board-spr-4.png)
+
+Points completed: 14
+
+Velocity: 16.25
+
+
 
 
 <a id="tools-and-technologies"></a>
