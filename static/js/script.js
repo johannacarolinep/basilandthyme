@@ -78,10 +78,25 @@ function selectRating(event) {
 }
 
 
-function submitRating(rating) {
+async function submitRating(rating) {
     console.log("Submitting rating of ", rating);
 
+    // prepare POST request
+    const postAddress = '/add-update-rating/';
+    const data = {
+        rating: rating,
+        recipeId: recipeId // from on page script tag
+    };
+
+    // Send POST request and await response
+    const postResponse = await sendPostRequest(postAddress, data);
+
+    if (postResponse.message === 'Post received') {
+        console.log("Response received in script");
+    }
 }
+
+
 
 function prepCommentForm(event) {
     const commentForm = document.getElementById("comments-input");

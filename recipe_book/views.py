@@ -265,6 +265,18 @@ def add_remove_favourite(request):
                 status=400)
 
 
+@require_POST
+def add_update_rating(request):
+    """
+    View to handle POST request (Ratings)
+    """
+    if request.method == 'POST':
+        print("Received request in new function", request.body)
+        return JsonResponse(
+                        {"status": "success", "message": "Post received"},
+                        status=200)
+
+
 class FavouritesList(ListView):
     model = Recipe
     template_name = "recipe_book/favourites.html"
