@@ -45,6 +45,7 @@ function initalizeRating(event) {
     const closeModalBtn2 = document.getElementById("cancel-rating-btn");
     const lastFocusElement = event.currentTarget;
     const starBtns = document.getElementsByClassName("star-btn");
+    const deleteBtn = document.getElementById("delete-rating-btn");
 
     openModal(ratingModal);
     // Adds eventlistener to cancel buttons, to close modal and reset focus
@@ -55,13 +56,68 @@ function initalizeRating(event) {
     for (let btn of starBtns) {
         btn.addEventListener('click', selectRating);
     }
+
+    // add event listener to delete rating button
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', deleteRating);
+    }
+}
+
+function deleteRating() {
+    console.log("Inside delete function");
+    // Create the delete request URL
+
+    const url = "/delete-rating/" + "?recipeId=" + recipeId;
+
+    // Grab the csrf token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // https://testdriven.io/blog/django-ajax-xhr/
+    // Send a delete request to delete the comment
+    fetch(url, {
+            method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data
+            if (data.success) {
+                // If rating deleted, update frontend to reflect deletion WIP
+                console.log("Rating was deleted");
+                const ratingsDisplay = document.getElementById("init-rate-btn");
+                const starIcons = ratingsDisplay.querySelectorAll("i");
+                const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
+                ratingsCount.innerHTML = `(${data.count})`;
+                console.log(ratingsCount);
+                averageRating = data.average;
+                let counter = 1;
+                for (icon of starIcons) {
+                    if (averageRating >= counter) {
+                        icon.className = "fa-solid fa-star"; // Add a full star
+                    } else if (averageRating > counter - 1) {
+                        icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
+                    } else {
+                        icon.className = "fa-regular fa-star"; // Add an empty star
+                    }
+                    counter++;
+                }
+
+            } else {
+                // If rating not deleted
+                console.log("Something went wrong.")
+            }
+        });
+
 }
 
 function selectRating(event) {
     selectedRating = event.currentTarget.getAttribute("data-rating-value");
     const submitRatingBtn = document.getElementById("submit-rating-btn");
     submitRatingBtn.removeAttribute("disabled");
-    console.log("Rating is ", selectedRating);
 
     // style buttons to show selection
     const starBtns = document.getElementsByClassName("star-btn");

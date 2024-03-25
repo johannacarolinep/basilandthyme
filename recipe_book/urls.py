@@ -9,4 +9,5 @@ urlpatterns = [
     path('favourites/', views.FavouritesList.as_view(), name='favourites_page'),
     path('add-remove-favourite/', views.add_remove_favourite, name='add_remove_favourite'),
     path('add-update-rating/', views.add_update_rating, name='add_update_rating'),
+    path('delete-rating/', views.delete_rating, name='delete_rating'),
 ]

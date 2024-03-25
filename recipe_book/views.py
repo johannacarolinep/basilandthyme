@@ -1,7 +1,7 @@
 import json
 from django.db import models
 from django.views.generic import ListView, DetailView
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_http_methods
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q
@@ -321,6 +321,41 @@ def add_update_rating(request):
             return JsonResponse(
                             {"success": False, "message": "Unauthorised"},
                             status=401)
+
+
+@require_http_methods(["DELETE"])
+def delete_rating(request):
+    if request.method == 'DELETE':
+        user = request.user
+        if user.is_authenticated:
+            try:
+                recipe_id = request.GET.get("recipeId")
+                try:
+                    existing_rating = Rating.objects.get(
+                        recipe=recipe_id, user=user.id)
+                    existing_rating.delete()
+                    rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
+                    recipe_average = Rating.get_recipe_avg_rating(recipe_id)
+                    return JsonResponse(
+                        {"success": True,
+                            "message": "Rating deleted",
+                            "count": rating_count,
+                            "average": recipe_average},
+                        status=200)
+
+                except Rating.DoesNotExist:
+                    return JsonResponse(
+                        {"success": False, "message": "Rating does not exist"},
+                        status=400)
+
+            except json.JSONDecodeError:
+                return JsonResponse(
+                    {"success": False, "message": "Invalid JSON"},
+                    status=400)
+        else:
+            return JsonResponse(
+                        {"success": False, "message": "Unauthorised"},
+                        status=401)
 
 
 class FavouritesList(ListView):
