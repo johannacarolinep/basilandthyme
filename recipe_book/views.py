@@ -271,10 +271,56 @@ def add_update_rating(request):
     View to handle POST request (Ratings)
     """
     if request.method == 'POST':
-        print("Received request in new function", request.body)
-        return JsonResponse(
-                        {"status": "success", "message": "Post received"},
-                        status=200)
+        # Get user
+        user = request.user
+        if user.is_authenticated:
+            try:
+                data = json.loads(request.body)
+                recipe_id = data.get("recipeId")
+                rating_value = data.get("rating")
+
+            except json.JSONDecodeError:
+                return JsonResponse(
+                    {"success": False, "message": "Invalid JSON"},
+                    status=400)
+
+            # check if there is an existing rating
+            try:
+                existing_rating = Rating.objects.get(
+                    recipe=recipe_id, user=user.id)
+            except Rating.DoesNotExist:
+                existing_rating = None
+
+            if not existing_rating:
+                # create a new rating
+                new_rating = Rating.objects.create(
+                    user=user, recipe_id=recipe_id, rating=rating_value)
+                new_rating.save()
+                rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
+                recipe_average = Rating.get_recipe_avg_rating(recipe_id)
+                return JsonResponse(
+                    {"success": True,
+                     "message": "New rating created",
+                     "count": rating_count,
+                     "average": recipe_average},
+                    status=200)
+
+            else:
+                # update existing rating
+                existing_rating.rating = data.get("rating")
+                existing_rating.save()
+                rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
+                recipe_average = Rating.get_recipe_avg_rating(recipe_id)
+                return JsonResponse(
+                    {"success": True,
+                     "message": "Rating updated",
+                     "count": rating_count,
+                     "average": recipe_average},
+                    status=200)
+        else:
+            return JsonResponse(
+                            {"success": False, "message": "Unauthorised"},
+                            status=401)
 
 
 class FavouritesList(ListView):
