@@ -134,6 +134,8 @@ class RecipeDetailView(DetailView):
         context['avg_rating'] = Rating.get_recipe_avg_rating(recipe.id)
         context['rating_count'] = Rating.get_recipe_no_of_ratings(recipe.id)
         context['stars_range'] = range(1, 6)
+        context['user_rating'] = Rating.get_user_rating_of_recipe(
+            user.id, recipe.id)
         return context
 
     def post(self, request, *args, **kwargs):

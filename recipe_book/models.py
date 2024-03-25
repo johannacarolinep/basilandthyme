@@ -245,3 +245,13 @@ class Rating(models.Model):
             Integer: The number of ratings for a given recipe.
         """
         return cls.objects.filter(recipe=recipe_id).count()
+
+    @classmethod
+    def get_user_rating_of_recipe(cls, user_id, recipe_id):
+        try:
+            user_rating = cls.objects.get(
+                recipe=recipe_id, user=user_id).rating
+        except cls.DoesNotExist:
+            user_rating = None
+
+        return user_rating
