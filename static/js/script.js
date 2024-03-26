@@ -50,45 +50,53 @@ function initalizeRating(event, recipeListId = undefined) {
     const closeModalBtn2 = document.getElementById("cancel-rating-btn");
     const clickedRatingDisplay = event.currentTarget;
     const deleteBtn = document.getElementById("delete-rating-btn");
+    const userRating = event.currentTarget.getAttribute("data-user-rating");
+    const modalIntro = document.getElementById("rate-modal-intro");
+    const modalDeleteInstr = document.getElementById("rate-modal-delete-instr");
+    const modalStarDiv = document.getElementById("rate-modal-stars");
+    const submitBtn = document.getElementById("submit-rating-btn");
 
-    if (window.location.pathname === "/recipes/") {
-        const user_rating = event.currentTarget.getAttribute("data-user-rating");
-        const modalIntro = document.getElementById("rate-modal-intro");
-        const modalDeleteInstr = document.getElementById("rate-modal-delete-instr");
-        const modalStarDiv = document.getElementById("rate-modal-stars");
-
-        // build modal content
-        if (user_rating != "None") {
-            modalIntro.innerHTML = `You have previously given this recipe <span class="fw-bold">${user_rating}
+    // build modal content
+    submitBtn.setAttribute("disabled", true);
+    if (userRating != "None" && userRating != "null") {
+        modalIntro.innerHTML = `You have previously given this recipe <span class="fw-bold">${userRating}
         stars</span>.
     <br>If you wish, you can edit your rating by simply submitting a new rating.`;
-            modalDeleteInstr.innerHTML = 'Lastly, you can remove your existing rating by clicking "Delete" below.';
-        } else {
-            modalIntro.innerHTML = 'Give this recipe a rating by selecting a star below and clicking "Submit".';
+        modalDeleteInstr.innerHTML = 'Lastly, you can remove your existing rating by clicking "Delete" below.';
+        if (deleteBtn.classList.contains("d-none")) {
+            deleteBtn.classList.remove("d-none");
         }
-        let starButtons = "";
-        for (let i = 1; i <= 5; i++) {
-            if (user_rating != "None" && user_rating >= i) {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+    } else {
+        modalIntro.innerHTML = 'Give this recipe a rating by selecting a star below and clicking "Submit".';
+        modalDeleteInstr.innerHTML = "";
+        if (!deleteBtn.classList.contains("d-none")) {
+            deleteBtn.classList.add("d-none");
+        }
+    }
+    let starButtons = "";
+    for (let i = 1; i <= 5; i++) {
+        if (userRating != "None" && userRating >= i) {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
             aria-label="Give a ${i} star rating.">
             <i class="fa-solid fa-star" aria-hidden="true"></i>
         </button>`; // Add a full star
-            } else if (user_rating != "None" && user_rating > i - 1) {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+        } else if (userRating != "None" && userRating > i - 1) {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
             aria-label="Give a ${i} star rating.">
             <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
         </button>`; // Add a half star
-            } else {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+        } else {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
             aria-label="Give a ${i} star rating.">
             <i class="fa-regular fa-star" aria-hidden="true"></i>
         </button>`; // Add an empty star
-            }
         }
-        modalStarDiv.innerHTML = starButtons;
     }
+    modalStarDiv.innerHTML = starButtons;
+
     const starBtns = document.getElementsByClassName("star-btn");
 
+    // Open modal and add event listeners to its buttons
     openModal(ratingModal);
     // Adds eventlistener to cancel buttons, to close modal and reset focus
     closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
@@ -139,13 +147,14 @@ function deleteRating(recipeId) {
                     console.log("On recipes page!");
                     const recipeCard = document.getElementById(recipeId);
                     const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+                    ratingsDisplay.setAttribute("data-user-rating", "None")
                     updateRatingsDisplay(data, ratingsDisplay);
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
                 } else {
                     console.log("On recipe page.")
                     ratingsDisplay = document.getElementById("init-rate-btn");
-                    console.log("Ratingdsdisplay", ratingsDisplay);
+                    ratingsDisplay.setAttribute("data-user-rating", "None")
                     updateRatingsDisplay(data, ratingsDisplay);
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
@@ -200,11 +209,13 @@ async function submitRating(rating, recipeId) {
         if (window.location.pathname === "/recipes/") {
             const recipeCard = document.getElementById(recipeId);
             const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+            ratingsDisplay.setAttribute("data-user-rating", rating)
             updateRatingsDisplay(postResponse, ratingsDisplay); // update stars in card
             closeModal(modal, ratingsDisplay); // close modal and set focus on button in the card
         } else {
             // On recipe page
             ratingsDisplay = document.getElementById("init-rate-btn");
+            ratingsDisplay.setAttribute("data-user-rating", rating)
             updateRatingsDisplay(postResponse, ratingsDisplay); // update stars on page
             closeModal(modal, ratingsDisplay); // close modal and set focus on button
         }

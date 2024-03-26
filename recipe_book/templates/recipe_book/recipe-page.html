@@ -23,7 +23,7 @@
                         <!-- Improve ARIA accessibility ?? -->
                         <div class="me-1">
                             <!-- Button to open modal -->
-                            <button id="init-rate-btn" class="icon-button">
+                            <button id="init-rate-btn" class="icon-button" data-user-rating="{{ user_rating }}">
                                 {% for i in stars_range %}
                                 {% if avg_rating >= i %}
                                 <i class="fa-solid fa-star" aria-hidden="true"></i>
@@ -189,53 +189,19 @@
                 </h1>
                 <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" id="close-rating-btn"
                     aria-label="Close"></button>
-                {% if user.is_authenticated and user_rating != None %}
-                <p>
-                    You have previously given this recipe <span class="fw-bold">{{ user_rating }}
-                        stars</span>.
-                    <br>If you wish, you can edit your rating by simply submitting a new rating.
-                </p>
-                {% else %}
-                <p class="mt-2">
-                    Give this recipe a rating by selecting a star below and clicking "Submit".
-                </p>
-                {% endif %}
-                <div class="d-flex fs-1 my-3 justify-content-center">
-                    {% for i in stars_range %}
-                    {% if user_rating != None and user_rating >= i %}
-                    <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
-                        aria-label="Give a {{ i }} star rating. Avg rating is {{ avg_rating }}">
-                        <i class="fa-solid fa-star" aria-hidden="true"></i>
-                    </button>
-                    {% elif user_rating != None and user_rating > i|add:"-1" %}
-                    <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
-                        aria-label="Give a {{ i }} star rating. Avg rating is {{ avg_rating }}">
-                        <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
-                    </button>
-                    {% else %}
-                    <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
-                        aria-label="Give a {{ i }} star rating. Avg rating is {{ avg_rating }}">
-                        <i class="fa-regular fa-star" aria-hidden="true"></i>
-                    </button>
-                    {% endif %}
-                    {% endfor %}
+                <p id="rate-modal-intro"></p>
+                <div id="rate-modal-stars" class="d-flex fs-1 my-3 justify-content-center">
                 </div>
-                {% if user.is_authenticated and user_rating != None %}
-                <p>
-                    Lastly, you can remove your existing rating by clicking "Delete" below.
-                </p>
-                {% endif %}
+                <p id="rate-modal-delete-instr"></p>
                 <div class="d-flex mt-3 justify-content-center flex-wrap">
                     <button class="btn mt-2 d-inline-block me-2 comment-delete-cancel"
                         aria-label="Cancel and close modal" id="cancel-rating-btn">
                         Cancel
                     </button>
-                    {% if user.is_authenticated and user_rating != None %}
                     <button class="btn mt-2 d-inline-block me-2 delete" aria-label="Delete existing rating"
                         id="delete-rating-btn">
                         Delete
                     </button>
-                    {% endif %}
                     <button class="btn mt-2 d-inline-block ms-2 submit-btn" aria-label="Submit rating"
                         id="submit-rating-btn" disabled>
                         Submit
