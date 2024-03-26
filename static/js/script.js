@@ -119,7 +119,7 @@ function deleteRating(recipeId) {
 
 }
 
-function selectRating(event) {
+function selectRating(event, recipeId) {
     selectedRating = event.currentTarget.getAttribute("data-rating-value");
     const submitRatingBtn = document.getElementById("submit-rating-btn");
     submitRatingBtn.removeAttribute("disabled");
@@ -135,41 +135,41 @@ function selectRating(event) {
     }
 
     // Add event listener to submitbutton
-    submitRatingBtn.addEventListener('click', () => submitRating(selectedRating))
+    submitRatingBtn.addEventListener('click', () => submitRating(selectedRating, recipeId))
 }
 
 
-async function submitRating(rating) {
+async function submitRating(rating, recipeId) {
 
-    const ratingsDisplay = document.getElementById("init-rate-btn");
-    const starIcons = ratingsDisplay.querySelectorAll("i");
-    const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
+    // const ratingsDisplay = document.getElementById("init-rate-btn");
+    // const starIcons = ratingsDisplay.querySelectorAll("i");
+    // const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
 
     // prepare POST request
     const postAddress = '/add-update-rating/';
     const data = {
         rating: rating,
-        recipeId: recipeId // from on page script tag
+        recipeId: recipeId
     };
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
     if (postResponse.success) {
         console.log("Rating either updated or added");
-        ratingsCount.innerHTML = `(${postResponse.count})`;
-        console.log(ratingsCount);
-        averageRating = postResponse.average;
-        let counter = 1;
-        for (icon of starIcons) {
-            if (averageRating >= counter) {
-                icon.className = "fa-solid fa-star"; // Add a full star
-            } else if (averageRating > counter - 1) {
-                icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
-            } else {
-                icon.className = "fa-regular fa-star"; // Add an empty star
-            }
-            counter++;
-        }
+        // ratingsCount.innerHTML = `(${postResponse.count})`;
+        // console.log(ratingsCount);
+        // averageRating = postResponse.average;
+        // let counter = 1;
+        // for (icon of starIcons) {
+        //     if (averageRating >= counter) {
+        //         icon.className = "fa-solid fa-star"; // Add a full star
+        //     } else if (averageRating > counter - 1) {
+        //         icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
+        //     } else {
+        //         icon.className = "fa-regular fa-star"; // Add an empty star
+        //     }
+        //     counter++;
+        // }
 
     } else {
         console.log("Bad request");
