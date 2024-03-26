@@ -38,7 +38,12 @@ function initializeScript() {
 }
 
 
-function initalizeRating(event) {
+function initalizeRating(event, recipeListId = undefined) {
+    // if recipeListId passed in
+    if (recipeListId) {
+        recipeId = recipeListId;
+    }
+    console.log("Recipe id:", recipeId);
     // open modal
     const ratingModal = document.getElementById("ratings-modal");
     const closeModalBtn1 = document.getElementById("close-rating-btn");
@@ -54,23 +59,23 @@ function initalizeRating(event) {
 
     // add event listener to star buttons
     for (let btn of starBtns) {
-        btn.addEventListener('click', selectRating);
+        btn.addEventListener('click', (event) => selectRating(event, recipeId));
     }
 
     // add event listener to delete rating button
     if (deleteBtn) {
-        deleteBtn.addEventListener('click', deleteRating);
+        deleteBtn.addEventListener('click', () => deleteRating(recipeId));
     }
 }
 
-function deleteRating() {
+function deleteRating(recipeId) {
     console.log("Inside delete function");
     // Create the delete request URL
 
     const url = "/delete-rating/" + "?recipeId=" + recipeId;
 
     // Grab the csrf token
-    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     // https://testdriven.io/blog/django-ajax-xhr/
     // Send a delete request to delete the comment
