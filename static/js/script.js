@@ -160,20 +160,18 @@ async function submitRating(rating, recipeId) {
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
     if (postResponse.success) {
+        const modal = document.getElementById("ratings-modal");
         if (window.location.pathname === "/recipes/") {
-            console.log("On recipes page!");
             const recipeCard = document.getElementById(recipeId);
             const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
-            updateRatingsDisplay(postResponse, ratingsDisplay);
-            const modal = document.getElementById("ratings-modal");
-            closeModal(modal, ratingsDisplay);
+            updateRatingsDisplay(postResponse, ratingsDisplay); // update stars in card
+            closeModal(modal, ratingsDisplay); // close modal and set focus on button in the card
         } else {
-            console.log("On recipe page.")
+            // On recipe page
             ratingsDisplay = document.getElementById("init-rate-btn");
-            console.log("Ratingdsdisplay", ratingsDisplay);
-            updateRatingsDisplay(postResponse, ratingsDisplay);
-            const modal = document.getElementById("ratings-modal");
-            closeModal(modal, ratingsDisplay);
+            updateRatingsDisplay(postResponse, ratingsDisplay); // update stars on page
+            closeModal(modal, ratingsDisplay); // close modal and set focus on button
+
         }
 
     } else {

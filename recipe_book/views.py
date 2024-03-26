@@ -2,8 +2,7 @@ import json
 from django.db import models
 from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST, require_http_methods
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.db.models import Q
 from .models import Recipe, Favourite, Rating
 from .forms import CommentForm
@@ -30,9 +29,17 @@ class RecipeListView(ListView):
         self.query = self.request.GET.get("q")
         # https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate
         base_queryset = Recipe.objects.filter(status=1).annotate(
-            avg_rating=models.Avg('rating_recipe__rating'),  # Assume 'rating' is a field in the Rating model for the score
-            ratings_count=models.Count('rating_recipe')  # Count ratings using the ID of the Rating model
+            avg_rating=models.Avg('rating_recipe__rating'),
+            ratings_count=models.Count('rating_recipe'),
         )
+        # if logged in user, annotate recipes with users rating of recipe
+        user = self.request.user
+        if user.is_authenticated:
+            print("in if statement")
+            base_queryset = base_queryset.annotate(
+                user_rating=models.F('rating_recipe__rating')
+                )
+
         if self.query:
             match self.query:
                 case "all":
