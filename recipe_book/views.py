@@ -293,9 +293,8 @@ def add_update_rating(request):
 
             if not existing_rating:
                 # create a new rating
-                new_rating = Rating.objects.create(
+                Rating.objects.create(
                     user=user, recipe_id=recipe_id, rating=rating_value)
-                new_rating.save()
                 rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(

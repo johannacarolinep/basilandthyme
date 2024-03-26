@@ -38,17 +38,165 @@ function initializeScript() {
 }
 
 
-function initalizeRating(event) {
+function initalizeRating(event, recipeListId = undefined) {
+    // if recipeListId passed in
+    if (recipeListId) {
+        recipeId = recipeListId;
+    }
+    console.log("Recipe id:", recipeId);
+    console.log("Current target, initialize:", event.currentTarget);
     // open modal
     const ratingModal = document.getElementById("ratings-modal");
     const closeModalBtn1 = document.getElementById("close-rating-btn");
     const closeModalBtn2 = document.getElementById("cancel-rating-btn");
-    const lastFocusElement = event.currentTarget;
+    const clickedRatingDisplay = event.currentTarget;
+    const starBtns = document.getElementsByClassName("star-btn");
+    const deleteBtn = document.getElementById("delete-rating-btn");
 
     openModal(ratingModal);
     // Adds eventlistener to cancel buttons, to close modal and reset focus
-    closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
-    closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
+    closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
+    closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
+
+    // add event listener to star buttons
+    for (let btn of starBtns) {
+        btn.addEventListener('click', (event) => selectRating(event, recipeId));
+    }
+
+    // add event listener to delete rating button
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', prepRatingDelete);
+    }
+}
+
+function prepRatingDelete(event) {
+    deleteRating(recipeId);
+    event.currentTarget.removeEventListener('click', prepRatingDelete);
+}
+
+function deleteRating(recipeId) {
+    console.log("Inside delete function");
+    // Create the delete request URL
+
+    const url = "/delete-rating/" + "?recipeId=" + recipeId;
+
+    // Grab the csrf token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // https://testdriven.io/blog/django-ajax-xhr/
+    // Send a delete request to delete the comment
+    fetch(url, {
+            method: "DELETE",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data
+            if (data.success) {
+                // If rating deleted, update frontend to reflect deletion WIP
+                console.log("Rating was deleted");
+                if (window.location.pathname === "/recipes/") {
+                    console.log("On recipes page!");
+                    const recipeCard = document.getElementById(recipeId);
+                    const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+                    updateRatingsDisplay(data, ratingsDisplay);
+                    const modal = document.getElementById("ratings-modal");
+                    closeModal(modal, ratingsDisplay);
+                } else {
+                    console.log("On recipe page.")
+                    ratingsDisplay = document.getElementById("init-rate-btn");
+                    console.log("Ratingdsdisplay", ratingsDisplay);
+                    updateRatingsDisplay(data, ratingsDisplay);
+                    const modal = document.getElementById("ratings-modal");
+                    closeModal(modal, ratingsDisplay);
+                }
+
+            } else {
+                // If rating not deleted
+                console.log("Something went wrong.")
+            }
+        });
+
+}
+
+function selectRating(event, recipeId) {
+    selectedRating = event.currentTarget.getAttribute("data-rating-value");
+    const submitRatingBtn = document.getElementById("submit-rating-btn");
+    submitRatingBtn.removeAttribute("disabled");
+
+    // style buttons to show selection
+    const starBtns = document.getElementsByClassName("star-btn");
+    for (let btn of starBtns) {
+        if (selectedRating >= btn.getAttribute("data-rating-value")) {
+            btn.classList.add("selected");
+        } else {
+            btn.classList.remove("selected");
+        }
+    }
+
+    // Add event listener to submitbutton
+    submitRatingBtn.addEventListener('click', prepRatingSubmit)
+}
+
+function prepRatingSubmit(event) {
+    submitRating(selectedRating, recipeId)
+    event.currentTarget.removeEventListener('click', prepRatingSubmit);
+}
+
+
+async function submitRating(rating, recipeId) {
+
+    // prepare POST request
+    const postAddress = '/add-update-rating/';
+    const data = {
+        rating: rating,
+        recipeId: recipeId
+    };
+
+    // Send POST request and await response
+    const postResponse = await sendPostRequest(postAddress, data);
+    if (postResponse.success) {
+        if (window.location.pathname === "/recipes/") {
+            console.log("On recipes page!");
+            const recipeCard = document.getElementById(recipeId);
+            const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+            updateRatingsDisplay(postResponse, ratingsDisplay);
+            const modal = document.getElementById("ratings-modal");
+            closeModal(modal, ratingsDisplay);
+        } else {
+            console.log("On recipe page.")
+            ratingsDisplay = document.getElementById("init-rate-btn");
+            console.log("Ratingdsdisplay", ratingsDisplay);
+            updateRatingsDisplay(postResponse, ratingsDisplay);
+            const modal = document.getElementById("ratings-modal");
+            closeModal(modal, ratingsDisplay);
+        }
+
+    } else {
+        console.log("Bad request");
+    }
+}
+
+function updateRatingsDisplay(data, ratingsDisplay) {
+    const starIcons = ratingsDisplay.querySelectorAll("i");
+    const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
+    ratingsCount.innerHTML = `(${data.count})`;
+    averageRating = data.average;
+    let counter = 1;
+    for (icon of starIcons) {
+        if (averageRating >= counter) {
+            icon.className = "fa-solid fa-star"; // Add a full star
+        } else if (averageRating > counter - 1) {
+            icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
+        } else {
+            icon.className = "fa-regular fa-star"; // Add an empty star
+        }
+        counter++;
+    }
 }
 
 

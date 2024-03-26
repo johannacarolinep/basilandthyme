@@ -44,18 +44,19 @@ function initalizeRating(event, recipeListId = undefined) {
         recipeId = recipeListId;
     }
     console.log("Recipe id:", recipeId);
+    console.log("Current target, initialize:", event.currentTarget);
     // open modal
     const ratingModal = document.getElementById("ratings-modal");
     const closeModalBtn1 = document.getElementById("close-rating-btn");
     const closeModalBtn2 = document.getElementById("cancel-rating-btn");
-    const lastFocusElement = event.currentTarget;
+    const clickedRatingDisplay = event.currentTarget;
     const starBtns = document.getElementsByClassName("star-btn");
     const deleteBtn = document.getElementById("delete-rating-btn");
 
     openModal(ratingModal);
     // Adds eventlistener to cancel buttons, to close modal and reset focus
-    closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
-    closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, lastFocusElement));
+    closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
+    closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
 
     // add event listener to star buttons
     for (let btn of starBtns) {
@@ -64,8 +65,13 @@ function initalizeRating(event, recipeListId = undefined) {
 
     // add event listener to delete rating button
     if (deleteBtn) {
-        deleteBtn.addEventListener('click', () => deleteRating(recipeId));
+        deleteBtn.addEventListener('click', prepRatingDelete);
     }
+}
+
+function prepRatingDelete(event) {
+    deleteRating(recipeId);
+    event.currentTarget.removeEventListener('click', prepRatingDelete);
 }
 
 function deleteRating(recipeId) {
@@ -93,22 +99,20 @@ function deleteRating(recipeId) {
             if (data.success) {
                 // If rating deleted, update frontend to reflect deletion WIP
                 console.log("Rating was deleted");
-                const ratingsDisplay = document.getElementById("init-rate-btn");
-                const starIcons = ratingsDisplay.querySelectorAll("i");
-                const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
-                ratingsCount.innerHTML = `(${data.count})`;
-                console.log(ratingsCount);
-                averageRating = data.average;
-                let counter = 1;
-                for (icon of starIcons) {
-                    if (averageRating >= counter) {
-                        icon.className = "fa-solid fa-star"; // Add a full star
-                    } else if (averageRating > counter - 1) {
-                        icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
-                    } else {
-                        icon.className = "fa-regular fa-star"; // Add an empty star
-                    }
-                    counter++;
+                if (window.location.pathname === "/recipes/") {
+                    console.log("On recipes page!");
+                    const recipeCard = document.getElementById(recipeId);
+                    const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+                    updateRatingsDisplay(data, ratingsDisplay);
+                    const modal = document.getElementById("ratings-modal");
+                    closeModal(modal, ratingsDisplay);
+                } else {
+                    console.log("On recipe page.")
+                    ratingsDisplay = document.getElementById("init-rate-btn");
+                    console.log("Ratingdsdisplay", ratingsDisplay);
+                    updateRatingsDisplay(data, ratingsDisplay);
+                    const modal = document.getElementById("ratings-modal");
+                    closeModal(modal, ratingsDisplay);
                 }
 
             } else {
@@ -135,15 +139,16 @@ function selectRating(event, recipeId) {
     }
 
     // Add event listener to submitbutton
-    submitRatingBtn.addEventListener('click', () => submitRating(selectedRating, recipeId))
+    submitRatingBtn.addEventListener('click', prepRatingSubmit)
+}
+
+function prepRatingSubmit(event) {
+    submitRating(selectedRating, recipeId)
+    event.currentTarget.removeEventListener('click', prepRatingSubmit);
 }
 
 
 async function submitRating(rating, recipeId) {
-
-    // const ratingsDisplay = document.getElementById("init-rate-btn");
-    // const starIcons = ratingsDisplay.querySelectorAll("i");
-    // const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
 
     // prepare POST request
     const postAddress = '/add-update-rating/';
@@ -155,27 +160,44 @@ async function submitRating(rating, recipeId) {
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
     if (postResponse.success) {
-        console.log("Rating either updated or added");
-        // ratingsCount.innerHTML = `(${postResponse.count})`;
-        // console.log(ratingsCount);
-        // averageRating = postResponse.average;
-        // let counter = 1;
-        // for (icon of starIcons) {
-        //     if (averageRating >= counter) {
-        //         icon.className = "fa-solid fa-star"; // Add a full star
-        //     } else if (averageRating > counter - 1) {
-        //         icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
-        //     } else {
-        //         icon.className = "fa-regular fa-star"; // Add an empty star
-        //     }
-        //     counter++;
-        // }
+        if (window.location.pathname === "/recipes/") {
+            console.log("On recipes page!");
+            const recipeCard = document.getElementById(recipeId);
+            const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+            updateRatingsDisplay(postResponse, ratingsDisplay);
+            const modal = document.getElementById("ratings-modal");
+            closeModal(modal, ratingsDisplay);
+        } else {
+            console.log("On recipe page.")
+            ratingsDisplay = document.getElementById("init-rate-btn");
+            console.log("Ratingdsdisplay", ratingsDisplay);
+            updateRatingsDisplay(postResponse, ratingsDisplay);
+            const modal = document.getElementById("ratings-modal");
+            closeModal(modal, ratingsDisplay);
+        }
 
     } else {
         console.log("Bad request");
     }
 }
 
+function updateRatingsDisplay(data, ratingsDisplay) {
+    const starIcons = ratingsDisplay.querySelectorAll("i");
+    const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
+    ratingsCount.innerHTML = `(${data.count})`;
+    averageRating = data.average;
+    let counter = 1;
+    for (icon of starIcons) {
+        if (averageRating >= counter) {
+            icon.className = "fa-solid fa-star"; // Add a full star
+        } else if (averageRating > counter - 1) {
+            icon.className = "fa-solid fa-star-half-stroke"; // Add a half star
+        } else {
+            icon.className = "fa-regular fa-star"; // Add an empty star
+        }
+        counter++;
+    }
+}
 
 
 function prepCommentForm(event) {
