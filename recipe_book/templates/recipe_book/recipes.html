@@ -38,6 +38,7 @@
                         <div class="rating">
                             <!-- Button to open modal -->
                             <button class="icon-button init-rate-btns" data-object-index="{{ forloop.counter0 }}"
+                                data-user-rating="{{ recipe.user_rating }}"
                                 aria-label="Avg rating is {{ recipe.avg_rating }}">
                                 {% for i in stars_range %}
                                 {% if recipe.avg_rating >= i %}
@@ -49,7 +50,6 @@
                                 {% endif %}
                                 {% endfor %}
                                 <span class="ratings-count">({{ recipe.ratings_count }})</span>
-                                {{ recipe.user_rating }}
                             </button>
                         </div>
                         <div class="category fs-rem-120">
@@ -129,17 +129,10 @@
                 </h1>
                 <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" id="close-rating-btn"
                     aria-label="Close"></button>
-                {% if user.is_authenticated and user_rating != None %}
-                <p>
-                    You have previously given this recipe <span class="fw-bold">{{ user_rating }} stars</span>.
-                    <br>If you wish, you can edit your rating by simply submitting a new rating.
+                <p id="rate-modal-intro">
+                    Select a rating from the stars below and click "submit".
                 </p>
-                {% else %}
-                <p class="mt-2">
-                    Give this recipe a rating by selecting a star below and clicking "Submit".
-                </p>
-                {% endif %}
-                <div class="d-flex fs-1 my-3 justify-content-center">
+                <div id="rate-modal-stars" class="d-flex fs-1 my-3 justify-content-center">
                     {% for i in stars_range %}
                     {% if user_rating != None and user_rating >= i %}
                     <button class="icon-button mx-1 star-btn" data-rating-value="{{ i }}"
@@ -159,11 +152,8 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-                {% if user.is_authenticated and user_rating != None %}
-                <p>
-                    Lastly, you can remove your existing rating by clicking "Delete" below.
+                <p id="rate-modal-delete-instr">
                 </p>
-                {% endif %}
                 <div class="d-flex mt-3 justify-content-center flex-wrap">
                     <button class="btn mt-2 d-inline-block me-2 comment-delete-cancel"
                         aria-label="Cancel and close modal" id="cancel-rating-btn">
