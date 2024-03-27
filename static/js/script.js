@@ -214,6 +214,10 @@ async function submitRating(rating, recipeId) {
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
+    const toast = document.getElementById('toast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+    const toastTitle = toast.querySelector("#toast-title");
+    const toastBody = toast.querySelector("#toast-body");
     if (postResponse.success) {
         const modal = document.getElementById("ratings-modal");
         if (window.location.pathname === "/recipes/") {
@@ -233,6 +237,9 @@ async function submitRating(rating, recipeId) {
     } else {
         console.log("Bad request");
     }
+    toastTitle.innerText = "Ratings";
+    toastBody.innerText = postResponse.message;
+    toastBootstrap.show()
 }
 
 function updateRatingsDisplay(data, ratingsDisplay) {

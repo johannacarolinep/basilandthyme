@@ -288,7 +288,8 @@ def add_update_rating(request):
 
             except json.JSONDecodeError:
                 return JsonResponse(
-                    {"success": False, "message": "Invalid JSON"},
+                    {"success": False,
+                     "message": "Sorry! Something went wrong."},
                     status=400)
 
             # check if there is an existing rating
@@ -306,7 +307,7 @@ def add_update_rating(request):
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
                     {"success": True,
-                     "message": "New rating created",
+                     "message": rating_value + " star rating added to " + Recipe.objects.get(id=recipe_id).title,
                      "count": rating_count,
                      "average": recipe_average},
                     status=200)
@@ -319,13 +320,13 @@ def add_update_rating(request):
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
                     {"success": True,
-                     "message": "Rating updated",
+                     "message": "Rating updated for " + Recipe.objects.get(id=recipe_id).title,
                      "count": rating_count,
                      "average": recipe_average},
                     status=200)
         else:
             return JsonResponse(
-                            {"success": False, "message": "Unauthorised"},
+                            {"success": False, "message": "You need to be logged in to rate recipes!"},
                             status=401)
 
 
