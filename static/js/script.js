@@ -146,14 +146,15 @@ function deleteRating(recipeId) {
                 "X-CSRFToken": csrfToken,
             },
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
+            data.status = status;
             // Handle the response data
             // Toast
             const toast = document.getElementById('toast');
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
             const toastBody = toast.querySelector("#toast-body");
-            if (data.success) {
+            if (data.status === 200) {
                 // If rating deleted, update frontend to reflect deletion
                 if (window.location.pathname === "/recipes/") {
                     const recipeCard = document.getElementById(recipeId);
@@ -219,7 +220,7 @@ async function submitRating(rating, recipeId) {
     const toast = document.getElementById('toast');
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
     const toastBody = toast.querySelector("#toast-body");
-    if (postResponse.success) {
+    if (postResponse.status === 200) {
         const modal = document.getElementById("ratings-modal");
         if (window.location.pathname === "/recipes/") {
             const recipeCard = document.getElementById(recipeId);
@@ -357,10 +358,10 @@ function editCommentForm(event, commentForm) {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
             // Handle server response
-            if (data.success) {
+            if (status === 200) {
                 // Add success message and update comment body
                 const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
                 const message = document.createElement("p")
@@ -459,10 +460,10 @@ function deleteComment(commentId) {
                 "X-CSRFToken": csrfToken,
             },
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.status)
+        .then((status) => {
             // Handle the response data
-            if (data.success) {
+            if (status === 200) {
                 // If comment deleted, update frontend to reflect deletion
                 const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
                 const comment = deleteButton.closest(".comment-container");
@@ -504,10 +505,10 @@ function submitCommentForm(event, commentForm) {
             },
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
             // Handle the response
-            if (data.success) {
+            if (status === 200) {
                 // If comment was created, call function to update frontend
                 buildComment(data.data);
             } else {
@@ -614,19 +615,22 @@ async function favouritingBtnListener(event, eventRecipeId) {
         const toast = document.getElementById('fave-toast');
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
         const toastBody = toast.querySelector("#fave-toast-body");
-
-        // If favourite was removed
-        if (postResponse.action === 'removed') {
-            if (window.location.pathname === "/favourites/") {
-                removeFavouriteOnFavouritesPage(heartButton);
-            } else {
-                heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-solid', 'fa-regular');
-                heartButton.parentNode.querySelector('p').innerText = "Removed";
+        if (postResponse.status === 200) {
+            // If favourite was removed
+            if (postResponse.action === 'removed') {
+                if (window.location.pathname === "/favourites/") {
+                    removeFavouriteOnFavouritesPage(heartButton);
+                } else {
+                    heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-solid', 'fa-regular');
+                    heartButton.parentNode.querySelector('p').innerText = "Removed";
+                }
+                // If favourite was created
+            } else if (postResponse.action === 'created') {
+                heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
+                heartButton.parentNode.querySelector('p').innerText = "Saved!";
             }
-            // If favourite was created
-        } else if (postResponse.action === 'created') {
-            heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
-            heartButton.parentNode.querySelector('p').innerText = "Saved!";
+        } else {
+            // Handle 400
         }
         toastBody.innerText = postResponse.message;
         toastBootstrap.show()
@@ -663,8 +667,9 @@ function sendPostRequest(postAddress, data) {
             body: JSON.stringify(data)
         })
         // Once response received, convert it to json
-        .then(response => response.json())
-        .then(data => {
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
+            data.status = status;
             return data // Return the response data
         })
 }

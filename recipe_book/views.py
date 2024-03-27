@@ -167,15 +167,15 @@ class RecipeDetailView(DetailView):
                     "date": comment.created_on,
                 }
 
-                return JsonResponse({'success': True, 'data': response_data})
+                return JsonResponse({'data': response_data}, status=200)
 
             # If the form is invalid
             return JsonResponse(
-                {'success': False, 'message': "Comment invalid"}, status=400)
+                {'message': "Comment invalid"}, status=400)
 
         # If the form is invalid
         return JsonResponse(
-            {'success': False, 'message': "You must be logged in to comment"},
+            {'message': "You must be logged in to comment"},
             status=401)
 
     def delete(self, request, *args, **kwargs):
@@ -193,16 +193,15 @@ class RecipeDetailView(DetailView):
         comment = recipe.comments.filter(id=comment_id).first()
         if comment is None:
             return JsonResponse(
-                {'success': False,
-                    'error': 'Comment not found or not authorized to delete'},
+                {'error': 'Comment not found or not authorized to delete'},
                 status=400)
 
         if comment.author == request.user:
             comment.delete()
-            return JsonResponse({'success': True, 'data': "comment deleted"})
+            return JsonResponse({'data': "comment deleted"}, status=200)
         else:
             return JsonResponse(
-                {'success': False, 'data': "not allowed"}, status=401)
+                {'data': "not allowed"}, status=401)
 
     def put(self, request, *args, **kwargs):
         """
@@ -219,11 +218,11 @@ class RecipeDetailView(DetailView):
 
         if comment is None:
             return JsonResponse(
-                {'success': False, 'error': 'Comment not found'}, status=400)
+                {'error': 'Comment not found'}, status=400)
 
         if comment.author != request.user:
             return JsonResponse(
-                {'success': False, 'error': 'Not authorised'}, status=401)
+                {'error': 'Not authorised'}, status=401)
 
         elif data["body"] != "" and data["body"] != comment.body:
             comment.body = data["body"]
@@ -231,10 +230,10 @@ class RecipeDetailView(DetailView):
                 comment.approved = True
             comment.save()
             return JsonResponse(
-                {'success': True, 'data': "Comment updated"})
+                {'data': "Comment updated"}, status=200)
 
         return JsonResponse(
-            {'success': False, 'data': "Comment not updated"}, status=400)
+            {'data': "Comment not updated"}, status=400)
 
 
 @require_POST
@@ -254,8 +253,7 @@ def add_remove_favourite(request):
                 confirm = Favourite.delete_favourite(user_id, recipe_id)
                 if (confirm):
                     return JsonResponse(
-                        {"status": "success",
-                            "action": "removed",
+                        {"action": "removed",
                             "message": "Removed from favourites: " + Recipe.objects.get(id=recipe_id).title},
                         status=200)
             # handle case where recipe is not a favourite of the user
@@ -263,11 +261,11 @@ def add_remove_favourite(request):
                 confirm = Favourite.create_favourite(user_id, recipe_id)
                 if (confirm):
                     return JsonResponse(
-                        {"status": "success", "action": "created", "message": "Added to favourites: " + Recipe.objects.get(id=recipe_id).title},
+                        {"action": "created", "message": "Added to favourites: " + Recipe.objects.get(id=recipe_id).title},
                         status=200)
         except json.JSONDecodeError:
             return JsonResponse(
-                {"status": "error", "message": "Sorry, something went wrong!"},
+                {"message": "Sorry, something went wrong!"},
                 status=400)
 
 
@@ -287,8 +285,7 @@ def add_update_rating(request):
 
             except json.JSONDecodeError:
                 return JsonResponse(
-                    {"success": False,
-                     "message": "Sorry! Something went wrong."},
+                    {"message": "Sorry! Something went wrong."},
                     status=400)
 
             # check if there is an existing rating
@@ -305,10 +302,9 @@ def add_update_rating(request):
                 rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
-                    {"success": True,
-                     "message": rating_value + " star rating added to " + Recipe.objects.get(id=recipe_id).title,
-                     "count": rating_count,
-                     "average": recipe_average},
+                    {"message": rating_value + " star rating added to " + Recipe.objects.get(id=recipe_id).title,
+                        "count": rating_count,
+                        "average": recipe_average},
                     status=200)
 
             else:
@@ -318,14 +314,13 @@ def add_update_rating(request):
                 rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
-                    {"success": True,
-                     "message": "Rating updated for " + Recipe.objects.get(id=recipe_id).title,
-                     "count": rating_count,
-                     "average": recipe_average},
+                    {"message": "Rating updated for " + Recipe.objects.get(id=recipe_id).title,
+                        "count": rating_count,
+                        "average": recipe_average},
                     status=200)
         else:
             return JsonResponse(
-                            {"success": False, "message": "You need to be logged in to rate recipes!"},
+                            {"message": "You need to be logged in to rate recipes!"},
                             status=401)
 
 
@@ -343,27 +338,23 @@ def delete_rating(request):
                     rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                     recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                     return JsonResponse(
-                        {"success": True,
-                            "message": "Rating deleted for recipe " + Recipe.objects.get(id=recipe_id).title,
+                        {"message": "Rating deleted for recipe " + Recipe.objects.get(id=recipe_id).title,
                             "count": rating_count,
                             "average": recipe_average},
                         status=200)
 
                 except Rating.DoesNotExist:
                     return JsonResponse(
-                        {"success": False,
-                            "message": "Sorry, we could not find this rating"},
+                        {"message": "Sorry, we could not find this rating"},
                         status=400)
 
             except json.JSONDecodeError:
                 return JsonResponse(
-                    {"success": False,
-                        "message": "Sorry, something went wrong!"},
+                    {"message": "Sorry, something went wrong!"},
                     status=400)
         else:
             return JsonResponse(
-                        {"success": False,
-                            "message": "You must be logged in to rate recipes"},
+                        {"message": "You must be logged in to rate recipes"},
                         status=401)
 
 
