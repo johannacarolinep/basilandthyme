@@ -35,7 +35,6 @@ class RecipeListView(ListView):
         # if logged in user, annotate recipes with users rating of recipe
         user = self.request.user
         if user.is_authenticated:
-            print("in if statement")
             base_queryset = base_queryset.annotate(
                 user_rating=models.F('rating_recipe__rating')
                 )
@@ -244,8 +243,6 @@ def add_remove_favourite(request):
     View to handle POST request (Favourites buttons)
     """
     if request.method == 'POST':
-        print("Received request", request.body)
-
         try:
             data = json.loads(request.body)
             recipe_id = data.get("recipeId")
@@ -257,18 +254,20 @@ def add_remove_favourite(request):
                 confirm = Favourite.delete_favourite(user_id, recipe_id)
                 if (confirm):
                     return JsonResponse(
-                        {"status": "success", "message": "Favourite removed"},
+                        {"status": "success",
+                            "action": "removed",
+                            "message": "Removed from favourites: " + Recipe.objects.get(id=recipe_id).title},
                         status=200)
             # handle case where recipe is not a favourite of the user
             else:
                 confirm = Favourite.create_favourite(user_id, recipe_id)
                 if (confirm):
                     return JsonResponse(
-                        {"status": "success", "message": "Favourite created"},
+                        {"status": "success", "action": "created", "message": "Added to favourites: " + Recipe.objects.get(id=recipe_id).title},
                         status=200)
         except json.JSONDecodeError:
             return JsonResponse(
-                {"status": "error", "message": "Invalid JSON"},
+                {"status": "error", "message": "Sorry, something went wrong!"},
                 status=400)
 
 

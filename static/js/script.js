@@ -616,7 +616,7 @@ async function favouritingBtnListener(event, eventRecipeId) {
         const toastBody = toast.querySelector("#fave-toast-body");
 
         // If favourite was removed
-        if (postResponse.message === 'Favourite removed') {
+        if (postResponse.action === 'removed') {
             if (window.location.pathname === "/favourites/") {
                 removeFavouriteOnFavouritesPage(heartButton);
             } else {
@@ -624,7 +624,7 @@ async function favouritingBtnListener(event, eventRecipeId) {
                 heartButton.parentNode.querySelector('p').innerText = "Removed";
             }
             // If favourite was created
-        } else if (postResponse.message === 'Favourite created') {
+        } else if (postResponse.action === 'created') {
             heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
             heartButton.parentNode.querySelector('p').innerText = "Saved!";
         }
