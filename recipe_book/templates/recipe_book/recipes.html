@@ -114,27 +114,9 @@
     </div>
 </section>
 
-<!-- TEST TOASTS -->
-<div class="toast-container position-fixed top-0 end-0 p-3 below-header">
-    <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="toast">
-        <div class="toast-header">
-            <!-- <img src="..." class="rounded me-2" alt="..."> -->
-            <strong class="me-auto" id="toast-title">Ratings</strong>
-            <small class="text-body-secondary">just now</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body" id="toast-body"></div>
-    </div>
-    <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="fave-toast">
-        <div class="toast-header">
-            <!-- <img src="..." class="rounded me-2" alt="..."> -->
-            <strong class="me-auto" id="toast-title">Favourites</strong>
-            <small class="text-body-secondary">just now</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body" id="fave-toast-body"></div>
-    </div>
-</div>
+<!-- TOASTS -->
+{% include 'toasts.html' %}
+
 {% endblock %}
 
 {% block modal %}

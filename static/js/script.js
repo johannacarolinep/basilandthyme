@@ -129,7 +129,6 @@ function prepRatingDelete(event) {
 }
 
 function deleteRating(recipeId) {
-    console.log("Inside delete function");
     // Create the delete request URL
 
     const url = "/delete-rating/" + "?recipeId=" + recipeId;
@@ -157,7 +156,6 @@ function deleteRating(recipeId) {
             if (data.success) {
                 // If rating deleted, update frontend to reflect deletion
                 if (window.location.pathname === "/recipes/") {
-                    console.log("On recipes page!");
                     const recipeCard = document.getElementById(recipeId);
                     const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
                     ratingsDisplay.setAttribute("data-user-rating", "None")
@@ -165,7 +163,6 @@ function deleteRating(recipeId) {
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
                 } else {
-                    console.log("On recipe page.")
                     ratingsDisplay = document.getElementById("init-rate-btn");
                     ratingsDisplay.setAttribute("data-user-rating", "None")
                     updateRatingsDisplay(data, ratingsDisplay);
