@@ -15,8 +15,6 @@ import os
 import sys
 import dj_database_url
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 if os.path.isfile('env.py'):
     import env
 
@@ -159,6 +157,8 @@ cloudinary.config(
     api_secret=os.environ.get("CLOUD_SECRET_KEY"),
     secure=True
 )
+import cloudinary.uploader
+import cloudinary.api
 
 
 # Static files (CSS, JavaScript, Images)
