@@ -156,7 +156,7 @@ function deleteRating(recipeId) {
             const toastBody = toast.querySelector("#toast-body");
             if (data.status === 200) {
                 // If rating deleted, update frontend to reflect deletion
-                if (window.location.pathname === "/recipes/") {
+                if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
                     const recipeCard = document.getElementById(recipeId);
                     const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
                     ratingsDisplay.setAttribute("data-user-rating", "None")
@@ -178,7 +178,6 @@ function deleteRating(recipeId) {
             toastBody.innerText = data.message;
             toastBootstrap.show()
         });
-
 }
 
 function selectRating(event, recipeId) {
@@ -222,7 +221,7 @@ async function submitRating(rating, recipeId) {
     const toastBody = toast.querySelector("#toast-body");
     if (postResponse.status === 200) {
         const modal = document.getElementById("ratings-modal");
-        if (window.location.pathname === "/recipes/") {
+        if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
             const recipeCard = document.getElementById(recipeId);
             const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
             ratingsDisplay.setAttribute("data-user-rating", rating)
@@ -600,6 +599,7 @@ function addCategoryQuery(event) {
 async function favouritingBtnListener(event, eventRecipeId) {
 
     const heartButton = event.currentTarget;
+    console.log("In function to remove favourite")
 
     if (userId !== "None") {
         // User is logged in, prepare POST request
