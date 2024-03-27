@@ -345,23 +345,26 @@ def delete_rating(request):
                     recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                     return JsonResponse(
                         {"success": True,
-                            "message": "Rating deleted",
+                            "message": "Rating deleted for recipe " + Recipe.objects.get(id=recipe_id).title,
                             "count": rating_count,
                             "average": recipe_average},
                         status=200)
 
                 except Rating.DoesNotExist:
                     return JsonResponse(
-                        {"success": False, "message": "Rating does not exist"},
+                        {"success": False,
+                            "message": "Sorry, we could not find this rating"},
                         status=400)
 
             except json.JSONDecodeError:
                 return JsonResponse(
-                    {"success": False, "message": "Invalid JSON"},
+                    {"success": False,
+                        "message": "Sorry, something went wrong!"},
                     status=400)
         else:
             return JsonResponse(
-                        {"success": False, "message": "Unauthorised"},
+                        {"success": False,
+                            "message": "You must be logged in to rate recipes"},
                         status=401)
 
 

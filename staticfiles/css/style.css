@@ -13,6 +13,8 @@ main {
     flex: 1 0 auto;
 }
 
+
+
 /* ----------------------------- Colours */
 
 .bg-brand-green {
@@ -108,6 +110,10 @@ body {
 
 .fs-rem-250 {
     font-size: 2.5rem;
+}
+
+.below-header {
+    margin-top: 65px;
 }
 
 /* ----------------------------- Navbar/Header */
@@ -476,6 +482,10 @@ footer {
 
     .img-container {
         max-height: 450px;
+    }
+
+    .below-header {
+        margin-top: 75px;
     }
 
     /* -------------------------------- Navbar/Header */

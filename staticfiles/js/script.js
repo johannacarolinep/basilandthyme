@@ -150,9 +150,12 @@ function deleteRating(recipeId) {
         .then(response => response.json())
         .then(data => {
             // Handle the response data
+            // Toast
+            const toast = document.getElementById('toast');
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+            const toastBody = toast.querySelector("#toast-body");
             if (data.success) {
-                // If rating deleted, update frontend to reflect deletion WIP
-                console.log("Rating was deleted");
+                // If rating deleted, update frontend to reflect deletion
                 if (window.location.pathname === "/recipes/") {
                     console.log("On recipes page!");
                     const recipeCard = document.getElementById(recipeId);
@@ -174,6 +177,8 @@ function deleteRating(recipeId) {
                 // If rating not deleted
                 console.log("Something went wrong.")
             }
+            toastBody.innerText = data.message;
+            toastBootstrap.show()
         });
 
 }
@@ -214,6 +219,9 @@ async function submitRating(rating, recipeId) {
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
+    const toast = document.getElementById('toast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+    const toastBody = toast.querySelector("#toast-body");
     if (postResponse.success) {
         const modal = document.getElementById("ratings-modal");
         if (window.location.pathname === "/recipes/") {
@@ -233,6 +241,8 @@ async function submitRating(rating, recipeId) {
     } else {
         console.log("Bad request");
     }
+    toastBody.innerText = postResponse.message;
+    toastBootstrap.show()
 }
 
 function updateRatingsDisplay(data, ratingsDisplay) {
@@ -603,6 +613,10 @@ async function favouritingBtnListener(event, eventRecipeId) {
 
         // Send POST request and await response
         const postResponse = await sendPostRequest(postAddress, data);
+        // Toast
+        const toast = document.getElementById('fave-toast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+        const toastBody = toast.querySelector("#fave-toast-body");
 
         // If favourite was removed
         if (postResponse.message === 'Favourite removed') {
@@ -617,6 +631,9 @@ async function favouritingBtnListener(event, eventRecipeId) {
             heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
             heartButton.parentNode.querySelector('p').innerText = "Saved!";
         }
+        toastBody.innerText = postResponse.message;
+        toastBootstrap.show()
+
     } else {
         // User is not logged in, open "Sign in" modal
         const modal = document.getElementById("sign-up-modal");
