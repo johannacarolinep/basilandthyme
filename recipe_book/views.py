@@ -130,6 +130,7 @@ class RecipeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         recipe = self.get_object()
         user = self.request.user
+        # print("Image url:", recipe.feature_image.secure_url)
         comments = recipe.comments.all().order_by("-created_on")
         no_of_comments = comments.filter(approved=True).count()
         comment_form = CommentForm()
