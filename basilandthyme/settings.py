@@ -153,12 +153,15 @@ USE_TZ = True
 # Cloudinary config
 cloudinary.config(
     cloud_name=os.environ.get("CLOUD_NAME"),
-    api_key=os.environ.get("CLOUD_API_KEY"),
-    api_secret=os.environ.get("CLOUD_SECRET_KEY"),
+    # api_key=os.environ.get("CLOUD_API_KEY"),
+    # api_secret=os.environ.get("CLOUD_SECRET_KEY"),
     secure=True
 )
-import cloudinary.uploader
-import cloudinary.api
+
+# # https://cloudinary.com/documentation/django_integration
+# # According to docs, below imports should be below the config
+# import cloudinary.uploader
+# import cloudinary.api
 
 
 # Static files (CSS, JavaScript, Images)
