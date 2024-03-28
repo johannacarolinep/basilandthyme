@@ -150,9 +150,18 @@ function prepRatingDelete(event) {
     event.currentTarget.removeEventListener('click', prepRatingDelete);
 }
 
+
+/**
+ * Submits a DELETE request for a rating, for a particular recipe. Prepares the
+ * request and sends it. Updates the ratings display based on the response,
+ * closes the modal and displays a toast message.
+ *
+ * @param {string} recipeId - The ID of the recipe for which the rating deletion
+ * is being requested.
+ * @returns {void}
+ */
 function deleteRating(recipeId) {
     // Create the delete request URL
-
     const url = "/delete-rating/" + "?recipeId=" + recipeId;
 
     // Grab the csrf token
@@ -171,26 +180,23 @@ function deleteRating(recipeId) {
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
             data.status = status;
+            // grab ratingsDisplay based on location
+            let ratingsDisplay;
+            if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
+                const recipeCard = document.getElementById(recipeId);
+                const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+            } else {
+                ratingsDisplay = document.getElementById("init-rate-btn");
+            }
             // Handle the response data
             if (data.status === 200) {
                 // If rating deleted, update frontend to reflect deletion
-                // on listing pages
-                if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
-                    const recipeCard = document.getElementById(recipeId);
-                    const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
-                    ratingsDisplay.setAttribute("data-user-rating", "None")
-                    updateRatingsDisplay(data, ratingsDisplay);
-                    const modal = document.getElementById("ratings-modal");
-                    closeModal(modal, ratingsDisplay);
-                    // on individual recipe page
-                } else {
-                    ratingsDisplay = document.getElementById("init-rate-btn");
-                    ratingsDisplay.setAttribute("data-user-rating", "None")
-                    updateRatingsDisplay(data, ratingsDisplay);
-                    const modal = document.getElementById("ratings-modal");
-                    closeModal(modal, ratingsDisplay);
-                }
+                ratingsDisplay.setAttribute("data-user-rating", "None")
+                updateRatingsDisplay(data, ratingsDisplay);
             }
+            // close modal and display toast message
+            const modal = document.getElementById("ratings-modal");
+            closeModal(modal, ratingsDisplay);
             displayToast("toast", data.message, data.status);
         });
 }
