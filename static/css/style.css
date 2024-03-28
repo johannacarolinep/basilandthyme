@@ -435,6 +435,12 @@ body {
     color: #008B20;
 }
 
+/* -------------------------------------- Toasts */
+.toast img {
+    width: 30px;
+    height: 30px;
+}
+
 /* -------------------------------- Footer */
 footer {
     padding: 20px 0;

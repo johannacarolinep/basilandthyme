@@ -150,12 +150,9 @@ function deleteRating(recipeId) {
         .then(([data, status]) => {
             data.status = status;
             // Handle the response data
-            // Toast
-            const toast = document.getElementById('toast');
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-            const toastBody = toast.querySelector("#toast-body");
             if (data.status === 200) {
                 // If rating deleted, update frontend to reflect deletion
+                // on listing pages
                 if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
                     const recipeCard = document.getElementById(recipeId);
                     const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
@@ -163,6 +160,7 @@ function deleteRating(recipeId) {
                     updateRatingsDisplay(data, ratingsDisplay);
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
+                    // on individual recipe page
                 } else {
                     ratingsDisplay = document.getElementById("init-rate-btn");
                     ratingsDisplay.setAttribute("data-user-rating", "None")
@@ -170,14 +168,34 @@ function deleteRating(recipeId) {
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
                 }
-
-            } else {
-                // If rating not deleted
-                console.log("Something went wrong.")
             }
-            toastBody.innerText = data.message;
-            toastBootstrap.show()
+            displayToast("toast", data.message, data.status);
         });
+}
+
+
+/**
+ * Displays a toast message with the given message and an image based on
+ * the status.
+ * 
+ * @param {string} toastId - The ID of the toast element to display.
+ * @param {string} message - The message to display in the toast.
+ * @param {number} status - The status code, indicating indicating succcess or
+ * failure.
+ */
+function displayToast(toastId, message, status) {
+    const toast = document.getElementById(toastId);
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+    const toastBody = toast.querySelector(".toast-body");
+    let toastImage;
+    toastBody.innerText = message;
+    toastBootstrap.show()
+    if (status === 200) {
+        toastImage = toast.querySelector(".success-img");
+    } else {
+        toastImage = toast.querySelector(".fail-img");
+    }
+    toastImage.classList.remove("d-none");
 }
 
 function selectRating(event, recipeId) {
@@ -216,9 +234,6 @@ async function submitRating(rating, recipeId) {
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
-    const toast = document.getElementById('toast');
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-    const toastBody = toast.querySelector("#toast-body");
     if (postResponse.status === 200) {
         const modal = document.getElementById("ratings-modal");
         if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
@@ -234,12 +249,8 @@ async function submitRating(rating, recipeId) {
             updateRatingsDisplay(postResponse, ratingsDisplay); // update stars on page
             closeModal(modal, ratingsDisplay); // close modal and set focus on button
         }
-
-    } else {
-        console.log("Bad request");
     }
-    toastBody.innerText = postResponse.message;
-    toastBootstrap.show()
+    displayToast("toast", postResponse.message, postResponse.status);
 }
 
 function updateRatingsDisplay(data, ratingsDisplay) {
@@ -611,10 +622,6 @@ async function favouritingBtnListener(event, eventRecipeId) {
 
         // Send POST request and await response
         const postResponse = await sendPostRequest(postAddress, data);
-        // Toast
-        const toast = document.getElementById('fave-toast');
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-        const toastBody = toast.querySelector("#fave-toast-body");
         if (postResponse.status === 200) {
             // If favourite was removed
             if (postResponse.action === 'removed') {
@@ -629,12 +636,8 @@ async function favouritingBtnListener(event, eventRecipeId) {
                 heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
                 heartButton.parentNode.querySelector('p').innerText = "Saved!";
             }
-        } else {
-            // Handle 400
         }
-        toastBody.innerText = postResponse.message;
-        toastBootstrap.show()
-
+        displayToast("fave-toast", postResponse.message, postResponse.status);
     } else {
         // User is not logged in, open "Sign in" modal
         const modal = document.getElementById("sign-up-modal");
