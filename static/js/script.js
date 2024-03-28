@@ -184,7 +184,7 @@ function deleteRating(recipeId) {
             let ratingsDisplay;
             if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
                 const recipeCard = document.getElementById(recipeId);
-                const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+                ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
             } else {
                 ratingsDisplay = document.getElementById("init-rate-btn");
             }

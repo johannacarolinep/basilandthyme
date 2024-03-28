@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from datetime import datetime
-from .models import Recipe
+from recipe_book.models import Recipe
 
 
 # Create your tests here.

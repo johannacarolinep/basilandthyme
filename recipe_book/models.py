@@ -218,6 +218,21 @@ class Rating(models.Model):
     )
     rating = models.IntegerField(choices=RATING_CHOICES)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'recipe'],
+                                    name='unique_rating')
+        ]
+
+    def __str__(self):
+        """
+        Returns a string representation of the Favourite object.
+
+        Returns:
+            str: A string indicating which user favourited which recipe.
+        """
+        return f"{self.user} gave a rating of {self.rating} to '{self.recipe}'"
+
     @classmethod
     def get_recipe_avg_rating(cls, recipe_id):
         """

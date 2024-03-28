@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.db import IntegrityError
-from .models import Recipe, Favourite
+from recipe_book.models import Recipe, Favourite
 
 
 class TestFavouriteModel(TestCase):
