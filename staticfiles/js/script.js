@@ -38,65 +38,32 @@ function initializeScript() {
 }
 
 
+/**
+ * Initializes the ratings modal and handles user interaction for rating recipes.
+ * If the user is logged in, it calls a function to build the rating modal with
+ * content for the user-recipe combination. Adds event listeners to the modal
+ * buttons. If the user is not logged in, it opens the "Sign in" modal.
+ *
+ * @param {Event} click - click on rating button on recipe page or recipe card.
+ * @param {string} recipeListId - Optional. The ID of the recipe when rating a card.
+ * @returns {void}
+ */
 function initalizeRating(event, recipeListId = undefined) {
-    // if recipeListId passed in
+    const clickedRatingDisplay = event.currentTarget;
+    // if recipeListId passed in (not on individual recipe page)
     if (recipeListId) {
         recipeId = recipeListId;
     }
-
-    const clickedRatingDisplay = event.currentTarget;
 
     if (userId !== "None") {
         // get modal elements
         const ratingModal = document.getElementById("ratings-modal");
         const closeModalBtn1 = document.getElementById("close-rating-btn");
         const closeModalBtn2 = document.getElementById("cancel-rating-btn");
-
         const deleteBtn = document.getElementById("delete-rating-btn");
         const userRating = event.currentTarget.getAttribute("data-user-rating");
-        const modalIntro = document.getElementById("rate-modal-intro");
-        const modalDeleteInstr = document.getElementById("rate-modal-delete-instr");
-        const modalStarDiv = document.getElementById("rate-modal-stars");
-        const submitBtn = document.getElementById("submit-rating-btn");
 
-        // build modal content
-        submitBtn.setAttribute("disabled", true);
-        if (userRating != "None" && userRating != "null") {
-            modalIntro.innerHTML = `You have previously given this recipe <span class="fw-bold">${userRating}
-        stars</span>.
-    <br>If you wish, you can edit your rating by simply submitting a new rating.`;
-            modalDeleteInstr.innerHTML = 'Lastly, you can remove your existing rating by clicking "Delete" below.';
-            if (deleteBtn.classList.contains("d-none")) {
-                deleteBtn.classList.remove("d-none");
-            }
-        } else {
-            modalIntro.innerHTML = 'Give this recipe a rating by selecting a star below and clicking "Submit".';
-            modalDeleteInstr.innerHTML = "";
-            if (!deleteBtn.classList.contains("d-none")) {
-                deleteBtn.classList.add("d-none");
-            }
-        }
-        let starButtons = "";
-        for (let i = 1; i <= 5; i++) {
-            if (userRating != "None" && userRating >= i) {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
-            aria-label="Give a ${i} star rating.">
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-        </button>`; // Add a full star
-            } else if (userRating != "None" && userRating > i - 1) {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
-            aria-label="Give a ${i} star rating.">
-            <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
-        </button>`; // Add a half star
-            } else {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
-            aria-label="Give a ${i} star rating.">
-            <i class="fa-regular fa-star" aria-hidden="true"></i>
-        </button>`; // Add an empty star
-            }
-        }
-        modalStarDiv.innerHTML = starButtons;
-
+        buildRatingModal(userRating); // create modal content
         const starBtns = document.getElementsByClassName("star-btn");
 
         // Open modal and add event listeners to its buttons
@@ -121,6 +88,61 @@ function initalizeRating(event, recipeListId = undefined) {
         openModal(modal);
         closeModalBtn.addEventListener('click', () => closeModal(modal, clickedRatingDisplay));
     }
+}
+
+
+/**
+ * Builds the content of the rating modal based on the user's existing rating
+ * of the recipe.
+ *
+ * @param {string} userRating - The user's existing rating for the recipe.
+ * @returns {void}
+ */
+function buildRatingModal(userRating) {
+    const submitBtn = document.getElementById("submit-rating-btn");
+    const deleteBtn = document.getElementById("delete-rating-btn");
+    const modalIntro = document.getElementById("rate-modal-intro");
+    const modalDeleteInstr = document.getElementById("rate-modal-delete-instr");
+    const modalStarDiv = document.getElementById("rate-modal-stars");
+
+    submitBtn.setAttribute("disabled", true);
+    if (userRating != "None" && userRating != "null") {
+        modalIntro.innerHTML = `You have previously given this recipe <span class="fw-bold">${userRating}
+        stars</span>.
+    <br>If you wish, you can edit your rating by simply submitting a new rating.`;
+        modalDeleteInstr.innerHTML = 'Lastly, you can remove your existing rating by clicking "Delete" below.';
+        if (deleteBtn.classList.contains("d-none")) {
+            deleteBtn.classList.remove("d-none");
+        }
+    } else {
+        modalIntro.innerHTML = 'Give this recipe a rating by selecting a star below and clicking "Submit".';
+        modalDeleteInstr.innerHTML = "";
+        if (!deleteBtn.classList.contains("d-none")) {
+            deleteBtn.classList.add("d-none");
+        }
+    }
+
+    // Create the star buttons styled according to the users existing rating for the recipe
+    let starButtons = "";
+    for (let i = 1; i <= 5; i++) {
+        if (userRating != "None" && userRating >= i) {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+            aria-label="Give a ${i} star rating.">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+        </button>`; // Add a full star
+        } else if (userRating != "None" && userRating > i - 1) {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+            aria-label="Give a ${i} star rating.">
+            <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
+        </button>`; // Add a half star
+        } else {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+            aria-label="Give a ${i} star rating.">
+            <i class="fa-regular fa-star" aria-hidden="true"></i>
+        </button>`; // Add an empty star
+        }
+    }
+    modalStarDiv.innerHTML = starButtons;
 }
 
 function prepRatingDelete(event) {
@@ -150,12 +172,9 @@ function deleteRating(recipeId) {
         .then(([data, status]) => {
             data.status = status;
             // Handle the response data
-            // Toast
-            const toast = document.getElementById('toast');
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-            const toastBody = toast.querySelector("#toast-body");
             if (data.status === 200) {
                 // If rating deleted, update frontend to reflect deletion
+                // on listing pages
                 if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
                     const recipeCard = document.getElementById(recipeId);
                     const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
@@ -163,6 +182,7 @@ function deleteRating(recipeId) {
                     updateRatingsDisplay(data, ratingsDisplay);
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
+                    // on individual recipe page
                 } else {
                     ratingsDisplay = document.getElementById("init-rate-btn");
                     ratingsDisplay.setAttribute("data-user-rating", "None")
@@ -170,14 +190,34 @@ function deleteRating(recipeId) {
                     const modal = document.getElementById("ratings-modal");
                     closeModal(modal, ratingsDisplay);
                 }
-
-            } else {
-                // If rating not deleted
-                console.log("Something went wrong.")
             }
-            toastBody.innerText = data.message;
-            toastBootstrap.show()
+            displayToast("toast", data.message, data.status);
         });
+}
+
+
+/**
+ * Displays a toast message with the given message and an image based on
+ * the status.
+ * 
+ * @param {string} toastId - The ID of the toast element to display.
+ * @param {string} message - The message to display in the toast.
+ * @param {number} status - The status code, indicating indicating succcess or
+ * failure.
+ */
+function displayToast(toastId, message, status) {
+    const toast = document.getElementById(toastId);
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+    const toastBody = toast.querySelector(".toast-body");
+    let toastImage;
+    toastBody.innerText = message;
+    toastBootstrap.show()
+    if (status === 200) {
+        toastImage = toast.querySelector(".success-img");
+    } else {
+        toastImage = toast.querySelector(".fail-img");
+    }
+    toastImage.classList.remove("d-none");
 }
 
 function selectRating(event, recipeId) {
@@ -216,9 +256,6 @@ async function submitRating(rating, recipeId) {
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
-    const toast = document.getElementById('toast');
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-    const toastBody = toast.querySelector("#toast-body");
     if (postResponse.status === 200) {
         const modal = document.getElementById("ratings-modal");
         if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
@@ -234,12 +271,8 @@ async function submitRating(rating, recipeId) {
             updateRatingsDisplay(postResponse, ratingsDisplay); // update stars on page
             closeModal(modal, ratingsDisplay); // close modal and set focus on button
         }
-
-    } else {
-        console.log("Bad request");
     }
-    toastBody.innerText = postResponse.message;
-    toastBootstrap.show()
+    displayToast("toast", postResponse.message, postResponse.status);
 }
 
 function updateRatingsDisplay(data, ratingsDisplay) {
@@ -611,10 +644,6 @@ async function favouritingBtnListener(event, eventRecipeId) {
 
         // Send POST request and await response
         const postResponse = await sendPostRequest(postAddress, data);
-        // Toast
-        const toast = document.getElementById('fave-toast');
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-        const toastBody = toast.querySelector("#fave-toast-body");
         if (postResponse.status === 200) {
             // If favourite was removed
             if (postResponse.action === 'removed') {
@@ -629,12 +658,8 @@ async function favouritingBtnListener(event, eventRecipeId) {
                 heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
                 heartButton.parentNode.querySelector('p').innerText = "Saved!";
             }
-        } else {
-            // Handle 400
         }
-        toastBody.innerText = postResponse.message;
-        toastBootstrap.show()
-
+        displayToast("fave-toast", postResponse.message, postResponse.status);
     } else {
         // User is not logged in, open "Sign in" modal
         const modal = document.getElementById("sign-up-modal");

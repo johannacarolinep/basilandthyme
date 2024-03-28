@@ -38,65 +38,32 @@ function initializeScript() {
 }
 
 
+/**
+ * Initializes the ratings modal and handles user interaction for rating recipes.
+ * If the user is logged in, it calls a function to build the rating modal with
+ * content for the user-recipe combination. Adds event listeners to the modal
+ * buttons. If the user is not logged in, it opens the "Sign in" modal.
+ *
+ * @param {Event} click - click on rating button on recipe page or recipe card.
+ * @param {string} recipeListId - Optional. The ID of the recipe when rating a card.
+ * @returns {void}
+ */
 function initalizeRating(event, recipeListId = undefined) {
-    // if recipeListId passed in
+    const clickedRatingDisplay = event.currentTarget;
+    // if recipeListId passed in (not on individual recipe page)
     if (recipeListId) {
         recipeId = recipeListId;
     }
-
-    const clickedRatingDisplay = event.currentTarget;
 
     if (userId !== "None") {
         // get modal elements
         const ratingModal = document.getElementById("ratings-modal");
         const closeModalBtn1 = document.getElementById("close-rating-btn");
         const closeModalBtn2 = document.getElementById("cancel-rating-btn");
-
         const deleteBtn = document.getElementById("delete-rating-btn");
         const userRating = event.currentTarget.getAttribute("data-user-rating");
-        const modalIntro = document.getElementById("rate-modal-intro");
-        const modalDeleteInstr = document.getElementById("rate-modal-delete-instr");
-        const modalStarDiv = document.getElementById("rate-modal-stars");
-        const submitBtn = document.getElementById("submit-rating-btn");
 
-        // build modal content
-        submitBtn.setAttribute("disabled", true);
-        if (userRating != "None" && userRating != "null") {
-            modalIntro.innerHTML = `You have previously given this recipe <span class="fw-bold">${userRating}
-        stars</span>.
-    <br>If you wish, you can edit your rating by simply submitting a new rating.`;
-            modalDeleteInstr.innerHTML = 'Lastly, you can remove your existing rating by clicking "Delete" below.';
-            if (deleteBtn.classList.contains("d-none")) {
-                deleteBtn.classList.remove("d-none");
-            }
-        } else {
-            modalIntro.innerHTML = 'Give this recipe a rating by selecting a star below and clicking "Submit".';
-            modalDeleteInstr.innerHTML = "";
-            if (!deleteBtn.classList.contains("d-none")) {
-                deleteBtn.classList.add("d-none");
-            }
-        }
-        let starButtons = "";
-        for (let i = 1; i <= 5; i++) {
-            if (userRating != "None" && userRating >= i) {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
-            aria-label="Give a ${i} star rating.">
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-        </button>`; // Add a full star
-            } else if (userRating != "None" && userRating > i - 1) {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
-            aria-label="Give a ${i} star rating.">
-            <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
-        </button>`; // Add a half star
-            } else {
-                starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
-            aria-label="Give a ${i} star rating.">
-            <i class="fa-regular fa-star" aria-hidden="true"></i>
-        </button>`; // Add an empty star
-            }
-        }
-        modalStarDiv.innerHTML = starButtons;
-
+        buildRatingModal(userRating); // create modal content
         const starBtns = document.getElementsByClassName("star-btn");
 
         // Open modal and add event listeners to its buttons
@@ -121,6 +88,61 @@ function initalizeRating(event, recipeListId = undefined) {
         openModal(modal);
         closeModalBtn.addEventListener('click', () => closeModal(modal, clickedRatingDisplay));
     }
+}
+
+
+/**
+ * Builds the content of the rating modal based on the user's existing rating
+ * of the recipe.
+ *
+ * @param {string} userRating - The user's existing rating for the recipe.
+ * @returns {void}
+ */
+function buildRatingModal(userRating) {
+    const submitBtn = document.getElementById("submit-rating-btn");
+    const deleteBtn = document.getElementById("delete-rating-btn");
+    const modalIntro = document.getElementById("rate-modal-intro");
+    const modalDeleteInstr = document.getElementById("rate-modal-delete-instr");
+    const modalStarDiv = document.getElementById("rate-modal-stars");
+
+    submitBtn.setAttribute("disabled", true);
+    if (userRating != "None" && userRating != "null") {
+        modalIntro.innerHTML = `You have previously given this recipe <span class="fw-bold">${userRating}
+        stars</span>.
+    <br>If you wish, you can edit your rating by simply submitting a new rating.`;
+        modalDeleteInstr.innerHTML = 'Lastly, you can remove your existing rating by clicking "Delete" below.';
+        if (deleteBtn.classList.contains("d-none")) {
+            deleteBtn.classList.remove("d-none");
+        }
+    } else {
+        modalIntro.innerHTML = 'Give this recipe a rating by selecting a star below and clicking "Submit".';
+        modalDeleteInstr.innerHTML = "";
+        if (!deleteBtn.classList.contains("d-none")) {
+            deleteBtn.classList.add("d-none");
+        }
+    }
+
+    // Create the star buttons styled according to the users existing rating for the recipe
+    let starButtons = "";
+    for (let i = 1; i <= 5; i++) {
+        if (userRating != "None" && userRating >= i) {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+            aria-label="Give a ${i} star rating.">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+        </button>`; // Add a full star
+        } else if (userRating != "None" && userRating > i - 1) {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+            aria-label="Give a ${i} star rating.">
+            <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
+        </button>`; // Add a half star
+        } else {
+            starButtons += `<button class="icon-button mx-1 star-btn" data-rating-value="${i}"
+            aria-label="Give a ${i} star rating.">
+            <i class="fa-regular fa-star" aria-hidden="true"></i>
+        </button>`; // Add an empty star
+        }
+    }
+    modalStarDiv.innerHTML = starButtons;
 }
 
 function prepRatingDelete(event) {
