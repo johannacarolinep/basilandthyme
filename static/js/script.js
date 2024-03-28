@@ -220,7 +220,19 @@ function displayToast(toastId, message, status) {
     toastImage.classList.remove("d-none");
 }
 
+
+/**
+ * Handles the selection of a rating for a recipe. Activates the submit rating
+ * button and adds event listener to it.
+ *
+ * @param {Event} click - Click on a star button, representing the selected
+ * rating.
+ * @param {string} recipeId - The ID of the recipe for which the rating is being
+ * selected.
+ * @returns {void}
+ */
 function selectRating(event, recipeId) {
+    // Get rating value from the clicked star
     selectedRating = event.currentTarget.getAttribute("data-rating-value");
     const submitRatingBtn = document.getElementById("submit-rating-btn");
     // activate submit button after a rating has been selected
