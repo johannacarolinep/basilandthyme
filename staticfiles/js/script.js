@@ -150,9 +150,18 @@ function prepRatingDelete(event) {
     event.currentTarget.removeEventListener('click', prepRatingDelete);
 }
 
+
+/**
+ * Submits a DELETE request for a rating, for a particular recipe. Prepares the
+ * request and sends it. Updates the ratings display based on the response,
+ * closes the modal and displays a toast message.
+ *
+ * @param {string} recipeId - The ID of the recipe for which the rating deletion
+ * is being requested.
+ * @returns {void}
+ */
 function deleteRating(recipeId) {
     // Create the delete request URL
-
     const url = "/delete-rating/" + "?recipeId=" + recipeId;
 
     // Grab the csrf token
@@ -171,26 +180,23 @@ function deleteRating(recipeId) {
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
             data.status = status;
+            // grab ratingsDisplay based on location
+            let ratingsDisplay;
+            if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
+                const recipeCard = document.getElementById(recipeId);
+                ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+            } else {
+                ratingsDisplay = document.getElementById("init-rate-btn");
+            }
             // Handle the response data
             if (data.status === 200) {
                 // If rating deleted, update frontend to reflect deletion
-                // on listing pages
-                if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
-                    const recipeCard = document.getElementById(recipeId);
-                    const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
-                    ratingsDisplay.setAttribute("data-user-rating", "None")
-                    updateRatingsDisplay(data, ratingsDisplay);
-                    const modal = document.getElementById("ratings-modal");
-                    closeModal(modal, ratingsDisplay);
-                    // on individual recipe page
-                } else {
-                    ratingsDisplay = document.getElementById("init-rate-btn");
-                    ratingsDisplay.setAttribute("data-user-rating", "None")
-                    updateRatingsDisplay(data, ratingsDisplay);
-                    const modal = document.getElementById("ratings-modal");
-                    closeModal(modal, ratingsDisplay);
-                }
+                ratingsDisplay.setAttribute("data-user-rating", "None")
+                updateRatingsDisplay(data, ratingsDisplay);
             }
+            // close modal and display toast message
+            const modal = document.getElementById("ratings-modal");
+            closeModal(modal, ratingsDisplay);
             displayToast("toast", data.message, data.status);
         });
 }
@@ -220,9 +226,22 @@ function displayToast(toastId, message, status) {
     toastImage.classList.remove("d-none");
 }
 
+
+/**
+ * Handles the selection of a rating for a recipe. Activates the submit rating
+ * button and adds event listener to it.
+ *
+ * @param {Event} click - Click on a star button, representing the selected
+ * rating.
+ * @param {string} recipeId - The ID of the recipe for which the rating is being
+ * selected.
+ * @returns {void}
+ */
 function selectRating(event, recipeId) {
+    // Get rating value from the clicked star
     selectedRating = event.currentTarget.getAttribute("data-rating-value");
     const submitRatingBtn = document.getElementById("submit-rating-btn");
+    // activate submit button after a rating has been selected
     submitRatingBtn.removeAttribute("disabled");
 
     // style buttons to show selection
@@ -245,8 +264,16 @@ function prepRatingSubmit(event) {
 }
 
 
+/**
+ * Submits a rating for a recipe asynchronously. Prepares the post data, calls
+ * function to do POST request. Updates the ratings display based on the POST
+ * response, closes the modal and displays a toast message.
+ *
+ * @param {number} rating - The rating to be submitted.
+ * @param {string} recipeId - The ID of the recipe for which the rating is submitted.
+ * @returns {Promise<void>} - A Promise that resolves when the rating submission process is complete.
+ */
 async function submitRating(rating, recipeId) {
-
     // prepare POST request
     const postAddress = '/add-update-rating/';
     const data = {
@@ -256,25 +283,38 @@ async function submitRating(rating, recipeId) {
 
     // Send POST request and await response
     const postResponse = await sendPostRequest(postAddress, data);
-    if (postResponse.status === 200) {
-        const modal = document.getElementById("ratings-modal");
-        if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
-            const recipeCard = document.getElementById(recipeId);
-            const ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
-            ratingsDisplay.setAttribute("data-user-rating", rating)
-            updateRatingsDisplay(postResponse, ratingsDisplay); // update stars in card
-            closeModal(modal, ratingsDisplay); // close modal and set focus on button in the card
-        } else {
-            // On recipe page
-            ratingsDisplay = document.getElementById("init-rate-btn");
-            ratingsDisplay.setAttribute("data-user-rating", rating)
-            updateRatingsDisplay(postResponse, ratingsDisplay); // update stars on page
-            closeModal(modal, ratingsDisplay); // close modal and set focus on button
-        }
+
+    // handle response
+    // grab ratingsdisplay based on location
+    let ratingsDisplay;
+    if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
+        const recipeCard = document.getElementById(recipeId);
+        ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+    } else {
+        // On recipe page
+        ratingsDisplay = document.getElementById("init-rate-btn");
     }
+    // update ratingsdisplay if action successful
+    if (postResponse.status === 200) {
+        ratingsDisplay.setAttribute("data-user-rating", rating)
+        updateRatingsDisplay(postResponse, ratingsDisplay); // update ratingsdisplay
+    }
+    // close modal and display toast message
+    const modal = document.getElementById("ratings-modal");
+    closeModal(modal, ratingsDisplay);
     displayToast("toast", postResponse.message, postResponse.status);
 }
 
+
+/**
+ * Updates the ratings display (stars) on the page to reflect the recipes
+ * current avg rating and number of ratings, based on the provided data.
+ *
+ * @param {object} data - Contains ratings count and average rating.
+ * @param {HTMLElement} ratingsDisplay - The HTML element that holds the stars
+ * and count
+ * @returns {void}
+ */
 function updateRatingsDisplay(data, ratingsDisplay) {
     const starIcons = ratingsDisplay.querySelectorAll("i");
     const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
@@ -599,6 +639,13 @@ function buildComment(data) {
 };
 
 
+/**
+ * Adds a category query parameter to the current URL and redirects to the
+ * updated URL.
+ *
+ * @param {Event} click - The clicked category button.
+ * @returns {void}
+ */
 function addCategoryQuery(event) {
     const currentUrl = window.location.href;
     let category = event.currentTarget.value;
