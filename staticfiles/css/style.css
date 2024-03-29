@@ -441,6 +441,15 @@ body {
     height: 30px;
 }
 
+/* --------------------------------------- Signup/Sign in */
+.errorlist li {
+    color: #a90606;
+}
+
+.login label {
+    font-weight: 600;
+}
+
 /* -------------------------------- Footer */
 footer {
     padding: 20px 0;

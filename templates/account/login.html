@@ -4,19 +4,36 @@
 
 {% block content %}
 
-<h1>Sign in</h1>
+<div class="container-xl">
+  <div class="my-3 my-md-4 m-lg-4 p-4 bg-white recipe-container">
 
-<p>If you have not created an account yet, then please
-  <a href="{{ signup_url }}">sign up</a> first.
-</p>
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button class="primaryAction" type="submit">Sign in</button>
-</form>
-
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="mb-3">Sign in</h1>
+        <div class="bg-brand-green h-line mb-3"> </div>
+        <form class="login my-4" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button class="primaryAction submit-btn p-2 px-3" type="submit">Sign in</button>
+        </form>
+      </div>
+      <div class="col-md-6 d-flex">
+        <div class="bg-brand-gray p-4 text-center d-flex flex-column justify-content-center">
+          <p class="fs-5">If you have not created an account yet, then please sign up first. <span class="fw-bold">It's
+              free!</span>
+          </p>
+          <div>
+            <a class="btn comment-edit d-inline-block p-2 px-3 ms-2" href="{% url 'account_signup' %}"
+              aria-label="Go to the sign up page to register">
+              Sign Up
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
