@@ -3,17 +3,19 @@
 {% block head_title %}Basil&Thyme - Sign out{% endblock head_title %}
 
 {% block content %}
-<h1>Sign out</h1>
+<div class="container-xl h-100 d-flex justify-content-center align-items-center">
+  <div class="my-3 my-md-4 m-lg-4 p-4 bg-white white-container mx-auto form-box">
+    <h1>Sign out</h1>
+    <div class="bg-brand-green h-line mb-3"> </div>
+    <p>Are you sure you want to sign out?</p>
 
-<p>Are you sure you want to sign out?</p>
-
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">Sign Out</button>
-</form>
-
-
+    <form method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <button type="submit" class="comment-edit p-2 px-3 fw-bold fs-5">Sign Out</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}

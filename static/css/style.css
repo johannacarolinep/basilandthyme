@@ -446,8 +446,14 @@ body {
     color: #a90606;
 }
 
-.login label {
+.login label,
+.signup label {
     font-weight: 600;
+}
+
+.form-box {
+    width: 100%;
+    max-width: 900px;
 }
 
 /* -------------------------------- Footer */

@@ -4,30 +4,35 @@
 {% block head_title %}Basil&Thyme - Signup{% endblock head_title %}
 
 {% block content %}
-<div class="container-xl">
+<div class="container-xl h-100 d-flex justify-content-center align-items-center">
   <div class="my-3 my-md-4 m-lg-4 p-4 bg-white white-container">
-    <h1 class="mb-3">Sign Up</h1>
-    <div class="bg-brand-green h-line mb-3"> </div>
+    <div class="row">
+      <h1 class="mb-3">Sign Up</h1>
+      <div class="bg-brand-green h-line mb-3"> </div>
+      <div class="col-lg-6">
 
+        <form class="signup my-4" id="signup_form" method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button type="submit" class="submit-btn p-2 px-3 fs-5 fw-bold">Sign Up &raquo;</button>
+        </form>
+      </div>
 
-    <form class="signup my-4" id="signup_form" method="post" action="{% url 'account_signup' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      {% if redirect_field_value %}
-      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-      {% endif %}
-      <button type="submit" class="submit-btn p-2 px-3 fw-bold">Sign Up &raquo;</button>
-    </form>
-    <div class="row bg-brand-gray p-3 align-items-center my-2">
-      <div class="col-md-9">
-        <p class="fs-5 text-center mb-0">Already have an account? Then please sign in instead.</p>
+      <div class="col-lg-6 d-flex">
+        <div class="bg-brand-gray p-4 w-100 h-100 text-center d-flex flex-column justify-content-center">
+          <p class="fs-5">Already have an account? Then please <span class="fw-bold">sign in</span> instead.</p>
+          <div>
+            <a class="btn comment-edit d-inline-block p-2 px-3 fw-bold fs-5" href="{% url 'account_login' %}"
+              aria-label="Go to the sign in page to log in">
+              Sign In
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="col-md-3 d-flex justify-content-center my-2">
-        <a class="btn comment-edit d-inline-block p-2 px-3 mt-3 fw-bold" href="{% url 'account_login' %}"
-          aria-label="Go to the sign in page to log in">
-          Sign In
-        </a>
-      </div>
+
     </div>
   </div>
 </div>
