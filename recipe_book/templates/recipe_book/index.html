@@ -2,8 +2,17 @@
 {% load static %}
 
 {% block content %}
-
 {% include 'searchbar.html' %}
+<p>Recipes by rating</p>
+{% for recipe in recipes_by_rating %}
+<p>{{ recipe.title }}</p>
+{% endfor %}
+
+<p>Recipes by publication date</p>
+{% for recipe in recipes_by_date %}
+<p>{{ recipe.title }}</p>
+{% endfor %}
+
 
 {% endblock %}
 
