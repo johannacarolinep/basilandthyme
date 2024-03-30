@@ -38,7 +38,7 @@ class DeleteRatingViewTest(TestCase):
             JsonResponse(
                 {"message": f"Rating deleted for recipe {self.recipe.title}",
                     "count": 0,
-                    "average": None}, status=200).content,
+                    "average": 0.0}, status=200).content,
             msg="Response content incorrect")
         self.assertFalse(
             Rating.objects.filter(user=self.user, recipe=self.recipe).exists(),

@@ -246,7 +246,9 @@ class Rating(models.Model):
             the recipe has no ratings.
         """
         ratings = cls.objects.filter(recipe=recipe_id)
-        return ratings.aggregate(avg_rating=models.Avg('rating'))['avg_rating']
+        return ratings.aggregate(
+            avg_rating=models.functions.Coalesce(
+                models.Avg('rating'), 0.0))['avg_rating']
 
     @classmethod
     def get_recipe_no_of_ratings(cls, recipe_id):

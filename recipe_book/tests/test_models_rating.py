@@ -81,14 +81,14 @@ class TestRatingModel(TestCase):
 
     def test_get_recipe_avg_rating_no_ratings(self):
         """
-        Test to ensure the method returns None when a given recipe has no
+        Test to ensure the method returns 0.0 when a given recipe has no
         ratings
         """
         avg_rating = Rating.get_recipe_avg_rating(recipe_id=self.recipe.id)
 
-        self.assertIsNone(
-            avg_rating,
-            msg="Should have returned none for recipe with no ratings")
+        self.assertEqual(
+            avg_rating, 0.0,
+            msg="Should have returned 0.0 for recipe with no ratings")
 
     def test_get_recipe_no_of_ratings(self):
         """
