@@ -29,7 +29,7 @@ class RecipeListView(ListView):
         self.query = self.request.GET.get("q")
         # https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate
         base_queryset = Recipe.objects.filter(status=1).annotate(
-            avg_rating=models.Avg('rating_recipe__rating'),
+            avg_rating=models.functions.Coalesce(models.Avg('rating_recipe__rating'), models.Value(0.0)),
             ratings_count=models.Count('rating_recipe'),
         )
         # if logged in user, annotate recipes with users rating of recipe
