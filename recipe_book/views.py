@@ -36,7 +36,11 @@ class RecipeListView(ListView):
         user = self.request.user
         if user.is_authenticated:
             base_queryset = base_queryset.annotate(
-                user_rating=models.F('rating_recipe__rating')
+                user_rating=models.Case(
+                    models.When(rating_recipe__user=user, then=models.F('rating_recipe__rating')),
+                    default=None,
+                    output_field=models.IntegerField()
+                )
                 )
 
         if self.query:
@@ -110,7 +114,11 @@ class FeaturesListView(ListView):
         user = self.request.user
         if user.is_authenticated:
             base_queryset = base_queryset.annotate(
-                user_rating=models.F('rating_recipe__rating')
+                user_rating=models.Case(
+                    models.When(rating_recipe__user=user, then=models.F('rating_recipe__rating')),
+                    default=None,
+                    output_field=models.IntegerField()
+                )
                 )
 
         # The 4 recipes with the highest rating
