@@ -11,8 +11,8 @@ body {
 
 main {
     flex: 1 0 auto;
+    margin-top: 57.5px;
 }
-
 
 
 /* ----------------------------- Colours */
@@ -502,6 +502,11 @@ footer {
 
 /* ---------------------------------- Large screens */
 @media screen and (min-width: 992px) {
+
+    /* ------------------------------- General */
+    main {
+        margin-top: 66px;
+    }
 
     /* ------------------------------ Heights/sizing */
     .height-300-400 {
