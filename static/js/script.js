@@ -182,7 +182,7 @@ function deleteRating(recipeId) {
             data.status = status;
             // grab ratingsDisplay based on location
             let ratingsDisplay;
-            if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
+            if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/" || window.location.pathname === "/") {
                 const recipeCard = document.getElementById(recipeId);
                 ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
             } else {
@@ -287,7 +287,7 @@ async function submitRating(rating, recipeId) {
     // handle response
     // grab ratingsdisplay based on location
     let ratingsDisplay;
-    if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/") {
+    if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/" || window.location.pathname === "/") {
         const recipeCard = document.getElementById(recipeId);
         ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
     } else {
@@ -679,7 +679,6 @@ function addCategoryQuery(event) {
 async function favouritingBtnListener(event, eventRecipeId) {
 
     const heartButton = event.currentTarget;
-    console.log("In function to remove favourite")
 
     if (userId !== "None") {
         // User is logged in, prepare POST request

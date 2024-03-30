@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block token %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock token %}
+
 {% block content %}
 {% include 'searchbar.html' %}
 
-<section class="container-fluid bg-brand-gray py-4">
+<section id="top-rated-section" class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
         <div class="row my-2">
             <h2>Top rated recipes:</h2>
@@ -83,7 +87,7 @@
     </div>
 </section>
 
-<section class="container-fluid bg-white py-4">
+<section id="latest-section" class="container-fluid bg-white py-4">
     <div class="container-xl">
         <div class="row my-2">
             <h2>Our latest additions:</h2>
@@ -170,18 +174,68 @@
 </section> -->
 
 
+<!-- TOASTS -->
+{% include 'toasts.html' %}
+
 {% endblock %}
+
+{% block modal %}
+{% include 'signupmodal.html' %}
+
+<!-- Ratings modal -->
+<div class="modal fade bg-modal" id="ratings-modal" role="dialog" tabindex="-1" aria-labelledby="ratings-modal-label"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center position-relative p-4">
+                <h1 class="modal-title fs-4 fw-bold" id="ratings-modal-label">
+                    Rate this recipe
+                </h1>
+                <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" id="close-rating-btn"
+                    aria-label="Close"></button>
+                <p id="rate-modal-intro"></p>
+                <div id="rate-modal-stars" class="d-flex fs-1 my-3 justify-content-center">
+                </div>
+                <p id="rate-modal-delete-instr"></p>
+                <div class="d-flex mt-3 justify-content-center flex-wrap">
+                    <button class="btn mt-2 d-inline-block me-2 comment-delete-cancel"
+                        aria-label="Cancel and close modal" id="cancel-rating-btn">
+                        Cancel
+                    </button>
+                    <button class="btn mt-2 d-inline-block me-2 delete" aria-label="Delete existing rating"
+                        id="delete-rating-btn">
+                        Delete
+                    </button>
+                    <button class="btn mt-2 d-inline-block ms-2 submit-btn" aria-label="Submit rating"
+                        id="submit-rating-btn" disabled>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock modal %}
 
 {% block customscript %}
 <script type="text/javascript">
     // Convert Django variables to JavaScript variables
     const userId = '{{ user.id | safe }}';
+    const ratingsSection = document.getElementById("top-rated-section");
+    const latestSection = document.getElementById("latest-section");
     // Wait for the DOM to load
     document.addEventListener('DOMContentLoaded', function () {
         // Loop through object_list and add event listeners to each heart button
-        '{% for obj in object_list %}'
+        '{% for obj in recipes_by_rating %}'
         // Use index of for loop to attach event listener and pass the recipeId
-        document.querySelectorAll('.icon-button')['{{ forloop.counter0 }}'].addEventListener('click', (event) => favouritingBtnListener(event, '{{ obj.id }}'));
+        ratingsSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', (event) => favouritingBtnListener(event, '{{ obj.id }}'));
+        ratingsSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
+        '{% endfor %}'
+
+        '{% for obj in recipes_by_date %}'
+        // Use index of for loop to attach event listener and pass the recipeId
+        latestSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', (event) => favouritingBtnListener(event, '{{ obj.id }}'));
+        latestSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
         '{% endfor %}'
     });
 </script>
