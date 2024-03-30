@@ -11,8 +11,8 @@ body {
 
 main {
     flex: 1 0 auto;
+    margin-top: 57.5px;
 }
-
 
 
 /* ----------------------------- Colours */
@@ -114,6 +114,16 @@ body {
 
 .below-header {
     margin-top: 65px;
+}
+
+/* -------------------------------- Links and buttons */
+.standard-link {
+    text-decoration: none;
+}
+
+.standard-link:hover,
+.standard-link:active {
+    text-decoration: underline;
 }
 
 /* ----------------------------- Navbar/Header */
@@ -255,15 +265,6 @@ body {
     -webkit-line-clamp: 4;
     line-height: 1.5;
     max-height: 6em;
-}
-
-.card-link {
-    text-decoration: none;
-}
-
-.card-link:hover,
-.card-link:active {
-    text-decoration: underline;
 }
 
 .card-heart-icon {
@@ -464,9 +465,32 @@ footer {
 /* ---------------------------------- Medium screens */
 @media screen and (min-width: 768px) {
 
+
+    /* ---------------------------------- Heights/sizing */
+    .fs-rem-md-180 {
+        font-size: 1.8rem;
+    }
+
     /* --------------------------------- Recipe detail page */
     .recipe-instructions {
         border-left: 2.5px solid #008B20;
+    }
+
+    /* ------------------------------------ Features page (home page) */
+    .circle {
+        height: 180px;
+        width: 180px;
+        line-height: 180px;
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    .circle-white {
+        background-color: #ffffff;
+    }
+
+    .circle-gray {
+        background-color: #F8F9F8;
     }
 
     /* ---------------------------------- Comments */
@@ -478,6 +502,11 @@ footer {
 
 /* ---------------------------------- Large screens */
 @media screen and (min-width: 992px) {
+
+    /* ------------------------------- General */
+    main {
+        margin-top: 66px;
+    }
 
     /* ------------------------------ Heights/sizing */
     .height-300-400 {
@@ -507,6 +536,18 @@ footer {
 
     .below-header {
         margin-top: 75px;
+    }
+
+    /* ----------------------------------- Features page (home page) */
+    .circle,
+    .circle-white,
+    .circle-gray {
+        height: auto;
+        width: auto;
+        line-height: normal;
+        border-radius: initial;
+        text-align: initial;
+        background-color: initial;
     }
 
     /* -------------------------------- Navbar/Header */
