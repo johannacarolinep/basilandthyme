@@ -1,8 +1,9 @@
 import json
 from django.db import models
+from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.decorators.http import require_POST, require_http_methods
-from django.http import JsonResponse
+from django.http import HttpResponseNotFound, JsonResponse
 from django.db.models import Q
 from .models import Recipe, Favourite, Rating
 from .forms import CommentForm
@@ -423,3 +424,7 @@ class FavouritesList(ListView):
         context['stars_range'] = range(1, 6)
 
         return context
+
+
+def page_not_found_view(request, exception):
+    return HttpResponseNotFound(render(request, "404.html", {}))

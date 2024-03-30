@@ -39,6 +39,7 @@ class TestRecipeDetailView(TestCase):
             'recipe_detail', kwargs={'slug': 'non-existing-slug'}))
         self.assertEqual(
             response.status_code, 404, msg="Status code is not 404")
+        self.assertContains(response, "Page not found", status_code=404)
 
     def test_render_recipe_detail_page_when_not_logged_in(self):
         """

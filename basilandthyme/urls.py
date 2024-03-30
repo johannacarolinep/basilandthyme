@@ -23,3 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
 ]
+
+handler404 = "recipe_book.views.page_not_found_view"
