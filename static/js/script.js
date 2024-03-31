@@ -2,6 +2,12 @@
 document.addEventListener("DOMContentLoaded", initializeScript);
 
 function initializeScript() {
+    const navbarCollapse = document.querySelector(".navbar-collapse");
+    if (navbarCollapse) {
+        navbarCollapse.addEventListener('show.bs.collapse', () => toggleHeaderBanner(true))
+        navbarCollapse.addEventListener('hidden.bs.collapse', () => toggleHeaderBanner(false))
+    }
+
     const categoryButtons = document.getElementsByClassName('btnCategory');
     for (let i = 0; i < categoryButtons.length; i++) {
         categoryButtons[i].addEventListener('click', addCategoryQuery);
@@ -37,6 +43,22 @@ function initializeScript() {
     }
 }
 
+/**
+ * Toggles the visibility of the header banner. Hides the banner when collapsable
+ * navbar is opened.
+ * 
+ * @param {boolean} hide - Indicates to hide the banner (true) or show it (false).
+ */
+function toggleHeaderBanner(hide) {
+    const headerBanner = document.querySelector(".header-banner");
+    if (headerBanner) {
+        if (hide) {
+            headerBanner.classList.add("d-none");
+        } else {
+            headerBanner.classList.remove("d-none");
+        }
+    }
+}
 
 /**
  * Initializes the ratings modal and handles user interaction for rating recipes.
