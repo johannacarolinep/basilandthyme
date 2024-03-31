@@ -245,8 +245,26 @@ Velocity: 16.25
 
 ![Sprint 5 milestone](documentation/sprint5.png)
 
+##### Sprint 5 wrap-up:
 
+Project board at end of sprint 5:
+![Project board at end of sprint 5](documentation/project-board-spr-5.png)
 
+Points completed in sprint: 21
+
+Velocity: 17.2
+
+**Reflections:**
+As can be seen in the screenshot of the project board, a user story marked as "MustHave" remained in the "To do" part of the board at the end of the sprint: USER STORY: Email verification (Account/Login).
+
+I have been researching for the last few weeks the possibility of adding email verification as well as social sign-in functionality to the project, since I believe this would greatly improve the overall user experience. However, after speaking to my mentor, as well as researching other students' experience with adding such functionality in the Code Institute slack community, I have decided to treat these features as future improvements instead, putting them outside the scope of this project.
+
+I was alerted that these features would introduce a risk, since e.g. unexpected policy changes could require adjustments to the code for the features to continue working as expected, while I would not be allowed to make these changes after project submission.
+
+Furthermore, on closer reflection, I believe the implementation of this functionality to be mainly configuration-based, rather than code-based. For this reason, also, I thought it would be more suitable to focus on features that would better present my coding abilities, invest time in flushing out existing features and refactoring my code.
+
+**Actions:**
+- Moved two user stories back to the backlog.
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
@@ -261,7 +279,7 @@ Velocity: 16.25
 
 #### 2024-03-30: Incorrect value annotated to objects in RecipeListView
 
-The rating value, represented by stars, on the recipe card (eg on the "Recipes page"), represents the recipe's average rating value (the average of all ratings the recipe has received). 
+The rating value, represented by stars, on the recipe card (e.g. on the "Recipes page"), represents the recipe's average rating value (the average of all ratings the recipe has received). 
 
 Clicking on the rating stars, the user is presented with a modal. In this modal, if the specific user has previously rated the recipe, their existing rating of that recipe should be displayed.
 
