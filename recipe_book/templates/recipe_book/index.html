@@ -235,13 +235,13 @@
         '{% for obj in recipes_by_rating %}'
         // Use index of for loop to attach event listener and pass the recipeId
         ratingsSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', favouritingBtnListener);
-        ratingsSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
+        ratingsSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', initalizeRating);
         '{% endfor %}'
 
         '{% for obj in recipes_by_date %}'
         // Use index of for loop to attach event listener and pass the recipeId
         latestSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', favouritingBtnListener);
-        latestSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
+        latestSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', initalizeRating);
         '{% endfor %}'
     });
 </script>

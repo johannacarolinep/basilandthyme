@@ -183,7 +183,7 @@
         '{% for obj in object_list %}'
         // Use index of for loop to attach event listener and pass the recipeId
         document.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', favouritingBtnListener);
-        document.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
+        document.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', initalizeRating);
         '{% endfor %}'
     });
 </script>

@@ -79,13 +79,10 @@ function toggleHeaderBanner(hide) {
  * @param {string} recipeListId - Optional. The ID of the recipe when rating a card.
  * @returns {void}
  */
-function initalizeRating(event, recipeListId = undefined) {
+function initalizeRating(event) {
     const clickedRatingDisplay = event.currentTarget;
     const userLoggedIn = clickedRatingDisplay.getAttribute("data-logged-in");
-    // if recipeListId passed in (not on individual recipe page)
-    if (recipeListId) {
-        recipeId = recipeListId;
-    }
+    const recipeId = clickedRatingDisplay.getAttribute("data-recipe-id");
 
     if (userLoggedIn === "true") {
         // get modal elements
@@ -110,9 +107,15 @@ function initalizeRating(event, recipeListId = undefined) {
         }
 
         // add event listener to delete rating button
+        function prepRatingDelete(event) {
+            deleteRating(recipeId);
+            event.currentTarget.removeEventListener('click', prepRatingDelete);
+        }
+
         if (deleteBtn) {
             deleteBtn.addEventListener('click', prepRatingDelete);
         }
+
     } else {
         // User is not logged in, open "Sign in" modal
         const modal = document.getElementById("sign-up-modal");
@@ -175,11 +178,6 @@ function buildRatingModal(userRating) {
         }
     }
     modalStarDiv.innerHTML = starButtons;
-}
-
-function prepRatingDelete(event) {
-    deleteRating(recipeId);
-    event.currentTarget.removeEventListener('click', prepRatingDelete);
 }
 
 
@@ -271,7 +269,7 @@ function displayToast(toastId, message, status) {
  */
 function selectRating(event, recipeId) {
     // Get rating value from the clicked star
-    selectedRating = event.currentTarget.getAttribute("data-rating-value");
+    const selectedRating = event.currentTarget.getAttribute("data-rating-value");
     const submitRatingBtn = document.getElementById("submit-rating-btn");
     // activate submit button after a rating has been selected
     submitRatingBtn.removeAttribute("disabled");
@@ -286,13 +284,13 @@ function selectRating(event, recipeId) {
         }
     }
 
+    function prepRatingSubmit(event) {
+        submitRating(selectedRating, recipeId)
+        event.currentTarget.removeEventListener('click', prepRatingSubmit);
+    }
+
     // Add event listener to submitbutton
     submitRatingBtn.addEventListener('click', prepRatingSubmit)
-}
-
-function prepRatingSubmit(event) {
-    submitRating(selectedRating, recipeId)
-    event.currentTarget.removeEventListener('click', prepRatingSubmit);
 }
 
 
