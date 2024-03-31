@@ -112,10 +112,7 @@ function initalizeRating(event) {
 
         deleteBtn.setAttribute("data-recipe-id", recipeId);
 
-        if (deleteBtn) {
-            console.log("Deletebtn", recipeId)
-            deleteBtn.addEventListener('click', prepRatingDelete);
-        }
+        deleteBtn.addEventListener('click', prepRatingDelete);
 
     } else {
         // User is not logged in, open "Sign in" modal
@@ -290,15 +287,17 @@ function selectRating(event, recipeId) {
         }
     }
 
-    function prepRatingSubmit(event) {
-        submitRating(selectedRating, recipeId)
-        event.currentTarget.removeEventListener('click', prepRatingSubmit);
-    }
+    submitRatingBtn.setAttribute("data-recipe-id", recipeId);
+    submitRatingBtn.setAttribute("data-rating-value", selectedRating);
 
     // Add event listener to submitbutton
     submitRatingBtn.addEventListener('click', prepRatingSubmit)
 }
 
+function prepRatingSubmit(event) {
+    submitRating(event.currentTarget.getAttribute("data-rating-value"), event.currentTarget.getAttribute("data-recipe-id"))
+    event.currentTarget.removeEventListener('click', prepRatingSubmit);
+}
 
 /**
  * Submits a rating for a recipe asynchronously. Prepares the post data, calls
