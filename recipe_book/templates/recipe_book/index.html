@@ -24,7 +24,9 @@
                     {% endif %}
                     <div class="card-heart-icon d-flex align-items-center text-center m-2">
                         <p class="mb-0 me-1"></p>
-                        <button class="icon-button me-2 heart-btn" data-object-index="{{ forloop.counter0 }}">
+                        <button class="icon-button me-2 heart-btn" data-object-index="{{ forloop.counter0 }}"
+                            data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
+                            data-recipe-id="{{ recipe.id }}">
                             <i
                                 class="fa{% if recipe.id in user_favorites %} fa-solid {% else %} fa-regular {% endif %} fa-heart m-1 fs-rem-180"></i>
                         </button>
@@ -34,7 +36,8 @@
                         <div class="rating">
                             <!-- Button to open modal -->
                             <button class="icon-button init-rate-btns" data-object-index="{{ forloop.counter0 }}"
-                                data-user-rating="{{ recipe.user_rating }}"
+                                data-user-rating="{{ recipe.user_rating }}" data-recipe-id="{{ recipe.id }}"
+                                data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
                                 aria-label="Avg rating is {{ recipe.avg_rating }}">
                                 {% for i in stars_range %}
                                 {% if recipe.avg_rating >= i %}
@@ -103,7 +106,9 @@
                     {% endif %}
                     <div class="card-heart-icon d-flex align-items-center text-center m-2">
                         <p class="mb-0 me-1"></p>
-                        <button class="icon-button me-2 heart-btn" data-object-index="{{ forloop.counter0 }}">
+                        <button class="icon-button me-2 heart-btn" data-object-index="{{ forloop.counter0 }}"
+                            data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
+                            data-recipe-id="{{ recipe.id }}">
                             <i
                                 class="fa{% if recipe.id in user_favorites %} fa-solid {% else %} fa-regular {% endif %} fa-heart m-1 fs-rem-180"></i>
                         </button>
@@ -113,7 +118,8 @@
                         <div class="rating">
                             <!-- Button to open modal -->
                             <button class="icon-button init-rate-btns" data-object-index="{{ forloop.counter0 }}"
-                                data-user-rating="{{ recipe.user_rating }}"
+                                data-user-rating="{{ recipe.user_rating }}" data-recipe-id="{{ recipe.id }}"
+                                data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
                                 aria-label="Avg rating is {{ recipe.avg_rating }}">
                                 {% for i in stars_range %}
                                 {% if recipe.avg_rating >= i %}

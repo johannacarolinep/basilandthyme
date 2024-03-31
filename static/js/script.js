@@ -81,12 +81,13 @@ function toggleHeaderBanner(hide) {
  */
 function initalizeRating(event, recipeListId = undefined) {
     const clickedRatingDisplay = event.currentTarget;
+    const userLoggedIn = clickedRatingDisplay.getAttribute("data-logged-in");
     // if recipeListId passed in (not on individual recipe page)
     if (recipeListId) {
         recipeId = recipeListId;
     }
 
-    if (userId !== "None") {
+    if (userLoggedIn === "true") {
         // get modal elements
         const ratingModal = document.getElementById("ratings-modal");
         const closeModalBtn1 = document.getElementById("close-rating-btn");
@@ -741,13 +742,13 @@ function updateOrAppendQueryParam(param, value) {
 async function favouritingBtnListener(event, eventRecipeId) {
 
     const heartButton = event.currentTarget;
+    const userLoggedIn = heartButton.getAttribute("data-logged-in");
 
-    if (userId !== "None") {
+    if (userLoggedIn == "true") {
         // User is logged in, prepare POST request
         const postAddress = '/add-remove-favourite/';
         const data = {
             recipeId: eventRecipeId, // recipeId passed in script tag fr template
-            userId: userId // userId passed in script tag fr template
         };
 
         // Send POST request and await response
