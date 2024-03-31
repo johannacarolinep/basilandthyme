@@ -9,8 +9,17 @@ function initializeScript() {
     }
 
     const categoryButtons = document.getElementsByClassName('btnCategory');
-    for (let i = 0; i < categoryButtons.length; i++) {
-        categoryButtons[i].addEventListener('click', addCategoryQuery);
+    if (categoryButtons) {
+        for (let i = 0; i < categoryButtons.length; i++) {
+            categoryButtons[i].addEventListener('click', addCategoryQuery);
+        }
+    }
+
+    const sortButtons = document.getElementsByClassName('btn-sort');
+    if (sortButtons) {
+        for (let i = 0; i < sortButtons.length; i++) {
+            sortButtons[i].addEventListener('click', addSortQuery);
+        }
     }
 
     const favouritingButton = document.getElementById('favouriting-btn');
@@ -662,32 +671,63 @@ function buildComment(data) {
 
 
 /**
- * Adds a category query parameter to the current URL and redirects to the
- * updated URL.
+ * Gets the value of the clicked category button and calls function at append/
+ * update search query.
  *
  * @param {Event} click - The clicked category button.
  * @returns {void}
  */
 function addCategoryQuery(event) {
-    const currentUrl = window.location.href;
-    let category = event.currentTarget.value;
-
-    // If URL does not contain /recipes, append "/recipes/?q=category"
-    if (currentUrl.indexOf('/recipes') === -1) {
-        window.location.href = currentUrl.split('?')[0] + 'recipes/?q=' + category;
-    } else {
-        // If URL contains /recipes, remove any existing query string
-        const baseUrl = currentUrl.split('?')[0];
-
-        // if there was a parameter
-        if (baseUrl.endsWith('/recipes/')) {
-            window.location.href = baseUrl + '?q=' + category;
-        } else {
-            // if there was no parameter
-            window.location.href = baseUrl + '/?q=' + category;
-        }
-    }
+    const category = event.currentTarget.value;
+    updateOrAppendQueryParam("q", category)
 }
+
+
+/**
+ * Gets the value of the clicked sort button and calls function at append/
+ * update sort query.
+ *
+ * @param {Event} click - The clicked sort button.
+ * @returns {void}
+ */
+function addSortQuery(event) {
+    const sortCriteria = event.currentTarget.value;
+    updateOrAppendQueryParam("s", sortCriteria)
+}
+
+
+/**
+ * Modifies the URL by either updating the value of an existing parameter or by
+ * adding a parameter, based on the provided parameters.
+ * 
+ * @param {string} param - The parameter type to be updated or appended.
+ * @param {string} value - The value of the parameter.
+ * @returns {void}
+ */
+function updateOrAppendQueryParam(param, value) {
+    // Create a URL object
+    const url = new URL(window.location.href);
+    url.pathname = "/recipes/";
+
+    // Use searchParams object to work with the parameters
+    // credit: https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
+    const searchParams = url.searchParams;
+
+    // If URL has the parameter type (param), update its value
+    if (searchParams.has(param)) {
+        searchParams.set(param, value);
+    } else {
+        // If URL does not have the parameter, add it
+        searchParams.append(param, value);
+    }
+
+    // Update the URL's search string
+    url.search = searchParams.toString();
+
+    // Update the URL
+    window.location.href = url.toString();
+}
+
 
 /**
  * Handles the click event on favourite/unfavourite buttons.
