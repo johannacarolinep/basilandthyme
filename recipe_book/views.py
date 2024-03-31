@@ -46,7 +46,7 @@ class RecipeListView(ListView):
                 )
 
         if self.query:
-            match self.query:
+            match self.query.lower():
                 case "all":
                     base_queryset = base_queryset
                 case "chicken":

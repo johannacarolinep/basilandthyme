@@ -11,7 +11,7 @@ body {
 
 main {
     flex: 1 0 auto;
-    margin-top: 57px;
+    margin-top: 56px;
 }
 
 
@@ -148,6 +148,14 @@ body {
 
 .navbar-toggler-icon {
     font-weight: 700;
+}
+
+.header-banner {
+    background-color: #412f2b90;
+}
+
+.nav-container {
+    border-bottom: 1px solid #04330f;
 }
 
 
