@@ -24,7 +24,7 @@ function initializeScript() {
 
     const favouritingButton = document.getElementById('favouriting-btn');
     if (favouritingButton) {
-        favouritingButton.addEventListener('click', (event) => favouritingBtnListener(event, recipeId));
+        favouritingButton.addEventListener('click', favouritingBtnListener);
     }
 
     const openRatingsBtn = document.getElementById("init-rate-btn");
@@ -739,16 +739,17 @@ function updateOrAppendQueryParam(param, value) {
  * @param {Event} event - The click event triggering the function.
  * @returns {void}
  */
-async function favouritingBtnListener(event, eventRecipeId) {
+async function favouritingBtnListener(event) {
 
     const heartButton = event.currentTarget;
     const userLoggedIn = heartButton.getAttribute("data-logged-in");
+    const recipeId = heartButton.getAttribute("data-recipe-id");
 
     if (userLoggedIn == "true") {
         // User is logged in, prepare POST request
         const postAddress = '/add-remove-favourite/';
         const data = {
-            recipeId: eventRecipeId, // recipeId passed in script tag fr template
+            recipeId: recipeId, // recipeId passed in script tag fr template
         };
 
         // Send POST request and await response

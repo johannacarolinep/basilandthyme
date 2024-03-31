@@ -226,7 +226,7 @@
 {% block customscript %}
 <script type="text/javascript">
     // Convert Django variables to JavaScript variables
-    const userId = '{{ user.id | safe }}';
+
     const ratingsSection = document.getElementById("top-rated-section");
     const latestSection = document.getElementById("latest-section");
     // Wait for the DOM to load
@@ -234,13 +234,13 @@
         // Loop through object_list and add event listeners to each heart button
         '{% for obj in recipes_by_rating %}'
         // Use index of for loop to attach event listener and pass the recipeId
-        ratingsSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', (event) => favouritingBtnListener(event, '{{ obj.id }}'));
+        ratingsSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', favouritingBtnListener);
         ratingsSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
         '{% endfor %}'
 
         '{% for obj in recipes_by_date %}'
         // Use index of for loop to attach event listener and pass the recipeId
-        latestSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', (event) => favouritingBtnListener(event, '{{ obj.id }}'));
+        latestSection.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', favouritingBtnListener);
         latestSection.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', (event) => initalizeRating(event, '{{ obj.id }}'));
         '{% endfor %}'
     });
