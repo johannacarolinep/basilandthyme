@@ -22,14 +22,18 @@ function initializeScript() {
         }
     }
 
-    const favouritingButton = document.getElementById('favouriting-btn');
-    if (favouritingButton) {
-        favouritingButton.addEventListener('click', favouritingBtnListener);
+    const favouritingButtons = document.getElementsByClassName('heart-btn');
+    if (favouritingButtons) {
+        for (let btn of favouritingButtons) {
+            btn.addEventListener('click', favouritingBtnListener);
+        }
     }
 
-    const openRatingsBtn = document.getElementById("init-rate-btn");
-    if (openRatingsBtn) {
-        openRatingsBtn.addEventListener('click', initalizeRating)
+    const openRatingsBtns = document.getElementsByClassName("init-rate-btn");
+    if (openRatingsBtns) {
+        for (let btn of openRatingsBtns) {
+            btn.addEventListener('click', initalizeRating)
+        }
     }
 
     const commentForm = document.getElementById("comments-input");
@@ -87,8 +91,8 @@ function initalizeRating(event) {
     if (userLoggedIn === "true") {
         // get modal elements
         const ratingModal = document.getElementById("ratings-modal");
-        const closeModalBtn1 = document.getElementById("close-rating-btn");
-        const closeModalBtn2 = document.getElementById("cancel-rating-btn");
+        const closeModalBtn = document.getElementById("close-rating-btn");
+        const cancelModalBtn = document.getElementById("cancel-rating-btn");
         const deleteBtn = document.getElementById("delete-rating-btn");
         const userRating = event.currentTarget.getAttribute("data-user-rating");
 
@@ -98,21 +102,18 @@ function initalizeRating(event) {
         // Open modal and add event listeners to its buttons
         openModal(ratingModal);
         // Adds eventlistener to cancel buttons, to close modal and reset focus
-        closeModalBtn1.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
-        closeModalBtn2.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
+        closeModalBtn.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
+        cancelModalBtn.addEventListener('click', () => closeModal(ratingModal, clickedRatingDisplay));
 
         // add event listener to star buttons
         for (let btn of starBtns) {
             btn.addEventListener('click', (event) => selectRating(event, recipeId));
         }
 
-        // add event listener to delete rating button
-        function prepRatingDelete(event) {
-            deleteRating(recipeId);
-            event.currentTarget.removeEventListener('click', prepRatingDelete);
-        }
+        deleteBtn.setAttribute("data-recipe-id", recipeId);
 
         if (deleteBtn) {
+            console.log("Deletebtn", recipeId)
             deleteBtn.addEventListener('click', prepRatingDelete);
         }
 
@@ -125,6 +126,11 @@ function initalizeRating(event) {
     }
 }
 
+// add event listener to delete rating button
+function prepRatingDelete(event) {
+    deleteRating(event.currentTarget.getAttribute("data-recipe-id"));
+    event.currentTarget.removeEventListener('click', prepRatingDelete);
+}
 
 /**
  * Builds the content of the rating modal based on the user's existing rating
@@ -214,9 +220,9 @@ function deleteRating(recipeId) {
             let ratingsDisplay;
             if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/" || window.location.pathname === "/") {
                 const recipeCard = document.getElementById(recipeId);
-                ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+                ratingsDisplay = recipeCard.querySelector(".init-rate-btn");
             } else {
-                ratingsDisplay = document.getElementById("init-rate-btn");
+                ratingsDisplay = document.querySelector(".init-rate-btn");
             }
             // Handle the response data
             if (data.status === 200) {
@@ -319,10 +325,10 @@ async function submitRating(rating, recipeId) {
     let ratingsDisplay;
     if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/" || window.location.pathname === "/") {
         const recipeCard = document.getElementById(recipeId);
-        ratingsDisplay = recipeCard.querySelector(".init-rate-btns");
+        ratingsDisplay = recipeCard.querySelector(".init-rate-btn");
     } else {
         // On recipe page
-        ratingsDisplay = document.getElementById("init-rate-btn");
+        ratingsDisplay = document.querySelector(".init-rate-btn");
     }
     // update ratingsdisplay if action successful
     if (postResponse.status === 200) {

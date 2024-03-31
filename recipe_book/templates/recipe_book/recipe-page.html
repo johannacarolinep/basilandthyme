@@ -23,7 +23,7 @@
                         <!-- Improve ARIA accessibility ?? -->
                         <div class="me-1">
                             <!-- Button to open modal -->
-                            <button id="init-rate-btn" class="icon-button" data-user-rating="{{ user_rating }}"
+                            <button class="init-rate-btn icon-button" data-user-rating="{{ user_rating }}"
                                 data-recipe-id="{{ recipe.id }}"
                                 data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}">
                                 {% for i in stars_range %}
@@ -60,7 +60,7 @@
                 <div class="d-flex justify-content-end align-items-baseline mt-auto brand-green">
                     <!-- Need improved accessibility -->
                     <p class="m-0"></p>
-                    <button id="favouriting-btn" class="icon-button icon-button-stroke"
+                    <button class="heart-btn icon-button icon-button-stroke"
                         data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
                         data-recipe-id="{{ recipe.id }}">
                         <i
@@ -247,10 +247,6 @@
 {% endblock modal %}
 
 {% block customscript %}
-<script type="text/javascript">
-    // Convert Django variables to JavaScript variables
-    const recipeId = '{{ recipe.id | safe }}';
-</script>
 <script type="text/javascript" src="{% static 'js/script.js' %}">
 </script>
 {% endblock customscript %}

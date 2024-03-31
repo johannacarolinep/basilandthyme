@@ -52,7 +52,7 @@
                         <!-- Improve accessibility? -->
                         <div class="rating">
                             <!-- Button to open modal -->
-                            <button class="icon-button init-rate-btns" data-object-index="{{ forloop.counter0 }}"
+                            <button class="icon-button init-rate-btn" data-object-index="{{ forloop.counter0 }}"
                                 data-user-rating="{{ recipe.user_rating }}" data-recipe-id="{{ recipe.id }}"
                                 data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
                                 aria-label="Avg rating is {{ recipe.avg_rating }}">
@@ -174,18 +174,5 @@
 {% endblock modal %}
 
 {% block customscript %}
-<script type="text/javascript">
-    // Convert Django variables to JavaScript variables
-    const userId = '{{ user.id | safe }}';
-    // Wait for the DOM to load
-    document.addEventListener('DOMContentLoaded', function () {
-        // Loop through object_list and add event listeners to each heart button
-        '{% for obj in object_list %}'
-        // Use index of for loop to attach event listener and pass the recipeId
-        document.querySelectorAll('.heart-btn')['{{ forloop.counter0 }}'].addEventListener('click', favouritingBtnListener);
-        document.querySelectorAll('.init-rate-btns')['{{ forloop.counter0 }}'].addEventListener('click', initalizeRating);
-        '{% endfor %}'
-    });
-</script>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 {% endblock customscript %}
