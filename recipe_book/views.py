@@ -28,6 +28,7 @@ class RecipeListView(ListView):
             Queryset: A filtered queryset of Recipe objects.
         """
         self.query = self.request.GET.get("q")
+        self.sort = self.request.GET.get("s")
         # https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate
         base_queryset = Recipe.objects.filter(status=1).annotate(
             avg_rating=models.functions.Coalesce(models.Avg('rating_recipe__rating'), models.Value(0.0)),
@@ -47,23 +48,31 @@ class RecipeListView(ListView):
         if self.query:
             match self.query:
                 case "all":
-                    return base_queryset
+                    base_queryset = base_queryset
                 case "chicken":
-                    return base_queryset.filter(category=1)
+                    base_queryset = base_queryset.filter(category=1)
                 case "pork":
-                    return base_queryset.filter(category=2)
+                    base_queryset = base_queryset.filter(category=2)
                 case "beef":
-                    return base_queryset.filter(category=3)
+                    base_queryset = base_queryset.filter(category=3)
                 case "fish":
-                    return base_queryset.filter(category=4)
+                    base_queryset = base_queryset.filter(category=4)
                 case "vegetarian":
-                    return base_queryset.filter(category=5)
+                    base_queryset = base_queryset.filter(category=5)
                 case _:
-                    return base_queryset.filter(
+                    base_queryset = base_queryset.filter(
                         Q(title__icontains=self.query) | Q(ingredients__icontains=self.query)
                     )
-        else:
-            return base_queryset
+
+        if self.sort:
+            if self.sort == "newest":
+                base_queryset = base_queryset.order_by('-created_on')
+            elif self.sort == "oldest":
+                base_queryset = base_queryset.order_by('created_on')
+            elif self.sort == "highest-rating":
+                base_queryset = base_queryset.order_by('-avg_rating')
+
+        return base_queryset
 
     def get_context_data(self, **kwargs):
         """
