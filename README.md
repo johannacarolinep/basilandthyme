@@ -259,6 +259,77 @@ Velocity: 16.25
 
 ### Solved bugs
 
+#### 2024-03-30: Incorrect value annotated to objects in RecipeListView
+
+The rating value, represented by stars, on the recipe card (eg on the "Recipes page"), represents the recipe's average rating value (the average of all ratings the recipe has received). 
+
+Clicking on the rating stars, the user is presented with a modal. In this modal, if the specific user has previously rated the recipe, their existing rating of that recipe should be displayed.
+
+To achieve this, I annotated the query set in the RecipeListView with `avg_rating` and `user_rating`. While manually testing the functionality, I realised however that the user specific rating value was not always correct. 
+
+Steps taken:
+- Reviewing the code and data flow, adding in print statements for debugging, I came to realise that the value I was annotating to the objects to represent the `user_rating` was incorrect, and that I was actually annotating the recipe's average rating a second time instead.
+
+```python
+if user.is_authenticated:
+           base_queryset = base_queryset.annotate(
+               user_rating=models.F('rating_recipe__rating')
+               )
+```
+- This caused a lot of issues in the UI. For example, when logging in as a separate user, who had not rated a recipe, upon clicking on the ratings display, the modal would open and state that I had given a rating to the recipe. 
+
+- Since there would be instances where no rating existed for a given user and recipe, I knew I would need to use some type of condition for the annotation. Reading through the official Django documentation, I found that I could [use Case() expressions](https://docs.djangoproject.com/en/5.0/ref/models/conditional-expressions/#case) for this. 
+
+- Reviewing the documentation and the examples provided. I was able to rewrite my code as per below:
+
+```python
+if user.is_authenticated:
+           base_queryset = base_queryset.annotate(
+               user_rating=models.Case(
+                   models.When(rating_recipe__user=user, then=models.F('rating_recipe__rating')),
+                   default=None,
+                   output_field=models.IntegerField()
+               )
+               )
+```
+
+ - Lastly, I confirmed with print statements and by manually testing the UI that the values returned were now correct, matching the expected values for `user_rating`.
+
+ #### 2024-03-27 Cloudinary images sent with HTTP
+ On the deployed site, warnings were raised in the console, saying the images fetched from Cloudinary were being served with HTTP, and automatically upgraded to HTTPS. I wanted Django to fetch them through HTTPS by default. 
+
+ Steps taken:
+ - Researching the issue in the Cloudinary documentation I saw there was an option to configure a `secure` parameter to `true` to ensure that URLs would be generated as HTTPS. The documentation stated that the configuration parameters should be set globally, before importing the `cloudinary.uploader` and `cloudinary.api` classes.
+
+From [Cloudinary documentation](https://cloudinary.com/documentation/django_integration#setting_configuration_parameters_globally):
+```python
+import cloudinary
+
+cloudinary.config(
+cloud_name = "xxxx",
+api_key = "xxxxxxxxxxxx",
+api_secret = "xxxxxxxxxxx",
+api_proxy = "http://proxy.server:9999"
+)
+
+import cloudinary.uploader
+import cloudinary.api
+```
+
+- Trying this approach, the issue with the HTTP URLs was solved. However, it instead gave an issue with the linter, for having imports not at the top of the file. 
+
+- At this point, since the only parameter I was interested in was the `secure` parameter, I started removing parameters, removing the need for imports below the configuration parameters. It worked out, keeping only the `secure` and `cloud_name` parameters (which had to be included).
+
+From settings.py:
+```python
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    secure=True
+)
+```
+
+- Finally, I confirmed the images were being served with HTTPS, and the linter not raising any error.
+
 #### 2024-03-03: Missed adding CLOUDINARY_URL configuration variable in Heroku
 
 While working on displaying an overview of a recipe in a card format (creating the recipes.html template), I got a 500 error on the deployed version of the site. The error occurred in the first deployment after adding a recipe with a user-uploaded image and code in the template to display recipe images.
