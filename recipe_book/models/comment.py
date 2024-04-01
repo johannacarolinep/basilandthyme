@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from .recipe import Recipe
 
 
@@ -19,6 +20,17 @@ class Comment(models.Model):
         Recipe, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='comment_author')
-    body = models.TextField()
+    body = models.TextField(validators=[
+            MaxLengthValidator(
+                1200, message="The text must not exceed 1200 characters.")
+        ],
+        null=False,
+        blank=False)
     approved = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_on"]
+
+    def __str__(self):
+        return f"{self.user} commented '{self.recipe}'"
