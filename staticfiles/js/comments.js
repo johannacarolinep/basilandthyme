@@ -245,3 +245,88 @@ function deleteComment(commentId) {
             }
         });
 }
+
+
+/**
+ * Handles the submission of an edited comment form with AJAX. Prepares the data
+ * to send, does a PUT request, and handles the response, updating the frontend
+ * to reflect a successful or unsuccessful edit of a comment.
+ * 
+ * @param {Event} form submitted while in "edit mode"
+ * @param {HTMLFormElement} commentForm - the form element containing the comment data
+ * @returns {void}
+ */
+function editCommentForm(event, commentForm) {
+    // Prevent default form submission behaviour
+    event.preventDefault();
+
+    // Get commentId from the forms attribute 
+    const commentId = commentForm.getAttribute("data-comment-id");
+
+    // Create FormData object with data from the form
+    const formData = new FormData(commentForm);
+
+    // Convert the form data to JSON and add commentId
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    data['commentId'] = commentId;
+
+    // Save the submitted form "body"
+    const newComment = data['body'];
+
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // Credit: https://testdriven.io/blog/django-ajax-xhr/
+    // Send PUT request to update the comment
+    fetch(commentForm.action, {
+            method: "PUT",
+            credentials: "same-origin",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": csrfToken,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
+            // Handle server response
+            if (status === 200) {
+                // Add success message and update comment body
+                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+                const message = document.createElement("p")
+                message.className = "small brand-green mt-2";
+                message.innerText = "Comment was updated!";
+                const container = editBtn.closest(".comment-container");
+                container.querySelector("div").appendChild(message);
+                const commentBody = editBtn.closest(".comment-body");
+                commentBody.querySelector("p").innerText = newComment;
+                // scroll to the comment body
+                commentBody.scrollIntoView({
+                    block: "center"
+                });
+
+            } else {
+                // Add failure message and
+                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+                const message = document.createElement("p")
+                message.className = "small red mt-2";
+                message.innerText = "Comment was not updated!";
+                const container = editBtn.closest(".comment-container");
+                container.querySelector("div").appendChild(message);
+            }
+            // Reset form: empty textearea, remove comment id, update button and paragraph
+            document.getElementById("id_body").value = "";
+            commentForm.removeAttribute("data-comment-id");
+            const submitBtn = document.getElementById("comment-submit-btn");
+            const paragraph = commentForm.parentElement.querySelector("p");
+            paragraph.innerHTML = 'Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.';
+            submitBtn.innerText = "Send";
+            submitBtn.className = submitBtn.className.replace("update-btn", "submit-btn");
+            // Switch event listener back, to post comments
+            commentForm.removeEventListener("submit", prepEditForm);
+            commentForm.addEventListener("submit", prepCommentForm);
+        });
+}
