@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MaxLengthValidator
 from .recipe import Recipe
 
 
@@ -33,4 +33,4 @@ class Comment(models.Model):
         ordering = ["-created_on"]
 
     def __str__(self):
-        return f"{self.user} commented '{self.recipe}'"
+        return f"{self.author} commented '{self.recipe}'"
