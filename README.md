@@ -271,6 +271,11 @@ Furthermore, on closer reflection, I believe the implementation of this function
     - USER STORY: Page title and meta tags - As a **Site User finding the website through a search engine** I can **read a descriptive search result** so that I can **understand if the result is relevant to me**.
 - Additional items relating to testing and code refactoring were added to the backlog.
 
+#### Sprint 6
+
+![Sprint 6 milestone](documentation/sprint6.png)
+
+
 
 
 <a id="tools-and-technologies"></a>
