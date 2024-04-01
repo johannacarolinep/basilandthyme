@@ -265,6 +265,13 @@ Furthermore, on closer reflection, I believe the implementation of this function
 
 **Actions:**
 - Moved two user stories back to the backlog.
+- 3 new user stories were added to the backlog:
+    - USER STORY: Using the admin view - As a **Super user** I can **rely on the field validation, as well as see clear instructions in the admin view** so that I can **trust in that the content I am publishing will be valid**.
+    - USER STORY: Consistent styling - As a **Site User** I can **observe consistent styling, structure and interaction design across all pages on the website** so that I can **have a pleasant experience with the website**.
+    - USER STORY: Page title and meta tags - As a **Site User finding the website through a search engine** I can **read a descriptive search result** so that I can **understand if the result is relevant to me**.
+- Additional items relating to testing and code refactoring were added to the backlog.
+
+
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
