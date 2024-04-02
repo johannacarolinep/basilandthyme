@@ -1,8 +1,10 @@
 /* Wait for page to load before initializing script */
 document.addEventListener("DOMContentLoaded", initializeQueriesScript);
 
+/**
+ * Adds event listeners to category buttons and sort buttons
+ */
 function initializeQueriesScript() {
-
     const categoryButtons = document.getElementsByClassName('btnCategory');
     if (categoryButtons) {
         for (let i = 0; i < categoryButtons.length; i++) {
@@ -20,7 +22,7 @@ function initializeQueriesScript() {
 
 
 /**
- * Gets the value of the clicked category button and calls function at append/
+ * Gets the value of the clicked category button and calls function to append/
  * update search query.
  *
  * @param {Event} click - The clicked category button.
@@ -33,7 +35,7 @@ function addCategoryQuery(event) {
 
 
 /**
- * Gets the value of the clicked sort button and calls function at append/
+ * Gets the value of the clicked sort button and calls function to append/
  * update sort query.
  *
  * @param {Event} click - The clicked sort button.

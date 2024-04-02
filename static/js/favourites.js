@@ -1,7 +1,10 @@
+// Wait until document is loaded before calling initializeFavouriteScript()
 document.addEventListener("DOMContentLoaded", initializeFavouriteScript);
 
+/**
+ * Adds event listeners to favouriting buttons
+ */
 function initializeFavouriteScript() {
-
     const favouritingButtons = document.getElementsByClassName('heart-btn');
     if (favouritingButtons) {
         for (let btn of favouritingButtons) {
