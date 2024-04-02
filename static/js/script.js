@@ -41,15 +41,15 @@ function displayToast(toastId, message, status) {
     const toast = document.getElementById(toastId);
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
     const toastBody = toast.querySelector(".toast-body");
-    let toastImage;
     toastBody.innerText = message;
     toastBootstrap.show()
     if (status === 200) {
-        toastImage = toast.querySelector(".success-img");
+        toast.querySelector(".success-img").classList.remove("d-none");
+        toast.querySelector(".fail-img").classList.add("d-none");
     } else {
-        toastImage = toast.querySelector(".fail-img");
+        toast.querySelector(".success-img").classList.add("d-none");
+        toast.querySelector(".fail-img").classList.remove("d-none");
     }
-    toastImage.classList.remove("d-none");
 }
 
 

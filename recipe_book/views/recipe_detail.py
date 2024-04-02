@@ -76,11 +76,13 @@ class RecipeDetailView(DetailView):
                     "date": comment.created_on,
                 }
 
-                return JsonResponse({'data': response_data}, status=200)
+                return JsonResponse(
+                    {'data': response_data,
+                        'message': "Comment successfully posted!"}, status=200)
 
             # If the form is invalid
             return JsonResponse(
-                {'message': "Comment invalid"}, status=400)
+                {'message': "Sorry, comment is invalid."}, status=400)
 
         # If the form is invalid
         return JsonResponse(
@@ -102,15 +104,17 @@ class RecipeDetailView(DetailView):
         comment = recipe.comments.filter(id=comment_id).first()
         if comment is None:
             return JsonResponse(
-                {'error': 'Comment not found or not authorized to delete'},
+                {'message': 'Comment could not be found'},
                 status=400)
 
         if comment.author == request.user:
             comment.delete()
-            return JsonResponse({'data': "comment deleted"}, status=200)
+            return JsonResponse({'message': "Comment succesfully deleted!"},
+                                status=200)
         else:
             return JsonResponse(
-                {'data': "not allowed"}, status=401)
+                {'message': "You are not authorised to delete this comment"},
+                status=401)
 
     def put(self, request, *args, **kwargs):
         """
@@ -127,19 +131,25 @@ class RecipeDetailView(DetailView):
 
         if comment is None:
             return JsonResponse(
-                {'error': 'Comment not found'}, status=400)
+                {'message': 'Comment not found'}, status=400)
 
-        if comment.author != request.user:
+        elif comment.author != request.user:
             return JsonResponse(
-                {'error': 'Not authorised'}, status=401)
+                {'message': 'You are not authorised to edit this comment'},
+                status=401)
 
-        elif data["body"] != "" and data["body"] != comment.body:
+        elif data["body"] == comment.body:
+            return JsonResponse(
+                {'message': "Comment not updated, no change was made"},
+                status=400)
+
+        elif data["body"] != "":
             comment.body = data["body"]
             if not comment.approved:
                 comment.approved = True
             comment.save()
             return JsonResponse(
-                {'data': "Comment updated"}, status=200)
+                {'message': "Comment successfully updated!"}, status=200)
 
         return JsonResponse(
-            {'data': "Comment not updated"}, status=400)
+            {'message': "Sorry, comment not updated"}, status=400)

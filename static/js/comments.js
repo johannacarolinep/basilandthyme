@@ -140,19 +140,13 @@ function submitCommentForm(event) {
             if (status === 200) {
                 // If comment was created, call function to update frontend
                 buildComment(data.data);
-            } else {
-                // handle not successful
             }
+            // display toast message
+            displayToast("comment-toast", data.message, status);
             // clear the form
             document.getElementById("id_body").value = "";
         });
 };
-
-
-// function prepEditForm(event) {
-//     const commentForm = document.getElementById("comments-input");
-//     editCommentForm(event, commentForm);
-// }
 
 
 /**
@@ -236,8 +230,8 @@ function deleteComment(commentId) {
                 "X-CSRFToken": csrfToken,
             },
         })
-        .then(response => response.status)
-        .then((status) => {
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
             // Handle the response data
             if (status === 200) {
                 // If comment deleted, update frontend to reflect deletion
@@ -250,6 +244,8 @@ function deleteComment(commentId) {
                 const comment = deleteButton.closest(".comment-container");
                 comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
             }
+            // Display toast
+            displayToast("comment-toast", data.message, status)
         });
 }
 
@@ -257,7 +253,8 @@ function deleteComment(commentId) {
 /**
  * Handles the submission of an edited comment form with AJAX. Prepares the data
  * to send, does a PUT request, and handles the response, updating the frontend
- * to reflect a successful or unsuccessful edit of a comment.
+ * to reflect a successful or unsuccessful edit of a comment. Finally, displays
+ * a toast message, and resets the form.
  * 
  * @param {Event} form submitted while in "edit mode"
  * @param {HTMLFormElement} commentForm - the form element containing the comment data
@@ -270,10 +267,8 @@ function editCommentForm(event) {
     const commentForm = document.getElementById("comments-input");
     // Get commentId from the forms attribute 
     const commentId = commentForm.getAttribute("data-comment-id");
-
     // Create FormData object with data from the form
     const formData = new FormData(commentForm);
-
     // Convert the form data to JSON and add commentId
     const data = {};
     formData.forEach((value, key) => {
@@ -283,7 +278,6 @@ function editCommentForm(event) {
 
     // Save the submitted form "body"
     const newComment = data['body'];
-
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // Credit: https://testdriven.io/blog/django-ajax-xhr/
@@ -325,6 +319,8 @@ function editCommentForm(event) {
                 const container = editBtn.closest(".comment-container");
                 container.querySelector("div").appendChild(message);
             }
+            // Display toast
+            displayToast("comment-toast", data.message, status)
             // Reset form:
             resetForm();
         });

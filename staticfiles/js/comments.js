@@ -1,10 +1,15 @@
+// Wait until document is loaded before calling initializeCommentScript()
 document.addEventListener("DOMContentLoaded", initializeCommentScript);
 
+/**
+ * Adds event listeners to comment form, comment delete buttons, and comment
+ * edit buttons.
+ */
 function initializeCommentScript() {
 
     const commentForm = document.getElementById("comments-input");
     if (commentForm) {
-        commentForm.addEventListener("submit", prepCommentForm);
+        commentForm.addEventListener("submit", submitCommentForm);
     }
 
     const commentDeleteBtns = document.getElementsByClassName("comment-delete");
@@ -17,22 +22,15 @@ function initializeCommentScript() {
     const commentEditBtns = document.getElementsByClassName("comment-edit");
     if (commentEditBtns) {
         for (let btn of commentEditBtns) {
-            console.log("btn", btn)
             btn.addEventListener("click", startEditComment);
         }
     }
 }
 
 
-function prepCommentForm(event) {
-    const commentForm = document.getElementById("comments-input");
-    submitCommentForm(event, commentForm);
-}
-
-
 /**
  * Handles the confirmation of comment deletion. Displays modal, and adds event
- * listeners to close modal and/or delete comment.
+ * listeners to close modal and delete comment.
  * 
  * @param {Event} click on delete button of a comment.
  * @returns {void}
@@ -45,6 +43,8 @@ function confirmCommentDeletion(event) {
     const closeModalBtn = document.getElementById("close-delete-modal");
     const cancelModalBtn = document.getElementById("cancel-delete-btn");
     const confirmDeleteBtn = document.getElementById("delete-comment-btn");
+    // reset form
+    resetForm();
 
     // Displays the confirmation modal
     openModal(modal);
@@ -92,8 +92,8 @@ function startEditComment(event) {
     });
 
     // Switch out event listener on form button to use form for editing
-    commentForm.removeEventListener("submit", prepCommentForm);
-    commentForm.addEventListener("submit", prepEditForm);
+    commentForm.removeEventListener("submit", submitCommentForm);
+    commentForm.addEventListener("submit", editCommentForm);
 
     // Set forms textare to existing comment body text
     formTextArea.value = commentBody;
@@ -114,10 +114,11 @@ function startEditComment(event) {
  * @param {HTMLFormElement} commentForm - The comment form element
  * @returns {void}
  */
-function submitCommentForm(event, commentForm) {
+function submitCommentForm(event) {
     // Prevent default form submission behaviour
     event.preventDefault();
 
+    const commentForm = document.getElementById("comments-input");
     // Prepare data to post
     const formData = new FormData(commentForm);
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -139,19 +140,13 @@ function submitCommentForm(event, commentForm) {
             if (status === 200) {
                 // If comment was created, call function to update frontend
                 buildComment(data.data);
-            } else {
-                // handle not successful
             }
+            // display toast message
+            displayToast("comment-toast", data.message, status);
             // clear the form
             document.getElementById("id_body").value = "";
         });
 };
-
-
-function prepEditForm(event) {
-    const commentForm = document.getElementById("comments-input");
-    editCommentForm(event, commentForm);
-}
 
 
 /**
@@ -172,9 +167,11 @@ function buildComment(data) {
     // Get comments parent container
     const commentsList = document.querySelector("#comments-list");
 
+    // Create green dividing line
     const divider = document.createElement("div");
     divider.className = "bg-brand-green h-line mx-auto my-3 d-none d-md-block";
 
+    // Create the new comment
     const commentContainer = document.createElement("div");
     commentContainer.className = "comment-container row mx-auto my-2 py-3 bg-brand-gray";
     commentContainer.innerHTML = `
@@ -193,11 +190,14 @@ function buildComment(data) {
             </div>
         </div>`;
 
-    // Attach the comment to the parentcontainer
+    // Attach the comment and dividing line to the parent container
     commentsList.prepend(commentContainer);
     commentsList.prepend(divider);
+    commentContainer.scrollIntoView({
+        block: "center"
+    });
 
-    // Add event listeners to the new comments buttons
+    // Add event listeners to the new comment's buttons
     commentsList.querySelector(`[data-edit-comment-id="${data.comment_id}"]`).addEventListener("click", startEditComment);
     commentsList.querySelector(`[data-delete-comment-id="${data.comment_id}"]`).addEventListener("click", confirmCommentDeletion);
 };
@@ -212,6 +212,7 @@ function buildComment(data) {
  * @returns {void}
  */
 function deleteComment(commentId) {
+
     // Create the delete request URL
     const commentForm = document.getElementById("comments-input");
     const url = commentForm.action.slice(0, -1) + "?commentId=" + commentId;
@@ -229,8 +230,8 @@ function deleteComment(commentId) {
                 "X-CSRFToken": csrfToken,
             },
         })
-        .then(response => response.status)
-        .then((status) => {
+        .then(response => Promise.all([response.json(), response.status]))
+        .then(([data, status]) => {
             // Handle the response data
             if (status === 200) {
                 // If comment deleted, update frontend to reflect deletion
@@ -243,6 +244,8 @@ function deleteComment(commentId) {
                 const comment = deleteButton.closest(".comment-container");
                 comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
             }
+            // Display toast
+            displayToast("comment-toast", data.message, status)
         });
 }
 
@@ -250,22 +253,22 @@ function deleteComment(commentId) {
 /**
  * Handles the submission of an edited comment form with AJAX. Prepares the data
  * to send, does a PUT request, and handles the response, updating the frontend
- * to reflect a successful or unsuccessful edit of a comment.
+ * to reflect a successful or unsuccessful edit of a comment. Finally, displays
+ * a toast message, and resets the form.
  * 
  * @param {Event} form submitted while in "edit mode"
  * @param {HTMLFormElement} commentForm - the form element containing the comment data
  * @returns {void}
  */
-function editCommentForm(event, commentForm) {
+function editCommentForm(event) {
     // Prevent default form submission behaviour
     event.preventDefault();
 
+    const commentForm = document.getElementById("comments-input");
     // Get commentId from the forms attribute 
     const commentId = commentForm.getAttribute("data-comment-id");
-
     // Create FormData object with data from the form
     const formData = new FormData(commentForm);
-
     // Convert the form data to JSON and add commentId
     const data = {};
     formData.forEach((value, key) => {
@@ -275,7 +278,6 @@ function editCommentForm(event, commentForm) {
 
     // Save the submitted form "body"
     const newComment = data['body'];
-
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // Credit: https://testdriven.io/blog/django-ajax-xhr/
@@ -317,16 +319,29 @@ function editCommentForm(event, commentForm) {
                 const container = editBtn.closest(".comment-container");
                 container.querySelector("div").appendChild(message);
             }
-            // Reset form: empty textearea, remove comment id, update button and paragraph
-            document.getElementById("id_body").value = "";
-            commentForm.removeAttribute("data-comment-id");
-            const submitBtn = document.getElementById("comment-submit-btn");
-            const paragraph = commentForm.parentElement.querySelector("p");
-            paragraph.innerHTML = 'Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.';
-            submitBtn.innerText = "Send";
-            submitBtn.className = submitBtn.className.replace("update-btn", "submit-btn");
-            // Switch event listener back, to post comments
-            commentForm.removeEventListener("submit", prepEditForm);
-            commentForm.addEventListener("submit", prepCommentForm);
+            // Display toast
+            displayToast("comment-toast", data.message, status)
+            // Reset form:
+            resetForm();
         });
+}
+
+
+/**
+ * Resets the form to its default state - to post comments.
+ * 
+ * @returns {void}
+ */
+function resetForm() {
+    const commentForm = document.getElementById("comments-input");
+    const submitBtn = document.getElementById("comment-submit-btn");
+    const paragraph = commentForm.parentElement.querySelector("p");
+    document.getElementById("id_body").value = "";
+    commentForm.removeAttribute("data-comment-id");
+    paragraph.innerHTML = 'Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.';
+    submitBtn.innerText = "Send";
+    submitBtn.className = submitBtn.className.replace("update-btn", "submit-btn");
+    // Switch event listener back, to post comments
+    commentForm.removeEventListener("submit", editCommentForm);
+    commentForm.addEventListener("submit", submitCommentForm);
 }

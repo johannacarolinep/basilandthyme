@@ -79,7 +79,8 @@ body {
     max-height: 370px;
 }
 
-.img-cover {
+.img-cover,
+.img-container img {
     object-fit: cover;
     width: 100%;
 }

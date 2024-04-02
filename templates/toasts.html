@@ -23,4 +23,15 @@
         </div>
         <div class="toast-body"></div>
     </div>
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="comment-toast">
+        <div class="toast-header">
+            <img src="{% static 'images/logo-round-small-green.webp' %}" class="success-img d-none me-2"
+                alt="Action was successful">
+            <img src="{% static 'images/logo-round-small-red.webp' %}" class="fail-img d-none me-2" alt="Action failed">
+            <strong class="me-auto" id="toast-title">Comments</strong>
+            <small class="text-body-secondary">just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body"></div>
+    </div>
 </div>
