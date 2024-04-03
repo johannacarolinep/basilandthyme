@@ -21,7 +21,10 @@
 {% endblock topbanner %}
 
 {% block content %}
+<!-- Top section, with searchbar -->
 {% include 'components/searchbar.html' %}
+
+<!-- Section with top rated recipes -->
 <section id="top-rated-section" class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
         <div class="row my-2">
@@ -42,6 +45,7 @@
     </div>
 </section>
 
+<!-- Section with latest published recipes -->
 <section id="latest-section" class="container-fluid bg-white py-4">
     <div class="container-xl">
         <div class="row my-2">
@@ -62,13 +66,13 @@
     </div>
 </section>
 
+<!-- About us section -->
 <!-- <section class="container-fluid bg-brand-green">
     <div class="container-xl py-4">
         <h3>About us</h3>
         <p>A few paragraphs about the company</p>
     </div>
 </section> -->
-
 
 <!-- TOASTS -->
 {% include 'components/toasts.html' %}
@@ -114,7 +118,6 @@
 {% endblock modal %}
 
 {% block customscript %}
-<!-- <script type="text/javascript" src="{% static 'js/script.js' %}"></script> -->
 <script type="text/javascript" src="{% static 'js/favourites.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/ratings.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/queries.js' %}"></script>

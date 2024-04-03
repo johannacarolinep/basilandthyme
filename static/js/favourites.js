@@ -46,11 +46,13 @@ async function favouritingBtnListener(event) {
                 } else {
                     heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-solid', 'fa-regular');
                     heartButton.parentNode.querySelector('p').innerText = "Removed";
+                    heartButton.setAttribute("aria-label", "Add to favourites");
                 }
                 // If favourite was created
             } else if (postResponse.action === 'created') {
                 heartButton.querySelector('i').className = heartButton.querySelector('i').className.replace('fa-regular', 'fa-solid');
                 heartButton.parentNode.querySelector('p').innerText = "Saved!";
+                heartButton.setAttribute("aria-label", "Remove from favourites");
             }
         }
         displayToast("fave-toast", postResponse.message, postResponse.status);

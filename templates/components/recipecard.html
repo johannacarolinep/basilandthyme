@@ -1,7 +1,8 @@
 {% load static %}
 
 <div class="col">
-    <div class="card h-100 mx-auto" style="position: relative;" id="{{ recipe.id }}">
+    <article class="card h-100 mx-auto" style="position: relative;" id="{{ recipe.id }}"
+        aria-label="Card for recipe with title {{ recipe.title }}">
         {% if request.path == favourites_url %}
         <p class="d-none fs-rem-130 text-center text-white">Recipe removed from favourites</p>
         {% endif %}
@@ -14,19 +15,19 @@
             <p class="mb-0 me-1"></p>
             <button class="icon-button me-2 heart-btn"
                 data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
-                data-recipe-id="{{ recipe.id }}">
-                <i
-                    class="fa {% if request.path == favourites_url %}fa-solid{% else %}{% if recipe.id in user_favorites %} fa-solid {% else %} fa-regular {% endif %}{% endif %} fa-heart m-1 fs-rem-180"></i>
+                data-recipe-id="{{ recipe.id }}"
+                aria-label="{% if request.path != favourites_url and not recipe.id in user_favourites %}Add to favourites{% else %}Remove from favourites{% endif %}">
+                <i class="fa {% if request.path == favourites_url %}fa-solid{% else %}{% if recipe.id in user_favourites %} fa-solid {% else %} fa-regular {% endif %}{% endif %} fa-heart m-1 fs-rem-180"
+                    aria-hidden="true"></i>
             </button>
         </div>
         <div class="card-header d-flex justify-content-between align-items-center">
-            <!-- Improve accessibility? -->
-            <div class="rating">
+            <div class="rating" aria-label="Avg rating is {{ recipe.avg_rating }}">
                 <!-- Button to open modal -->
                 <button class="icon-button init-rate-btn" data-user-rating="{{ recipe.user_rating }}"
                     data-recipe-id="{{ recipe.id }}"
                     data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
-                    aria-label="Avg rating is {{ recipe.avg_rating }}">
+                    aria-label="Click to rate recipe. This will open a modal.">
                     {% for i in stars_range %}
                     {% if recipe.avg_rating >= i %}
                     <i class="fa-solid fa-star" aria-hidden="true"></i>
@@ -36,33 +37,31 @@
                     <i class="fa-regular fa-star" aria-hidden="true"></i>
                     {% endif %}
                     {% endfor %}
-                    <span class="ratings-count">({{ recipe.ratings_count }})</span>
+                    <span class="ratings-count"
+                        aria-label="This recipe has received {{ recipe.ratings_count }} ratings">
+                        ({{ recipe.ratings_count }})</span>
                 </button>
             </div>
             <div class="category fs-rem-120">
                 {% if recipe.category == 1 %}
-                <i class="fa-solid fa-drumstick-bite" aria-hidden="true"></i>
-                <span class="sr-only">Recipe category is "chicken".</span>
+                <i class="fa-solid fa-drumstick-bite" aria-label="Recipe category is 'chicken'"></i>
                 {% elif recipe.category == 2 %}
-                <i class="fa-solid fa-bacon" aria-hidden="true"></i>
-                <span class="sr-only">Recipe category is "pork".</span>
+                <i class="fa-solid fa-bacon" aria-label="Recipe category is 'pork'"></i>
                 {% elif recipe.category == 3 %}
-                <i class="fa-solid fa-cow" aria-hidden="true"></i>
-                <span class="sr-only">Recipe category is "beef".</span>
+                <i class="fa-solid fa-cow" aria-label="Recipe category is 'beef'"></i>
                 {% elif recipe.category == 4 %}
-                <i class="fa-solid fa-fish" aria-hidden="true"></i>
-                <span class="sr-only">Recipe category is "fish".</span>
+                <i class="fa-solid fa-fish" aria-label="Recipe category is 'fish'"></i>
                 {% elif recipe.category == 5 %}
-                <i class="fa-brands fa-pagelines" aria-hidden="true"></i>
-                <span class="sr-only">Recipe category is "fish".</span>
+                <i class="fa-brands fa-pagelines" aria-label="Recipe category is 'vegetarian'"></i>
                 {% endif %}
             </div>
         </div>
         <div class="card-body">
-            <a class="brand-dark standard-link" href="{% url 'recipe_detail' recipe.slug %}">
+            <a class="brand-dark standard-link" href="{% url 'recipe_detail' recipe.slug %}"
+                aria-label="Click to open detailed recipe page">
                 <h3 class="card-title truncate-two-lines">{{ recipe.title }}</h3>
                 <p class="card-text truncate-three-lines">{{ recipe.teaser }}</p>
             </a>
         </div>
-    </div>
+    </article>
 </div>

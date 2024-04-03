@@ -90,7 +90,7 @@ class RecipeListView(ListView):
             dict: A dictionary containing additional context data.
                 - 'searchHeading' (str): A message indicating the search
                 results or lack thereof.
-                - 'user_favorites' (list): A list of recipe IDs favorited by
+                - 'user_favourites' (list): A list of recipe IDs favorited by
                 the current user, or an empty list if the user is not
                 authenticated or has no favorites.
                 - 'stars_range' (range): A range object used to create the star
@@ -118,7 +118,7 @@ class RecipeListView(ListView):
             context['searchHeading'] = "Search for your new favourite recipes"
 
         user = self.request.user
-        context['user_favorites'] = Favourite.get_user_favourite_ids(user)
+        context['user_favourites'] = Favourite.get_user_favourite_ids(user)
         context['stars_range'] = range(1, 6)
 
         return context

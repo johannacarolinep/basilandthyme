@@ -61,7 +61,7 @@ class FeaturesListView(ListView):
         date_queryset = base_queryset.order_by('-created_on')[:4]
         context['recipes_by_rating'] = rating_queryset
         context['recipes_by_date'] = date_queryset
-        context['user_favorites'] = Favourite.get_user_favourite_ids(user)
+        context['user_favourites'] = Favourite.get_user_favourite_ids(user)
         context['stars_range'] = range(1, 6)
 
         return context
