@@ -8,6 +8,11 @@ class RecipeListView(ListView):
     """
     View for displaying a list of recipes based on search queries and
     categories, or all published recipes if there is no search query.
+
+    Attributes:
+        model (Model): The model associated with the view (Recipe).
+        template_name (str): The name of the template used to render the page.
+        paginate_by (int): The number of items to paginate by.
     """
     model = Recipe
     template_name = 'recipe_book/recipes.html'
@@ -16,7 +21,10 @@ class RecipeListView(ListView):
     def get_queryset(self):
         """
         Retrieves the queryset of recipes based on search queries and
-        categories, or all published recipes if there is no query.
+        categories, or all published recipes if there is no query. Sorts the
+        recipes if a sort parameter is present. Annotates each recipe with
+        additional details avg rating, rating count, and if user is
+        authenticated, the users rating of the recipe.
 
         Returns:
             Queryset: A filtered queryset of Recipe objects.
@@ -25,7 +33,8 @@ class RecipeListView(ListView):
         self.sort = self.request.GET.get("s")
         # https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate
         base_queryset = Recipe.objects.filter(status=1).annotate(
-            avg_rating=models.functions.Coalesce(models.Avg('rating_recipe__rating'), models.Value(0.0)),
+            avg_rating=models.functions.Coalesce(
+                models.Avg('rating_recipe__rating'), models.Value(0.0)),
             ratings_count=models.Count('rating_recipe'),
         )
         # if logged in user, annotate recipes with users rating of recipe
@@ -33,12 +42,14 @@ class RecipeListView(ListView):
         if user.is_authenticated:
             base_queryset = base_queryset.annotate(
                 user_rating=models.Case(
-                    models.When(rating_recipe__user=user, then=models.F('rating_recipe__rating')),
+                    models.When(rating_recipe__user=user,
+                                then=models.F('rating_recipe__rating')),
                     default=None,
                     output_field=models.IntegerField()
                 )
                 )
 
+        # if there's a search query, filter recipes by it
         if self.query:
             match self.query.lower():
                 case "all":
@@ -54,10 +65,13 @@ class RecipeListView(ListView):
                 case "vegetarian":
                     base_queryset = base_queryset.filter(category=5)
                 case _:
+                    title_query = Q(title__icontains=self.query)
+                    ingredients_query = Q(ingredients__icontains=self.query)
                     base_queryset = base_queryset.filter(
-                        Q(title__icontains=self.query) | Q(ingredients__icontains=self.query)
+                        title_query | ingredients_query
                     )
 
+        # if there's a sort query, sort recipes by it
         if self.sort:
             if self.sort == "newest":
                 base_queryset = base_queryset.order_by('-created_on')
@@ -79,17 +93,27 @@ class RecipeListView(ListView):
                 - 'user_favorites' (list): A list of recipe IDs favorited by
                 the current user, or an empty list if the user is not
                 authenticated or has no favorites.
+                - 'stars_range' (range): A range object used to create the star
         """
-        context = super().get_context_data(**kwargs)  # building context
-        count = len(self.get_queryset())  # nr of objects found
+        context = super().get_context_data(**kwargs)
+        count = len(self.get_queryset())
 
         if self.query:
             if self.query == "all":
-                context['searchHeading'] = "Showing all recipes, a total of " + str(count) + "."
+                context['searchHeading'] = (
+                    "Showing all recipes, a total of " + str(count) + ".")
             elif count > 0:
-                context['searchHeading'] = "Showing " + str(count) + " results for '" + self.query + "'."
+                context['searchHeading'] = (
+                    "Showing " +
+                    str(count) +
+                    " results for '" +
+                    self.query +
+                    "'.")
             else:
-                context["searchHeading"] = "Sorry, no results for '" + self.query + "'. Please try again."
+                context["searchHeading"] = (
+                    "Sorry, no results for '" +
+                    self.query +
+                    "'. Please try again.")
         else:
             context['searchHeading'] = "Search for your new favourite recipes"
 

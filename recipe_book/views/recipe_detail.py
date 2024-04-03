@@ -34,6 +34,17 @@ class RecipeDetailView(DetailView):
                 - 'is_favourite' (bool): A boolean indicating whether the
                 current user has favorited the recipe. Will be False if recipe
                 is not a favourited or if the user is not authenticated.
+                - 'avg_rating' (float): The average rating of the recipe.
+                - 'rating_count' (int): The number of ratings for the recipe.
+                - 'stars_range' (range): A range object used to create the star
+                buttons.
+                - 'user_rating' (int): The rating given by the current user for
+                the recipe.
+                - 'comments' (QuerySet): The comments associated with the
+                recipe.
+                - 'no_of_comments' (int): The number of approved comments for
+                the recipe.
+                - 'comment_form' (CommentForm): The form for adding comments.
         """
         context = super().get_context_data(**kwargs)
         recipe = self.get_object()

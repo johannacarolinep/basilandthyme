@@ -7,7 +7,16 @@ from ..models import Recipe, Rating
 @require_POST
 def add_update_rating(request):
     """
-    View to handle POST request (Ratings)
+    View to handle POST request for adding or updating ratings. It expects JSON
+    data in the request body with the recipe id and rating value. If the user
+    is authenticated, it adds or updates the rating. It returns a JSON response
+    with a message for user feedback.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        JsonResponse: JSON response containing the status code and a message.
     """
     if request.method == 'POST':
         # Get user
@@ -37,7 +46,8 @@ def add_update_rating(request):
                 rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
-                    {"message": rating_value + " star rating added to " + Recipe.objects.get(id=recipe_id).title,
+                    {"message": rating_value + " star rating added to " +
+                     Recipe.objects.get(id=recipe_id).title,
                         "count": rating_count,
                         "average": recipe_average},
                     status=200)
@@ -49,18 +59,34 @@ def add_update_rating(request):
                 rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
-                    {"message": "Rating updated for " + Recipe.objects.get(id=recipe_id).title,
+                    {"message": "Rating updated for " +
+                     Recipe.objects.get(id=recipe_id).title,
                         "count": rating_count,
                         "average": recipe_average},
                     status=200)
         else:
             return JsonResponse(
-                            {"message": "You need to be logged in to rate recipes!"},
+                            {"message": +
+                                "You need to be logged in to rate recipes!"},
                             status=401)
 
 
 @require_http_methods(["DELETE"])
 def delete_rating(request):
+    """
+    View to handle DELETE request for deleting a rating. It expects a recipe id
+    as a parameter in the query string. If the user is authenticated and the
+    rating exists, it deletes the rating. It returns a JSON response with the
+    status code and a message for user feedback, and if the rating was deleted,
+    the updated rating count and average rating for the recipe.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        JsonResponse: JSON response containing the status code, user message,
+        and the updated values for rating count and avg rating.
+    """
     if request.method == 'DELETE':
         user = request.user
         if user.is_authenticated:
@@ -73,7 +99,8 @@ def delete_rating(request):
                     rating_count = Rating.get_recipe_no_of_ratings(recipe_id)
                     recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                     return JsonResponse(
-                        {"message": "Rating deleted for recipe " + Recipe.objects.get(id=recipe_id).title,
+                        {"message": "Rating deleted for recipe " +
+                            Recipe.objects.get(id=recipe_id).title,
                             "count": rating_count,
                             "average": recipe_average},
                         status=200)

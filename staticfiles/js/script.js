@@ -1,6 +1,9 @@
 /* Wait for page to load before initializing script */
 document.addEventListener("DOMContentLoaded", initializeScript);
 
+/**
+ * Adds event listener to the navbar, collapsing and opening
+ */
 function initializeScript() {
     const navbarCollapse = document.querySelector(".navbar-collapse");
     if (navbarCollapse) {

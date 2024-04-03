@@ -1,6 +1,10 @@
+// Wait until document has loaded before initializing the script
 document.addEventListener("DOMContentLoaded", initializeRatingsScript);
 
-
+/**
+ * Adds event listeners to the openRatingsbuttons (stars displaying on cards or
+ * on the recipe page)
+ */
 function initializeRatingsScript() {
 
     const openRatingsBtns = document.getElementsByClassName("init-rate-btn");
@@ -50,7 +54,6 @@ function initalizeRating(event) {
         }
 
         deleteBtn.setAttribute("data-recipe-id", recipeId);
-
         deleteBtn.addEventListener('click', prepRatingDelete);
 
     } else {
@@ -63,7 +66,12 @@ function initalizeRating(event) {
 }
 
 
-// add event listener to delete rating button
+/**
+ * Calls function to delete rating, passing the recipe id, before removing the
+ * event listener from the clicked delete button.
+ * @param {Event} click on delete button in ratings modal 
+ * @returns {void}
+ */
 function prepRatingDelete(event) {
     deleteRating(event.currentTarget.getAttribute("data-recipe-id"));
     event.currentTarget.removeEventListener('click', prepRatingDelete);
@@ -210,6 +218,11 @@ function selectRating(event, recipeId) {
     submitRatingBtn.addEventListener('click', prepRatingSubmit)
 }
 
+/**
+ * Calls submitRating, passing the rating value and recipe id, before removing
+ * the eventlistener from the clicked submit-button.
+ * @param {Event} click - Click on the submit button in the ratings modal.
+ */
 function prepRatingSubmit(event) {
     submitRating(event.currentTarget.getAttribute("data-rating-value"), event.currentTarget.getAttribute("data-recipe-id"))
     event.currentTarget.removeEventListener('click', prepRatingSubmit);
