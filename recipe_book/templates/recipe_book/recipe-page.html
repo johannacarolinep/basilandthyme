@@ -42,15 +42,17 @@
                     </div>
                     <div class="col-auto fs-rem-150 brand-brown">
                         {% if recipe.category == 1 %}
-                        <i class="fa-solid fa-drumstick-bite" aria-label="Recipe category is 'chicken'"></i>
+                        <i class="fa-solid fa-drumstick-bite" aria-hidden="true"
+                            aria-label="Recipe category is 'chicken'"></i>
                         {% elif recipe.category == 2 %}
-                        <i class="fa-solid fa-bacon" aria-label="Recipe category is 'pork'"></i>
+                        <i class="fa-solid fa-bacon" aria-hidden="true" aria-label="Recipe category is 'pork'"></i>
                         {% elif recipe.category == 3 %}
-                        <i class="fa-solid fa-cow" aria-label="Recipe category is 'beef'"></i>
+                        <i class="fa-solid fa-cow" aria-hidden="true" aria-label="Recipe category is 'beef'"></i>
                         {% elif recipe.category == 4 %}
-                        <i class="fa-solid fa-fish" aria-label="Recipe category is 'fish'"></i>
+                        <i class="fa-solid fa-fish" aria-hidden="true" aria-label="Recipe category is 'fish'"></i>
                         {% elif recipe.category == 5 %}
-                        <i class="fa-brands fa-pagelines" aria-label="Recipe category is 'vegetarian'"></i>
+                        <i class="fa-brands fa-pagelines" aria-hidden="true"
+                            aria-label="Recipe category is 'vegetarian'"></i>
                         {% endif %}
                     </div>
                 </div>
