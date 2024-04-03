@@ -13,4 +13,4 @@ def page_not_found_view(request, exception):
     Returns:
         HttpResponseNotFound: HTTP response with the rendered 404 page.
     """
-    return HttpResponseNotFound(render(request, "404.html", {}))
+    return HttpResponseNotFound(render(request, "errors/404.html", {}))

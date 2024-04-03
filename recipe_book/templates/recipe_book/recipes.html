@@ -21,7 +21,7 @@
 {% endblock topbanner %}
 
 {% block content %}
-{% include 'searchbar.html' %}
+{% include 'components/searchbar.html' %}
 
 <section class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
@@ -46,7 +46,7 @@
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for recipe in object_list %}
-            {% include 'recipecard.html' %}
+            {% include 'components/recipecard.html' %}
             {% endfor %}
         </div>
         {% else %}
@@ -83,12 +83,12 @@
 </section>
 
 <!-- TOASTS -->
-{% include 'toasts.html' %}
+{% include 'components/toasts.html' %}
 
 {% endblock %}
 
 {% block modal %}
-{% include 'signupmodal.html' %}
+{% include 'components/signupmodal.html' %}
 
 <!-- Ratings modal -->
 <div class="modal fade bg-modal" id="ratings-modal" role="dialog" tabindex="-1" aria-labelledby="ratings-modal-label"
