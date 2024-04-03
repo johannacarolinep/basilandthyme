@@ -5,8 +5,22 @@
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock token %}
 
-{% block content %}
+{% block topbanner %}
+<div class="container-fluid m-0 py-1 text-center header-banner">
+    <p class="m-0 text-white fw-light small">
+        {% if user.is_authenticated %}
+        You're logged in as <span class="fw-bolder">{{ user.username }}</span>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="standard-link text-white fw-bold">Sign up</a> to save
+        recipes as
+        favourites,
+        post comments and ratings!
+        {% endif %}
+    </p>
+</div>
+{% endblock topbanner %}
 
+{% block content %}
 {% include 'searchbar.html' %}
 
 <section class="container-fluid bg-brand-gray py-4">
