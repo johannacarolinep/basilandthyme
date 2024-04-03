@@ -9,21 +9,39 @@ class Recipe(models.Model):
     Model representing a recipe.
 
     Attributes:
-    - title (CharField): The unique title of the recipe.
-    - slug (SlugField): A unique slug for the recipe URL.
+    - title (CharField): The unique title of the recipe. May not be empty and
+    must not exceed 70 characters.
+    - slug (SlugField): A unique slug for the recipe URL. May not be empty and
+    must not exceed 70 characters.
     - author (ForeignKey to User): The user who authored the recipe.
-    - feature_image (CloudinaryField): The main image of the recipe.
-    - alt_text (CharField): Alternative text for the feature image.
+    - feature_image (CloudinaryField): The image of the recipe.
+    - alt_text (CharField): Alt-text for the feature image.
     - content (TextField): The detailed content, including recipe instructions.
-    - ingredients (TextField): Ingredients required for the recipe.
-    - teaser (CharField): A short teaser/description of the recipe.
-    - created_on (DateTimeField): Date and time when the recipe was created.
+    Must be 100-5000 characters.
+    - ingredients (TextField): Ingredients required for the recipe. Must be
+    10-2500 characters.
+    - teaser (CharField): A short teaser/description of the recipe. May not be
+    empty and must not exceed 180 characters.
+    - created_on (DateTimeField): Date and time when the recipe was created. Is
+    set automatically on recipe creation.
     - updated_on (DateTimeField): Date and time when the recipe was last
-    updated.
+    updated, set automatically when recipe is updated.
     - category (IntegerField): Category of the recipe (e.g., Chicken, Pork).
+    Default is 0 - "No category selected".
     - status (IntegerField): Status of the recipe (e.g., Draft, Published).
-    """
+    Default is 0 - "Draft".
 
+    Choices:
+        CATEGORIES (tuple): Choices for the categories field.
+        STATUS (tuple): Choices for the status field.
+
+    Meta:
+        ordering (list): Specifies the default ordering for the model, by
+        date/time in descending order.
+
+    Methods:
+        __str__(): Returns a string representation of the Recipe object.
+    """
     # Choices for the categories and status fields
     CATEGORIES = (
         (0, "No category selected"),
@@ -85,4 +103,10 @@ class Recipe(models.Model):
         ordering = ["-created_on"]
 
     def __str__(self):
-        return f"{self.title}"
+        """
+        Returns a string representation of the Recipe object.
+
+        Returns:
+            str: The recipe title.
+        """
+        return self.title

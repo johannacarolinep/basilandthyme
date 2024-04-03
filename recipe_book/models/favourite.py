@@ -12,8 +12,22 @@ class Favourite(models.Model):
         recipe (ForeignKey to Recipe): The recipe favourited by the user.
 
     Meta:
-        unique_together = ('user', 'recipe'): Ensures that each user can mark a
+        constraints (list of constraints): Ensures that each user can mark a
         recipe as a favourite only once.
+
+    Methods:
+        - __str__(): Returns a string representation of the Favourite object.
+        - is_recipe_favourite(user, recipe): Checks if a recipe is marked as a
+        favourite by a user.
+        - is_recipe_favourite_by_ids(user_id, recipe_id): Checks if a recipe is
+        marked as a favourite by a user, given user ID and recipe ID.
+        - get_user_favourite_ids(user): Retrieves the IDs of recipes favourited
+        by a user.
+        - create_favourite(user_id, recipe_id): Create a Favourite object given
+        a user id and recipe id, given that the favourite object does not
+        already exist.
+        - delete_favourite(user_id, recipe_id): Delete a Favourite object given
+        a user id and recipe id, given that the favourite object exists.
     """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='favourite_user'
@@ -24,7 +38,8 @@ class Favourite(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['user', 'recipe'], name='unique_favourite')
+            models.UniqueConstraint(
+                fields=['user', 'recipe'], name='unique_favourite')
         ]
 
     def __str__(self):
@@ -84,7 +99,8 @@ class Favourite(models.Model):
             list: A list of recipe IDs favourited by the user.
         """
         if user.is_authenticated:
-            return cls.objects.filter(user=user).values_list('recipe', flat=True)
+            return cls.objects.filter(
+                user=user).values_list('recipe', flat=True)
         return []
 
     @classmethod

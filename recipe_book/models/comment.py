@@ -11,10 +11,19 @@ class Comment(models.Model):
     Attributes:
         recipe (ForeignKey to Recipe): The recipe being commented on.
         author (ForeignKey to User): The user who wrote the comment.
-        body (TextField): The text content of the comment.
+        body (TextField): The text content of the comment. Must not exceed 1200
+        characters.
         approved (BooleanField): Indicates whether the comment has been
         approved by the site admin. Is True by default.
-        created_on (DateTimeField): The date and time of comment creation.
+        created_on (DateTimeField): The date and time of comment creation. Is
+        set automatically on comment creation.
+
+    Meta:
+        ordering (list of str): Specifies the default ordering, by date and
+        time of creation in descending order.
+
+    Methods:
+        __str__: Returns a string representation of the comment.
     """
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='comments')
