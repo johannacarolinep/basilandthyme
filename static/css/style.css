@@ -166,9 +166,8 @@ body {
 
 /* -------------------------------- Hero section with content overlay */
 .hero-section {
-    background-color: #F8F9F8;
     height: 550px;
-    background: url("../images/hero.webp") no-repeat center top/cover;
+    background: #008B20 url("../images/hero.webp") no-repeat center top/cover;
 }
 
 .hero-section-wallpaper {
