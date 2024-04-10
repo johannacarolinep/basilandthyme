@@ -287,6 +287,15 @@ Points finished: 14
 
 Velocity: 16.66
 
+**Actions taken:**
+- Added PBI's relating to remaining project documentation to the backlog.
+
+#### Sprint 7
+
+![Sprint 7](documentation/sprint7.png)
+
+
+
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
