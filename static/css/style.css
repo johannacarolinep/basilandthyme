@@ -89,6 +89,10 @@ body {
     height: 2.5px;
 }
 
+.fs-rem-90 {
+    font-size: 0.9rem !important;
+}
+
 .fs-rem-110 {
     font-size: 1.1rem;
 }
@@ -476,6 +480,11 @@ footer {
 
 
     /* ---------------------------------- Heights/sizing */
+
+    .fs-rem-md-120 {
+        font-size: 1.2rem !important;
+    }
+
     .fs-rem-md-180 {
         font-size: 1.8rem;
     }
