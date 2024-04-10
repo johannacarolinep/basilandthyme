@@ -127,12 +127,17 @@ function trapFocusInModal(modal) {
     // Get the focusable elements within the modal
     const focusableElements = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
     const firstFocusableElement = focusableElements[0];
-    const lastFocusableElement = focusableElements[focusableElements.length - 1];
+    let lastFocusableElement = focusableElements[focusableElements.length - 1];
 
     // Add event listener for keydown events in the modal
     modal.addEventListener('keydown', function (event) {
         const isTabPressed = event.key === 'Tab';
         if (isTabPressed) {
+            if (focusableElements[focusableElements.length - 1].hasAttribute("disabled")) {
+                lastFocusableElement = focusableElements[focusableElements.length - 2];
+            } else {
+                lastFocusableElement = focusableElements[focusableElements.length - 1];
+            }
             // If focus is on the last focusable element, move it to the first
             if (document.activeElement === lastFocusableElement) {
                 firstFocusableElement.focus();

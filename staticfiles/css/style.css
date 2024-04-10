@@ -89,6 +89,10 @@ body {
     height: 2.5px;
 }
 
+.fs-rem-90 {
+    font-size: 0.9rem !important;
+}
+
 .fs-rem-110 {
     font-size: 1.1rem;
 }
@@ -162,9 +166,8 @@ body {
 
 /* -------------------------------- Hero section with content overlay */
 .hero-section {
-    background-color: #F8F9F8;
     height: 550px;
-    background: url("../images/hero.webp") no-repeat center top/cover;
+    background: #008B20 url("../images/hero.webp") no-repeat center top/cover;
 }
 
 .hero-section-wallpaper {
@@ -451,6 +454,10 @@ body {
     height: 30px;
 }
 
+.toast-body {
+    background-color: #ffffffda;
+}
+
 /* --------------------------------------- Signup/Sign in */
 .errorlist li {
     color: #a90606;
@@ -476,6 +483,11 @@ footer {
 
 
     /* ---------------------------------- Heights/sizing */
+
+    .fs-rem-md-120 {
+        font-size: 1.2rem !important;
+    }
+
     .fs-rem-md-180 {
         font-size: 1.8rem;
     }

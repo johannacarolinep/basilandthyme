@@ -454,6 +454,10 @@ body {
     height: 30px;
 }
 
+.toast-body {
+    background-color: #ffffffda;
+}
+
 /* --------------------------------------- Signup/Sign in */
 .errorlist li {
     color: #a90606;

@@ -91,6 +91,9 @@ function startEditComment(event) {
         block: "center"
     });
 
+    // Move focus to textarea
+    formTextArea.focus();
+
     // Switch out event listener on form button to use form for editing
     commentForm.removeEventListener("submit", submitCommentForm);
     commentForm.addEventListener("submit", editCommentForm);
