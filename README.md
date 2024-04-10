@@ -275,7 +275,17 @@ Furthermore, on closer reflection, I believe the implementation of this function
 
 ![Sprint 6 milestone](documentation/sprint6.png)
 
+##### Sprint 6 wrap-up
 
+OBS! Sprint 6 should have been closed 2 days prior. The delay was due to being out traveling and not having access to my computer.
+
+Project board at end of sprint 6:
+
+![Project board end of sprint 6](documentation/project-board-spr-6.png)
+
+Points finished: 14
+
+Velocity: 16.66
 
 
 <a id="tools-and-technologies"></a>
