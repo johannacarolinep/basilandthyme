@@ -4,9 +4,18 @@
 {% block token %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock token %}
+<!-- Page title -->
 {% block title %}
 Basil&Thyme - Favourites
 {% endblock title %}
+<!-- Page meta description -->
+{% block metadescr %}
+Discover your new favourite recipes at Basil&Thyme! Save your favourite recipes to easily find your way back to them.
+{% endblock metadescr %}
+<!-- Page meta keywords -->
+{% block metakeywords %}
+save recipes, recipe collection, favourite recipes, basil&thyme favourites, b&t favourites
+{% endblock metakeywords %}
 
 {% block content %}
 <section class="hero-section-wallpaper container-fluid d-flex align-items-center">

@@ -16,6 +16,10 @@
     {% block token %}
     <!-- Meta tag with csrf token goes here if present in template -->
     {% endblock token %}
+    <!-- Meta tags for SEO -->
+    <meta name="author" content="Johanna Petersson">
+    <meta name="description" content="{% block metadescr %}{% endblock metadescr %}">
+    <meta name="keywords" content="{% block metakeywords %}{% endblock metakeywords %}">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
@@ -27,7 +31,6 @@
 
     <!-- Custom CSS stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
     <title>{% block title %}{% endblock title %}</title>
 </head>
 

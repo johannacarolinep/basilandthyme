@@ -4,9 +4,20 @@
 {% block token %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock token %}
+<!-- Page title -->
 {% block title %}
 Basil&Thyme - Recipes
 {% endblock title %}
+<!-- Page meta description -->
+{% block metadescr %}
+Discover your new favourite recipes at Basil&Thyme! Search for categories and ingredients or browse all. See what other
+users thought before you try.
+{% endblock metadescr %}
+<!-- Page meta keywords -->
+{% block metakeywords %}
+recipe search, search for recipes, recipes chicken, recipes pork, recipes fish, recipes vegetarian, browse recipes,
+basil&thyme search
+{% endblock metakeywords %}
 
 {% block topbanner %}
 <div class="container-fluid m-0 py-1 text-center header-banner">

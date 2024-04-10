@@ -5,9 +5,19 @@
 {% block token %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock token %}
+<!-- Page title -->
 {% block title %}
 Basil&Thyme - Recipe page
 {% endblock title %}
+<!-- Page meta description -->
+{% block metadescr %}{{ recipe.title }} - Try it out for yourself!{% endblock metadescr %}
+<!-- Page meta keywords -->
+{% block metakeywords %}{% if recipe.category == 1 %}chicken recipe, recipe chicken, recipe with chicken
+{% elif recipe.category == 2 %}pork recipe, recipe pork, recipe with pork
+{% elif recipe.category == 3 %}recipes beef, beef recipe, recipe with beed, recipe red meat, meat recipes
+{% elif recipe.category == 4 %}recipe with fish, fish recipe, fish dishes, seafood recipe
+{% elif recipe.category == 5 %}vegetarian recipe, recipe veggie, recipe vegetarian, vegetarian dishes{% endif %}
+{% endblock metakeywords %}
 
 {% block content %}
 <div class="container-xl g-0">
