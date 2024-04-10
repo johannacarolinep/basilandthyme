@@ -190,10 +190,6 @@ Basil&Thyme - Recipe page
         </section>
     </article>
 </div>
-
-<!-- TOASTS -->
-{% include 'components/toasts.html' %}
-
 {% endblock content %}
 
 {% block modal %}
@@ -228,6 +224,11 @@ Basil&Thyme - Recipe page
     </div>
 </div>
 {% endblock modal %}
+
+<!-- TOASTS -->
+{% block toasts %}
+{% include 'components/toasts.html' %}
+{% endblock toasts %}
 
 {% block customscript %}
 <script src="{% static 'js/comments.js' %}"></script>

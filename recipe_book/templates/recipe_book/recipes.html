@@ -95,10 +95,6 @@ basil&thyme search
         {% endif %}
     </div>
 </section>
-
-<!-- TOASTS -->
-{% include 'components/toasts.html' %}
-
 {% endblock %}
 
 <!-- Modals -->
@@ -106,6 +102,11 @@ basil&thyme search
 {% include 'components/signupmodal.html' %}
 {% include 'components/ratingsmodal.html' %}
 {% endblock modal %}
+
+<!-- TOASTS -->
+{% block toasts %}
+{% include 'components/toasts.html' %}
+{% endblock toasts %}
 
 {% block customscript %}
 <script src="{% static 'js/favourites.js' %}"></script>
