@@ -79,9 +79,10 @@ function removeFavouriteOnFavouritesPage(button) {
     const cardChildren = card.querySelectorAll('*');
     card.classList.add('unfavourited-card');
     paragraph.className = paragraph.className.replace('d-none', 'unfavourited-p');
-    // Apply aria-hidden to each child element of card
+    // Apply aria-hidden to each child element of card, and make them non focusable
     cardChildren.forEach(child => {
         child.setAttribute('aria-hidden', 'true');
+        child.setAttribute('tabindex', '-1');
     });
     card.setAttribute('aria-label', 'Removed recipe');
 }
