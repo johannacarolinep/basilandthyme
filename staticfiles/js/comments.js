@@ -103,7 +103,7 @@ function startEditComment(event) {
 
     // Change styles and content to reflect form in edit mode
     submitBtn.innerText = "Update";
-    submitBtn.className = submitBtn.className.replace("submit-btn", "update-btn");
+    submitBtn.className = submitBtn.className.replace("border-btn-green", "border-btn-yellow");
     commentForm.setAttribute("data-comment-id", commentId);
     formParagraph.innerHTML = 'You can now edit your comment:';
 }
@@ -343,7 +343,7 @@ function resetForm() {
     commentForm.removeAttribute("data-comment-id");
     paragraph.innerHTML = 'Post a comment and <span class="brand-green">share your thoughts</span> on this recipe.';
     submitBtn.innerText = "Send";
-    submitBtn.className = submitBtn.className.replace("update-btn", "submit-btn");
+    submitBtn.className = submitBtn.className.replace("border-btn-yellow", "border-btn-green");
     // Switch event listener back, to post comments
     commentForm.removeEventListener("submit", editCommentForm);
     commentForm.addEventListener("submit", submitCommentForm);

@@ -26,7 +26,8 @@ log in, Basil and thyme sign in
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
-          <button class="primaryAction submit-btn p-2 px-3 fw-bold fs-5" type="submit">Sign In</button>
+          <button class="primaryAction border-btn-green btn-rounded btn-shadow p-2 px-3 fw-bold fs-5" type="submit">Sign
+            In</button>
         </form>
       </div>
       <div class="col-md-6 d-flex">
@@ -35,8 +36,8 @@ log in, Basil and thyme sign in
               free!</span>
           </p>
           <div>
-            <a class="btn comment-edit d-inline-block p-2 px-3 fw-bold fs-5" href="{% url 'account_signup' %}"
-              aria-label="Go to the sign up page to register">
+            <a class="btn border-btn-yellow btn-shadow btn-rounded d-inline-block p-2 px-3 fw-bold fs-5"
+              href="{% url 'account_signup' %}" aria-label="Go to the sign up page to register">
               Sign Up
             </a>
           </div>

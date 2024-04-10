@@ -1,12 +1,13 @@
 /* Google Fonts: Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-/* General */
+/* ------------------------------------ General */
 body {
     height: 100vh;
     display: flex;
     flex-direction: column;
     color: #201425;
+    font-family: "Poppins", sans-serif;
 }
 
 main {
@@ -15,7 +16,7 @@ main {
 }
 
 
-/* ----------------------------- Colours */
+/* ------------------------------------ Colours */
 
 .bg-brand-green {
     background-color: #008B20;
@@ -59,10 +60,6 @@ main {
 
 .red {
     color: #a90606;
-}
-
-body {
-    font-family: "Poppins", sans-serif;
 }
 
 /* ------------------------------ Heights/sizing */
@@ -121,7 +118,10 @@ body {
     margin-top: 65px;
 }
 
-/* -------------------------------- Links and buttons */
+/* ------------------------------------ Buttons and Links */
+
+/* Utility classes for buttons and links */
+
 .standard-link {
     text-decoration: none;
 }
@@ -129,6 +129,147 @@ body {
 .standard-link:hover,
 .standard-link:active {
     text-decoration: underline;
+}
+
+.btn-rounded {
+    border-radius: 2em;
+}
+
+.btn-shadow {
+    box-shadow: 6px 6px 12px #f1f2f1,
+        -6px -6px 12px #ffffff;
+}
+
+.btn-shadow:hover,
+.btn-shadow:active {
+    box-shadow: 6px 6px 12px #d3d4d3,
+        -6px -6px 12px #ffffff;
+}
+
+.hover-bold:hover {
+    font-weight: 600;
+}
+
+/* Standard buttons */
+.btn-yellow {
+    border: 2px solid #FFC633;
+    background-color: #FFC633;
+}
+
+.border-btn-yellow {
+    border: 2px solid #FFC633;
+    background-color: #ffffff;
+}
+
+.btn-yellow:hover,
+.btn-yellow:focus,
+.btn-yellow:active,
+.btn.btn-yellow.btn-shadow:active,
+.border-btn-yellow:hover,
+.border-btn-yellow:focus,
+.border-btn-yellow:active,
+.btn.border-btn-yellow.btn-shadow:active {
+    border: 2px solid #FFC633;
+    background-color: #FFC633;
+}
+
+.border-btn-red {
+    border: 2px solid #a90606;
+    background-color: #ffffff;
+}
+
+.border-btn-red:hover,
+.border-btn-red:focus,
+.border-btn-red:active {
+    border: 2px solid #a90606;
+    background-color: #a90606;
+    color: white;
+}
+
+.border-btn-green {
+    border: 2px solid #008B20;
+    background-color: #ffffff;
+}
+
+.border-btn-green:hover,
+.border-btn-green:focus,
+.border-btn-green:active {
+    border: 2px solid #008B20;
+    background-color: #008B20;
+    color: white;
+}
+
+.border-btn-gray {
+    border: 2px solid #9e9696;
+    background-color: #ffffff;
+}
+
+.border-btn-gray:hover,
+.border-btn-gray:focus,
+.border-btn-gray:active {
+    border: 2px solid #9e9696;
+    background-color: #9e9696;
+}
+
+/* Custom buttons */
+.searchbar .btn:hover,
+.searchbar .btn:focus,
+.searchbar .btn:active {
+    background-color: #008B20;
+    border-color: #008B20;
+}
+
+.category-btns .btn:hover,
+.category-btns .btn:active,
+.category-btns .btn:focus {
+    background-color: transparent;
+    color: #ffc633;
+    border: 1px solid #ffc633;
+}
+
+/* Icon buttons */
+.icon-button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.icon-button-stroke {
+    color: #008B20;
+}
+
+.icon-button-stroke:hover,
+.icon-button-stroke:active {
+    color: #076c1f;
+    -webkit-text-stroke: 1px #065f1b;
+}
+
+.card-heart-icon button {
+    top: 0;
+    right: 0;
+    color: #ffffff;
+    -webkit-text-stroke: 1.3px #4a3c50;
+    /* Outline color and thickness for WebKit browsers */
+    padding: 0;
+}
+
+.card-heart-icon button:hover,
+.card-heart-icon button:active,
+.card-heart-icon:focus {
+    color: #4a3c50;
+    -webkit-text-stroke: 1.3px #ffffff;
+}
+
+/* Recipe cards pagination */
+.page-link,
+.page-link:hover {
+    color: black;
+}
+
+.active-page .page-link {
+    background-color: #008B20;
+    color: #ffffff;
 }
 
 /* ----------------------------- Navbar/Header */
@@ -187,58 +328,6 @@ body {
     border-radius: 15px;
 }
 
-.searchbar .btn {
-    background-color: #F8F9F8;
-}
-
-.searchbar .btn:hover,
-.searchbar .btn:focus {
-    background-color: #008B20;
-}
-
-.searchbar .btn:active {
-    border: #008B20;
-}
-
-.category-btns .btn {
-    background-color: #FFC633;
-    border-radius: 2em;
-}
-
-.category-btns .btn:hover,
-.category-btns .btn:active,
-.category-btns .btn:focus {
-    background-color: transparent;
-    color: #ffc633;
-    border: 1px solid #ffc633;
-}
-
-.fave-signin-btn {
-    border: 2px solid #FFC633;
-    box-shadow: 5px 5px 8px #f5f5f5,
-        -5px -5px 8px #ffffff;
-}
-
-.fave-signup-btn {
-    border: 2px solid #FFC633;
-    background-color: #FFC633;
-    box-shadow: 5px 5px 8px #f5f5f5,
-        -5px -5px 8px #ffffff;
-}
-
-.fave-signin-btn:hover,
-.fave-signin-btn:active,
-.fave-signup-btn:hover,
-.fave-signup-btn:hover {
-    border: 2px solid #FFC633;
-    background-color: #FFC633;
-    font-weight: 600;
-    box-shadow: 8px 8px 16px #ebebeb,
-        -8px -8px 16px #ffffff;
-
-}
-
-
 /* -------------------------------- Recipe cards */
 
 .card {
@@ -292,22 +381,6 @@ body {
     -webkit-text-stroke: 1.3px #4a3c50;
 }
 
-.card-heart-icon button {
-    top: 0;
-    right: 0;
-    color: #ffffff;
-    -webkit-text-stroke: 1.3px #4a3c50;
-    /* Outline color and thickness for WebKit browsers */
-    padding: 0;
-}
-
-.card-heart-icon button:hover,
-.card-heart-icon button:active,
-.card-heart-icon:focus {
-    color: #4a3c50;
-    -webkit-text-stroke: 1.3px #ffffff;
-}
-
 .unfavourited-card {
     position: relative;
 }
@@ -333,39 +406,11 @@ body {
     width: 90%;
 }
 
-/* Recipe cards pagination */
-.page-link,
-.page-link:hover {
-    color: black;
-}
-
-.active-page .page-link {
-    background-color: #008B20;
-    color: #ffffff;
-}
-
 /* --------------------------------- Recipe detail page */
 .white-container {
     border: 0.5px solid #dadeda;
     box-shadow: 6px 6px 12px #e9eae9,
         -6px -6px 12px #ffffff;
-}
-
-.icon-button {
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.icon-button-stroke {
-    color: #008B20;
-}
-
-.icon-button-stroke:hover,
-.icon-button-stroke:active {
-    color: #076c1f;
-    -webkit-text-stroke: 1px #065f1b;
 }
 
 /* --------------------------------------- Comments */
@@ -378,69 +423,8 @@ body {
     font-weight: 600;
 }
 
-.submit-btn {
-    border: 2px solid #008B20;
-}
-
-.submit-btn:hover,
-.submit-btn:active {
-    background-color: #008B20;
-    color: white;
-    box-shadow: 6px 6px 12px #d3d4d3,
-        -6px -6px 12px #ffffff;
-}
-
 .comment-inactive p {
     color: #9b969e;
-}
-
-.comment-edit,
-.delete,
-.comment-delete-cancel,
-.submit-btn,
-.update-btn {
-    box-shadow: 6px 6px 12px #f1f2f1,
-        -6px -6px 12px #ffffff;
-    border-radius: 2em;
-    background-color: white;
-}
-
-.delete {
-    border: 2px solid #a90606;
-}
-
-.delete:hover,
-.delete:active {
-    background-color: #a90606;
-    color: white;
-    box-shadow: 6px 6px 12px #d3d4d3,
-        -6px -6px 12px #ffffff;
-}
-
-.comment-edit,
-.update-btn {
-    border: 2px solid #FFC633;
-}
-
-.comment-edit:hover,
-.comment-edit:active,
-.update-btn:hover,
-.update-btn:active {
-    background-color: #FFC633;
-    box-shadow: 6px 6px 12px #d3d4d3,
-        -6px -6px 12px #ffffff;
-}
-
-.comment-delete-cancel {
-    border: 2px solid #9e9696;
-
-}
-
-.comment-delete-cancel:hover,
-.comment-delete-cancel:active {
-    background-color: #9e9696;
-    box-shadow: 6px 6px 12px #d3d4d3,
-        -6px -6px 12px #ffffff;
 }
 
 /* ------------------------------------- Ratings */
@@ -589,5 +573,4 @@ footer {
         border-top: 0.5px solid white;
         padding-top: 20px;
     }
-
 }

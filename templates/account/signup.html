@@ -27,7 +27,8 @@ Basil&Thyme create account, Basil&Thyme sign up, B&T sign up, Basil and thyme si
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
-          <button type="submit" class="submit-btn p-2 px-3 fs-5 fw-bold">Sign Up &raquo;</button>
+          <button type="submit" class="border-btn-green btn-shadow btn-rounded p-2 px-3 fs-5 fw-bold">Sign Up
+            &raquo;</button>
         </form>
       </div>
 
@@ -35,8 +36,8 @@ Basil&Thyme create account, Basil&Thyme sign up, B&T sign up, Basil and thyme si
         <div class="bg-brand-gray p-4 w-100 h-100 text-center d-flex flex-column justify-content-center">
           <p class="fs-5">Already have an account? Then please <span class="fw-bold">sign in</span> instead.</p>
           <div>
-            <a class="btn comment-edit d-inline-block p-2 px-3 fw-bold fs-5" href="{% url 'account_login' %}"
-              aria-label="Go to the sign in page to log in">
+            <a class="btn border-btn-yellow btn-shadow btn-rounded d-inline-block p-2 px-3 fw-bold fs-5"
+              href="{% url 'account_login' %}" aria-label="Go to the sign in page to log in">
               Sign In
             </a>
           </div>
