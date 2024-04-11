@@ -116,6 +116,11 @@ label {
     width: 150px;
 }
 
+.square-220 {
+    height: 220px;
+    width: 220px;
+}
+
 .max-h-370 {
     max-height: 370px;
 }
@@ -128,6 +133,10 @@ label {
 .img-cover {
     object-fit: cover;
     width: 100%;
+}
+
+.img-round {
+    border-radius: 50%;
 }
 
 /* ------------------------------------ Font sizes */
@@ -524,6 +533,11 @@ label {
     .square-l-200 {
         height: 200px;
         width: 200px;
+    }
+
+    .square-l-300 {
+        height: 300px;
+        width: 300px;
     }
 
     /* ------------------------------ Font sizes */
