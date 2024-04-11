@@ -15,9 +15,13 @@ main {
     margin-top: 56px;
 }
 
+label {
+    font-weight: 600;
+}
 
 /* ------------------------------------ Colours */
 
+/* Background colors */
 .bg-brand-green {
     background-color: #008B20;
 }
@@ -42,6 +46,15 @@ main {
     background-color: #412f2bb2;
 }
 
+.bg-toast {
+    background-color: #ffffffda;
+}
+
+.bg-banner {
+    background-color: #412f2b90;
+}
+
+/* Font colors */
 .brand-brown {
     color: #442A23;
 }
@@ -62,30 +75,62 @@ main {
     color: #a90606;
 }
 
-/* ------------------------------ Heights/sizing */
-.height-300-400 {
+.white {
+    color: #ffffff;
+}
+
+/* ------------------------------------ Heights/sizing */
+
+.w-full {
+    width: 100%;
+}
+
+.h-30 {
+    height: 30px;
+}
+
+.h-300 {
     height: 300px;
 }
 
-.img-sq-150-200 {
+.max-w-370 {
+    max-width: 370px;
+}
+
+.max-w-900 {
+    max-width: 900px;
+}
+
+.square-30 {
+    width: 30px;
+    height: 30px;
+}
+
+.square-70 {
+    width: 70px;
+    height: 70px;
+}
+
+.square-150 {
     height: 150px;
     width: 150px;
 }
 
-.img-container {
+.max-h-370 {
     max-height: 370px;
-}
-
-.img-cover,
-.img-container img {
-    object-fit: cover;
-    width: 100%;
 }
 
 .h-line {
     height: 2.5px;
 }
 
+/* ------------------------------------ Images */
+.img-cover {
+    object-fit: cover;
+    width: 100%;
+}
+
+/* ------------------------------------ Font sizes */
 .fs-rem-90 {
     font-size: 0.9rem !important;
 }
@@ -114,14 +159,19 @@ main {
     font-size: 2.5rem;
 }
 
-.below-header {
-    margin-top: 65px;
+/* ------------------------------------ Font styles */
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.hover-bold:hover {
+    font-weight: 600;
 }
 
 /* ------------------------------------ Buttons and Links */
 
 /* Utility classes for buttons and links */
-
 .standard-link {
     text-decoration: none;
 }
@@ -144,10 +194,6 @@ main {
 .btn-shadow:active {
     box-shadow: 6px 6px 12px #d3d4d3,
         -6px -6px 12px #ffffff;
-}
-
-.hover-bold:hover {
-    font-weight: 600;
 }
 
 /* Standard buttons */
@@ -272,38 +318,30 @@ main {
     color: #ffffff;
 }
 
-/* ----------------------------- Navbar/Header */
-
-.nav-link {
-    color: #ffffff;
-    font-size: 1.2rem;
+/*-------------------------------- Misc utilities */
+.shadow {
+    box-shadow: 6px 6px 12px #e9eae9,
+        -6px -6px 12px #ffffff;
 }
 
-.nav-link i {
-    font-size: 1.3rem;
+.border-subtle {
+    border: 1px solid #dadeda;
 }
 
-.current {
-    font-weight: 600;
+.below-header {
+    margin-top: 65px;
 }
+
+/* ------------------------------------ SPECIFIC STYLES */
+/* ------------------------------------ Navbar/Header */
 
 .navbar-brand img {
-    height: 30px;
     aspect-ratio: 5.66 / 1;
 }
 
-.navbar-toggler-icon {
-    font-weight: 700;
-}
-
-.header-banner {
-    background-color: #412f2b90;
-}
-
 .nav-container {
-    border-bottom: 1px solid #04330f;
+    border-bottom: 0.5px solid #04330f;
 }
-
 
 /* -------------------------------- Hero section with content overlay */
 .hero-section {
@@ -313,8 +351,7 @@ main {
 
 .hero-section-wallpaper {
     height: 450px;
-    background: url("../images/pattern-white.webp") no-repeat center top/cover;
-    background-color: #FFC633;
+    background: #FFC633 url("../images/pattern-white.webp") no-repeat center top/cover;
 }
 
 .searchbar-outline {
@@ -324,26 +361,13 @@ main {
 }
 
 .searchbar {
-    background-color: #ffffff;
     border-radius: 15px;
 }
 
-/* -------------------------------- Recipe cards */
-
-.card {
-    max-width: 370px;
-    border: 1px solid #dadeda;
-    box-shadow: 6px 6px 12px #e9eae9,
-        -6px -6px 12px #ffffff;
-}
+/* ------------------------------------ Recipe cards */
 
 .card-img-top {
     aspect-ratio: 3/2;
-    object-fit: cover;
-}
-
-.card-title {
-    font-size: 1.3rem;
 }
 
 /* Credit: https://blog.logrocket.com/ways-truncate-text-css/ */
@@ -406,68 +430,35 @@ main {
     width: 90%;
 }
 
-/* --------------------------------- Recipe detail page */
-.white-container {
-    border: 0.5px solid #dadeda;
-    box-shadow: 6px 6px 12px #e9eae9,
-        -6px -6px 12px #ffffff;
-}
-
-/* --------------------------------------- Comments */
+/* ------------------------------------ Comments */
 
 #comments-input textarea {
     height: 150px;
-}
-
-#comments-input label {
-    font-weight: 600;
 }
 
 .comment-inactive p {
     color: #9b969e;
 }
 
-/* ------------------------------------- Ratings */
+/* ------------------------------------ Ratings */
 .selected {
     color: #008B20;
 }
 
-/* -------------------------------------- Toasts */
-.toast img {
-    width: 30px;
-    height: 30px;
-}
-
-.toast-body {
-    background-color: #ffffffda;
-}
-
-/* --------------------------------------- Signup/Sign in */
+/* ------------------------------------ Signup/Sign in */
 .errorlist li {
     color: #a90606;
 }
 
-.login label,
-.signup label {
-    font-weight: 600;
+/* ------------------------------------Footer */
+.line-top {
+    border-top: 0.5px solid white;
 }
 
-.form-box {
-    width: 100%;
-    max-width: 900px;
-}
-
-/* -------------------------------- Footer */
-footer {
-    padding: 20px 0;
-}
-
-/* ---------------------------------- Medium screens */
+/* ------------------------------------------------ MEDIUM SCREENS */
 @media screen and (min-width: 768px) {
 
-
-    /* ---------------------------------- Heights/sizing */
-
+    /* ---------------------------------- Font sizes */
     .fs-rem-md-120 {
         font-size: 1.2rem !important;
     }
@@ -476,12 +467,13 @@ footer {
         font-size: 1.8rem;
     }
 
+    /* --------------------------------- SPECIFIC STYLES - Medium screens */
     /* --------------------------------- Recipe detail page */
     .recipe-instructions {
         border-left: 2.5px solid #008B20;
     }
 
-    /* ------------------------------------ Features page (home page) */
+    /* --------------------------------- Features page (home page) */
     .circle {
         height: 180px;
         width: 180px;
@@ -499,13 +491,12 @@ footer {
     }
 
     /* ---------------------------------- Comments */
-
     .comment-body {
         border-left: 2px solid #008B20;
     }
 }
 
-/* ---------------------------------- Large screens */
+/* ------------------------------------------------ LARGE SCREENS */
 @media screen and (min-width: 992px) {
 
     /* ------------------------------- General */
@@ -513,16 +504,29 @@ footer {
         margin-top: 66px;
     }
 
+    .below-header {
+        margin-top: 75px;
+    }
+
     /* ------------------------------ Heights/sizing */
-    .height-300-400 {
+    .h-l-40 {
+        height: 40px;
+    }
+
+    .h-l-400 {
         height: 400px;
     }
 
-    .img-sq-150-200 {
+    .max-h-l-450 {
+        max-height: 450px;
+    }
+
+    .square-l-200 {
         height: 200px;
         width: 200px;
     }
 
+    /* ------------------------------ Font sizes */
     .fs-rem-lg-125 {
         font-size: 1.25rem;
     }
@@ -535,14 +539,7 @@ footer {
         font-size: 1.8rem;
     }
 
-    .img-container {
-        max-height: 450px;
-    }
-
-    .below-header {
-        margin-top: 75px;
-    }
-
+    /* --------------------------------- SPECIFIC STYLES - Large screens */
     /* ----------------------------------- Features page (home page) */
     .circle,
     .circle-white,
@@ -557,20 +554,10 @@ footer {
 
     /* -------------------------------- Navbar/Header */
     .navbar-brand img {
-        height: 40px;
         aspect-ratio: 5.66 / 1;
     }
 
     .line-left {
         border-left: 1px solid white;
-    }
-
-    footer {
-        padding: 20px 0;
-    }
-
-    .line-top {
-        border-top: 0.5px solid white;
-        padding-top: 20px;
     }
 }

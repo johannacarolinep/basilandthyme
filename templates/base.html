@@ -40,9 +40,10 @@
         <div class="container-fluid px-0 py-1 bg-brand-green nav-container">
             <nav class="navbar navbar-expand-lg p-1 navbar-dark">
                 <div class="container-xxl">
-                    <a class="navbar-brand {% if request.path == home_page_url %}current" aria-current="page{% endif %}"
+                    <a class="navbar-brand {% if request.path == home_page_url %}fw-600" aria-current="page{% endif %}"
                         href=" {% url 'home_page' %}" aria-label="Go to the home page">
-                        <img src="{% static 'images/logo-transp-center.png' %}" alt="Basil & Thyme logo">
+                        <img class="h-30 h-l-40" src="{% static 'images/logo-transp-center.png' %}"
+                            alt="Basil & Thyme logo">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -52,46 +53,46 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link {% if request.path == home_page_url %}current"
+                                <a class="nav-link white fs-rem-120 {% if request.path == home_page_url %}fw-600"
                                     aria-current="page{% endif %}" href="{% url 'home_page' %}">
-                                    <i class="fa-solid fa-house" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-house fs-rem-130" aria-hidden="true"></i>
                                     Home
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link line-left {% if request.path == recipe_list %}current"
+                                <a class="nav-link white fs-rem-120 line-left {% if request.path == recipe_list %}fw-600"
                                     aria-current="page{% endif %}" href="{% url 'recipe_list_page' %}">
-                                    <i class="fa-solid fa-list" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-list fs-rem-130" aria-hidden="true"></i>
                                     Recipes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link line-left {% if request.path == favourites_url %}current"
+                                <a class="nav-link white fs-rem-120 line-left {% if request.path == favourites_url %}fw-600"
                                     aria-current="page{% endif %}" href="{% url 'favourites_page' %}">
-                                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-heart fs-rem-130" aria-hidden="true"></i>
                                     Favourites
                                 </a>
                             </li>
                             <!-- If statement to dislay menu options based on logged in status -->
                             {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link line-left {% if request.path == logout_url %}current"
+                                <a class="nav-link white fs-rem-120 line-left {% if request.path == logout_url %}fw-600"
                                     aria-current="page{% endif %}" href="{% url 'account_logout' %}">
-                                    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-right-from-bracket fs-rem-130" aria-hidden="true"></i>
                                     Sign Out
                                 </a>
                             </li>
                             {% else %}
                             <li class="nav-item">
-                                <a class="nav-link line-left {% if request.path == signup_url %}current"
+                                <a class="nav-link white fs-rem-120 line-left {% if request.path == signup_url %}fw-600"
                                     aria-current="page{% endif %}" href="{% url 'account_signup' %}">
-                                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-user-plus fs-rem-130" aria-hidden="true"></i>
                                     Sign Up
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link line-left {% if request.path == login_url %}current"
+                                <a class="nav-link white fs-rem-120 line-left {% if request.path == login_url %}fw-600"
                                     aria-current="page{% endif %}" href="{% url 'account_login' %}">
-                                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-right-to-bracket fs-rem-130" aria-hidden="true"></i>
                                     Sign In
                                 </a>
                             </li>
@@ -119,8 +120,8 @@
         {% endblock toasts %}
     </main>
     <!-- Footer -->
-    <footer class="container-fluid bg-brand-brown text-white">
-        <div class="container-xxl line-top">
+    <footer class="container-fluid bg-brand-brown text-white py-3">
+        <div class="container-xxl line-top pt-3">
             <div class="row align-items-top">
                 <div class="col-lg text-center text-lg-start">
                     <p>© Copyright 2024 Basil & Thyme</p>
@@ -128,7 +129,7 @@
                 </div>
                 <div class="col-lg-5 text-center mt-1 mb-3 align-self-center">
                     <a href="{% url 'home_page' %}" aria-label="Go to the home page.">
-                        <img src="{% static 'images/logo-round-transp.webp' %}" width="70" height="70"
+                        <img src="{% static 'images/logo-round-transp.webp' %}" class="square-70"
                             alt="Basil & Thyme logo">
                     </a>
                 </div>

@@ -21,9 +21,9 @@ Basil&Thyme - Recipe page
 
 {% block content %}
 <div class="container-xl g-0">
-    <article class="m-3 my-md-4 m-lg-4 p-4 bg-white white-container">
+    <article class="m-3 my-md-4 m-lg-4 p-4 bg-white shadow white-container">
         <div class="row">
-            <div class="img-container d-flex col-md-7">
+            <div class="max-h-370 max-h-l-450 d-flex col-md-7">
                 {% if "placeholder" in recipe.feature_image.url %}
                 <img class="img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
                 {% else %}

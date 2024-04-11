@@ -20,7 +20,7 @@ basil&thyme search
 {% endblock metakeywords %}
 
 {% block topbanner %}
-<div class="container-fluid m-0 py-1 text-center header-banner">
+<div class="container-fluid m-0 py-1 text-center header-banner bg-banner">
     <p class="m-0 text-white fw-light small">
         {% if user.is_authenticated %}
         You're logged in as <span class="fw-bolder">{{ user.username }}</span>
@@ -47,7 +47,7 @@ basil&thyme search
         <div class="bg-brand-green h-line mb-2"> </div>
         {% if object_list %}
         <div class="dropdown text-end mb-3">
-            <button class="btn btn-secondary dropdown-toggle btn-shadow" type="button" data-bs-toggle="dropdown"
+            <button class="btn btn-yellow dropdown-toggle btn-shadow" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Sort
             </button>
@@ -64,9 +64,9 @@ basil&thyme search
             {% endfor %}
         </div>
         {% else %}
-        <div class="height-300-400 d-flex flex-grow-1 justify-content-center align-items-center">
+        <div class="h-300 h-l-400 d-flex flex-grow-1 justify-content-center align-items-center">
             <div class="text-center">
-                <img class="img-sq-150-200 mx-auto" src="{% static 'images/logo-round-brown.webp' %}"
+                <img class="square-150 square-l-200 mx-auto" src="{% static 'images/logo-round-brown.webp' %}"
                     alt="Basil and Thyme logo">
                 <p class="mt-4 brand-brown">Sorry, there were no results to display. Please try a different search.</p>
             </div>
