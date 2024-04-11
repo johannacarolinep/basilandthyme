@@ -17,7 +17,7 @@
         - [Design wireframes](#design-wireframes)
     - [Agile methodology](#agile-methodology)
 - [Tools and technologies](#tools-and-technologies)
-- [Deployment] (#deployment)
+- [Deployment](#deployment)
 - [Testing](#testing)
 - [Bugs](#bugs)
 - [Credits](#credits)
@@ -399,6 +399,12 @@ Followed by:
 python3 manage.py migrate recipe_book
 ```
 
+#### Run the project locally
+You should now be able to run the app locally by running the following command in the terminal:
+```
+python3 manage.py runserver
+```
+
 #### Create a superuser
 Some functionality in the project, such as creating new recipes, is limited to superusers. Therefore, in order to access the admin panel, you will need to create a superuser.
 
@@ -414,34 +420,34 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 <summary>Click to open the instructions</summary>
 
 - Clone the repository:
-  1. Open the terminal on your computer.
-  2. Run the command
-  - `git clone git@github.com:johannacarolinep/basilandthyme.git`
+  1. Create your own GitHub repository to host the code. You will need to host this code on your repository for the following to work.
 
-  3. Create your own GitHub repository to host the code. You will need to host this code on your repository for the following to work.
-  4. Run the command `git remote set-url origin <Your GitHub Repo Path>` to set the remote repository location to your repository.
+  2. Run the command `git remote set-url origin <Your GitHub Repo Path>` to set the remote repository location to your repository.
 
-  5. Push the files to your repository with the following command:
+  3. Ensure that the `DEBUG` constant is set to `True` in the *settings.py* file of the project.
+
+  4. Push the files to your repository with the following command:
   `git push`
   
-  6. Create a Heroku account if you don't already have one here [Heroku](https://dashboard.heroku.com).
-  7. Create a new Heroku application on the [Heroku Apps page](https://dashboard.heroku.com/apps), by clicking "New" in the upper right corner, and selecting "Create new app":
+  5. Create a Heroku account if you don't already have one here [Heroku](https://dashboard.heroku.com).
+
+  6. Create a new Heroku application on the [Heroku Apps page](https://dashboard.heroku.com/apps), by clicking "New" in the upper right corner, and selecting "Create new app":
 
     ![Heroku Apps - New](documentation/heroku-apps-new.png)
 
-8. Name the app, choose a region, and click "Create app".
+  7. Name the app, choose a region, and click "Create app".
     ![Heroku New App - Create](documentation/heroku-apps-create.png)
 
-9. Go to the Deploy tab:
+  8. Go to the Deploy tab:
     ![Heroku - Deploy Tab](documentation/heroku-deploy-tab.png)
 
-10. In the "Deployment method" section, click on "GitHub - Connect to GitHub". Search for your repository and connect your application.
+  9. In the "Deployment method" section, click on "GitHub - Connect to GitHub". Search for your repository and connect your application.
     ![Heroku - Connect to GitHub](documentation/heroku-connect-github.png)
 
-  11. Next, go to the Settings tab:
+  10. Next, go to the Settings tab:
   ![Heroku - Settings tab](documentation/heroku-settings-tab.png)
 
-  12. Next, in the "Config Vars" section, click "Reveal Config Vars". You will need to add 4 Config Vars
+  11. Next, in the "Config Vars" section, click "Reveal Config Vars". You will need to add 4 Config Vars
   ![Heroku - Reveal Config Vars button](documentation/heroku-reveal-config-vars.png)
 
 - Config Var number 1:
@@ -458,11 +464,11 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 
     ![Heroku - Config Vars](documentation/heroku-config-vars.png)
 
-  13. After adding the 4 Config Vars, go back to the Deploy tab:
+  12. After adding the 4 Config Vars, go back to the Deploy tab:
 
       ![Heroku - Deploy Tab](documentation/heroku-deploy-tab.png)
 
-  14. In the "Manual deploy" section, click "Deploy Branch":
+  13. In the "Manual deploy" section, click "Deploy Branch":
 
       ![Heroku - Manual deploy](documentation/heroku-manual-deploy.png)
 
@@ -470,7 +476,7 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 
       ![Heroku - Manual deployment success](documentation/heroku-deployment-success.png)
 
-  15. You can now click the "View" button (in the screenshot above), to launch the application.
+  14. You can now click the "View" button (in the screenshot above), to launch the application.
 
 </details>
 
