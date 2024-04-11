@@ -17,6 +17,7 @@
         - [Design wireframes](#design-wireframes)
     - [Agile methodology](#agile-methodology)
 - [Tools and technologies](#tools-and-technologies)
+- [Deployment] (#deployment)
 - [Testing](#testing)
 - [Bugs](#bugs)
 - [Credits](#credits)
@@ -299,6 +300,180 @@ Velocity: 16.66
 
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
+
+<a id="deployment"></a>
+## Deployment
+
+The program was deployed to [Heroku](https://id.heroku.com/login) and can be accessed by this [link](https://basil-and-thyme-e544c9b02aa3.herokuapp.com/).
+
+### To run the application locally:
+
+*Note:*
+1. This project requires you to have Python 3 installed on your computer.
+
+2. In order to run the project you will need to install and run [virtualenv](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/). This is due to compatibility issues between some versions of Python, such as 3.9.6 and the version of Python run on Heroku.
+
+Create a local copy of the GitHub repository by following one of the two processes below:
+
+- Download ZIP file:
+  1. Go to the [GitHub Repository](https://github.com/johannacarolinep/basilandthyme).
+  2. Download the ZIP file containing the project.
+  3. Extract the ZIP file to a location on your computer.
+
+- Clone the repository:
+  1. Run the following command in a terminal
+  - `git clone git@github.com:johannacarolinep/basilandthyme.git`
+
+#### Create a SECRET_KEY
+You will need to create a SECRET_KEY since Django requires this for cryptographic signing.
+
+1. In the top-level directory of your project, create an *env.py* file.
+2. Add *env.py* to *.gitignore*.
+3. In *env.py* add *import os* at the top of the file.
+4. Still in *env.py*, add the following line of code:
+```python
+os.environ.setdefault(
+    "SECRET_KEY", "<your secret key>"
+)
+```
+5. You can use an online key generator for your secret key value, such as [RandomKeygen](https://randomkeygen.com/)
+
+#### Create and connect a PostgreSQL database to the project
+To run the project, you will need to create and connect a PostgreSQL database instance. I used the [tool provided by Code Institute](https://dbs.ci-dbs.net/) for this, which is available to current Code Institute students.
+
+<details>
+<summary>Click to open the instructions</summary>
+
+1. Go to [https://dbs.ci-dbs.net/](https://dbs.ci-dbs.net/).
+2. Follow the on-screen instructions to create a database.
+3. You should now have received an email containing the URL for your database.
+4. In the *env.py* file of your project, add the following line of code:
+```python
+os.environ.setdefault(
+    "DATABASE_URL", "<the URL for your database>"
+)
+```
+
+</details>
+
+#### Connect a Cloudinary account to the project
+[Cloudinary](https://cloudinary.com/), a cloud media platform, is used to store and serve images in the project.
+
+<details>
+<summary>Click to open the instructions</summary>
+
+1. If you do not already have a Cloudinary account, you can create a free account [here](https://cloudinary.com/users/register_free).
+2. Sign in to your Cloudinary account.
+3. Once logged in, go to the tab "Programmable media", in the menu on the left-hand side, and then click "Dashboard". You should now see your "Product Environment Credentials".
+![Cloudinary dashboard](documentation/cloudinary-credentials.png)
+4. In the *env.py* file of your project, add the following lines of code (with the correct values):
+```python
+os.environ.setdefault(
+    "CLOUDINARY_URL", "<paste in value from the Cloudinary Dashboard>"
+)
+os.environ.setdefault("CLOUD_NAME", "<paste in value from the Cloudinary Dashboard>")
+```
+
+</details>
+
+<br>
+
+Install the dependencies listed in *requirements.txt*. 
+
+  - While in the project directory, run the following command in the terminal:
+
+```
+pip install -r requirements.txt
+```
+
+#### Run migrations
+After completing the preceding steps, you should be able to migrate the models of the project to your database. 
+
+In the terminal, run the following command:
+```
+python3 manage.py makemigrations recipe_book
+```
+
+Followed by:
+```
+python3 manage.py migrate recipe_book
+```
+
+#### Create a superuser
+Some functionality in the project, such as creating new recipes, is limited to superusers. Therefore, in order to access the admin panel, you will need to create a superuser.
+
+Write the following command in the terminal:
+```
+python3 manage.py createsuperuser
+```
+Follow the instructions in the terminal, which will prompt you for an email and password.
+
+### Run the project as a remote web application by deploying to Heroku:
+
+<details>
+<summary>Click to open the instructions</summary>
+
+- Clone the repository:
+  1. Open the terminal on your computer.
+  2. Run the command
+  - `git clone git@github.com:johannacarolinep/basilandthyme.git`
+
+  3. Create your own GitHub repository to host the code. You will need to host this code on your repository for the following to work.
+  4. Run the command `git remote set-url origin <Your GitHub Repo Path>` to set the remote repository location to your repository.
+
+  5. Push the files to your repository with the following command:
+  `git push`
+  
+  6. Create a Heroku account if you don't already have one here [Heroku](https://dashboard.heroku.com).
+  7. Create a new Heroku application on the [Heroku Apps page](https://dashboard.heroku.com/apps), by clicking "New" in the upper right corner, and selecting "Create new app":
+
+    ![Heroku Apps - New](documentation/heroku-apps-new.png)
+
+8. Name the app, choose a region, and click "Create app".
+    ![Heroku New App - Create](documentation/heroku-apps-create.png)
+
+9. Go to the Deploy tab:
+    ![Heroku - Deploy Tab](documentation/heroku-deploy-tab.png)
+
+10. In the "Deployment method" section, click on "GitHub - Connect to GitHub". Search for your repository and connect your application.
+    ![Heroku - Connect to GitHub](documentation/heroku-connect-github.png)
+
+  11. Next, go to the Settings tab:
+  ![Heroku - Settings tab](documentation/heroku-settings-tab.png)
+
+  12. Next, in the "Config Vars" section, click "Reveal Config Vars". You will need to add 4 Config Vars
+  ![Heroku - Reveal Config Vars button](documentation/heroku-reveal-config-vars.png)
+
+- Config Var number 1:
+    - **Key:** CLOUD_NAME **Value:** Copy the value of the CLOUD_NAME constant in your *env.py* file and paste it here (the value can also be found in your Cloudinary account).
+
+- Config Var number 2:
+    - **Key:** CLOUDINARY_URL **Value:** Copy the value of the CLOUDINARY_URL constant in your *env.py* file and paste it here (Alternatively the value can be found by logging in to your Cloudinary account).
+
+- Config Var number 3:
+    - **Key:** DATABASE_URL **Value:** Copy the value of the DATABASE_URL constant in your *env.py* file and paste it here. 
+
+- Config Var number 4:
+    - **Key:** SECRET_KEY **Value:** You can use an online secret key generator to create a value for this config var. It's good practice not to use the same value as the SECRET_KEY constant in your *env.py* file.
+
+    ![Heroku - Config Vars](documentation/heroku-config-vars.png)
+
+  13. After adding the 4 Config Vars, go back to the Deploy tab:
+
+      ![Heroku - Deploy Tab](documentation/heroku-deploy-tab.png)
+
+  14. In the "Manual deploy" section, click "Deploy Branch":
+
+      ![Heroku - Manual deploy](documentation/heroku-manual-deploy.png)
+
+      - Wait for the completion of the deployment.
+
+      ![Heroku - Manual deployment success](documentation/heroku-deployment-success.png)
+
+  15. You can now click the "View" button (in the screenshot above), to launch the application.
+
+</details>
+
 
 <a id="testing"></a>
 ## Testing
