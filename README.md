@@ -529,7 +529,7 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 <a id="testing"></a>
 ## Testing
 
-Please find documentation related to testing and validation in [TESTING.md](testing.md).
+Please find documentation related to testing and validation in [TESTING.md](TESTING.md).
 
 <a id="bugs"></a>
 ## Bugs
