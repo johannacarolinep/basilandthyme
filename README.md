@@ -153,6 +153,9 @@ A simple logo was created for the project, consisting of the company name comple
 
 #### Sprint 1
 
+<details>
+<summary>Click to see details of sprint 1</summary>
+
 ![Sprint 1 milestone](documentation/sprint1.png)
 
 ##### Sprint 1 wrap-up
@@ -173,7 +176,13 @@ Velocity: 17
 - Additional items added to the backlog:
     - USER STORY: Custom 404 page (Navigation and structure): As a **Site User** I can **see an informative 404 page guiding me back to the main page if I visit a page that does not exist by mistake** so that I can **easily get back to the home page with minimal disruption**.
 
+</details>
+
 #### Sprint 2
+
+<details>
+<summary>Click to see details of sprint 2</summary>
+
 ![Sprint 2 milestone](documentation/sprint2.png)
 
 ##### Sprint 2 wrap-up
@@ -203,7 +212,12 @@ Velocity: 16.5
     - USER STORY: Sign up/log in with social (Account signup/login): As a **Site User** I can **register an account using an existing social media account** so that I can **have a faster and smoother registration and login experience**.
     - USER STORY: Email verification (Account/Login): As a **Site User signing up for an account** I can **verify my email** so that I can **feel more secure and trust that my account is protected**.
 
+</details>
+
 #### Sprint 3
+
+<details>
+<summary>Click to see details of sprint 3</summary>
 ![Sprint 3 milestone](documentation/sprint3.png)
 
 ##### Sprint 3 wrap-up
@@ -220,7 +234,12 @@ Velocity: 17
 - Reprioritised backlog
 - Re-evaluated points for some backlog items
 
+</details>
+
 #### Sprint 4
+
+<details>
+<summary>Click to see details of sprint 4</summary>
 
 ![Sprint 4 milestone](documentation/sprint4.png)
 
@@ -242,7 +261,12 @@ Velocity: 16.25
     - USER STORY: Experience for keyboard users (ACCESSIBILITY): As a **Site User not able to utilize a mouse** I can **focus on and access all interactive elements on the website using a keyboard** so that I can **be included, navigate on the website, access the content, and use all core functionality**.
 - Added additional backlog items related to TESTING.
 
+</details>
+
 #### Sprint 5:
+
+<details>
+<summary>Click to see details of sprint 5</summary>
 
 ![Sprint 5 milestone](documentation/sprint5.png)
 
@@ -272,7 +296,12 @@ Furthermore, on closer reflection, I believe the implementation of this function
     - USER STORY: Page title and meta tags - As a **Site User finding the website through a search engine** I can **read a descriptive search result** so that I can **understand if the result is relevant to me**.
 - Additional items relating to testing and code refactoring were added to the backlog.
 
+</details>
+
 #### Sprint 6
+
+<details>
+<summary>Click to see details of sprint 6</summary>
 
 ![Sprint 6 milestone](documentation/sprint6.png)
 
@@ -290,6 +319,8 @@ Velocity: 16.66
 
 **Actions taken:**
 - Added PBI's relating to remaining project documentation to the backlog.
+
+</details>
 
 #### Sprint 7
 
@@ -372,6 +403,8 @@ Create a local copy of the GitHub repository by following one of the two process
 #### Create a SECRET_KEY
 You will need to create a SECRET_KEY since Django requires this for cryptographic signing.
 
+<details>
+<summary>Click to open the instructions.</summary>
 1. In the top-level directory of your project, create an *env.py* file.
 2. Add *env.py* to *.gitignore*.
 3. In *env.py* add *import os* at the top of the file.
@@ -382,6 +415,8 @@ os.environ.setdefault(
 )
 ```
 5. You can use an online key generator for your secret key value, such as [RandomKeygen](https://randomkeygen.com/)
+
+</details>
 
 #### Create and connect a PostgreSQL database to the project
 To run the project, you will need to create and connect a PostgreSQL database instance. I used the [tool provided by Code Institute](https://dbs.ci-dbs.net/) for this, which is available to current Code Institute students.
@@ -451,7 +486,7 @@ python3 manage.py runserver
 ```
 
 #### Create a superuser
-Some functionality in the project, such as creating new recipes, is limited to superusers. Therefore, in order to access the admin panel, you will need to create a superuser.
+Some functionality in the project, such as creating new recipes, is limited to superusers. Therefore, to access the admin panel, you will need to create a superuser.
 
 Write the following command in the terminal:
 ```
@@ -538,6 +573,9 @@ Please find documentation related to testing and validation in [TESTING.md](TEST
 
 #### 2024-03-30: Incorrect value annotated to objects in RecipeListView
 
+<details>
+<summary>Click to see bug details</summary>
+
 The rating value, represented by stars, on the recipe card (e.g. on the "Recipes page"), represents the recipe's average rating value (the average of all ratings the recipe has received). 
 
 Clicking on the rating stars, the user is presented with a modal. In this modal, if the specific user has previously rated the recipe, their existing rating of that recipe should be displayed.
@@ -572,7 +610,12 @@ if user.is_authenticated:
 
  - Lastly, I confirmed with print statements and by manually testing the UI that the values returned were now correct, matching the expected values for `user_rating`.
 
+ </details>
+
  #### 2024-03-27 Cloudinary images sent with HTTP
+
+ <details>
+<summary>Click to see bug details</summary>
  On the deployed site, warnings were raised in the console, saying the images fetched from Cloudinary were being served with HTTP, and automatically upgraded to HTTPS. I wanted Django to fetch them through HTTPS by default. 
 
  Steps taken:
@@ -607,7 +650,12 @@ cloudinary.config(
 
 - Finally, I confirmed the images were being served with HTTPS, and the linter not raising any error.
 
+</details>
+
 #### 2024-03-03: Missed adding CLOUDINARY_URL configuration variable in Heroku
+
+<details>
+<summary>Click to see bug details</summary>
 
 While working on displaying an overview of a recipe in a card format (creating the recipes.html template), I got a 500 error on the deployed version of the site. The error occurred in the first deployment after adding a recipe with a user-uploaded image and code in the template to display recipe images.
 
@@ -626,7 +674,12 @@ At this point I started reflecting more deeply on that the project worked as int
 ##### Solution:
 After correctly adding the CLOUDINARY_URL config variable, I was able to confirm the project worked as intended, on the deployed site as well as the local environment.
 
+</details>
+
 #### 2024-03-14: Missing file ending of test_models_favourite.py and Favourite uniqueness constraint not enforced
+
+<details>
+<summary>Click to see bug details</summary>
 
 This bug was a combination of two factors:
 1. While working on writing tests for the **Favourite model**, I realised the tests were not actually being run, and discovered I had misnamed my file to `test_models_favourite`, instead of `test_models_favourite.py`. This meant that the file was not recognized as a test file and was not run by Django unittest. Adding the ``.py`` file ending fixed this.
@@ -666,6 +719,8 @@ class Meta:
             models.UniqueConstraint(fields=['user', 'recipe'], name='unique_favourite')
         ]
 ``````
+
+</details>
 
 
 <a id="credits"></a>
