@@ -301,6 +301,51 @@ Velocity: 16.66
 <a id="tools-and-technologies"></a>
 ## Tools and technologies
 
+### Languages:
+
+- [Python 3.12.1](https://www.python.org/downloads/release/python-385/) - Used to write the application's server-side logic.
+- [JavaScript](https://www.javascript.com/) - Was used to develop interactive components on the website.
+- [HTML5](https://developer.mozilla.org/en-US/docs/Web/HTML) - Was used for the structure of the web pages.
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/css) - Was used to style the website.
+
+### Frameworks:
+- [Django 4.2.10](https://www.djangoproject.com/) - Python-based framework used to build the website.
+- [Bootstrap 5](https://getbootstrap.com/) - CSS framework used to style the website.
+
+### Databases:
+- [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - The database used to store the website's model data.
+
+### Cloud:
+- [Cloudinary](https://cloudinary.com/) - Was used for cloud-based image storage and management.
+- [Heroku.com](https://id.heroku.com/login) - Was used to deploy the project.
+- [GitHub](https://github.com/) - Was used to host the code of the website.
+
+### Testing and validation
+- [CI Python Linter](https://pep8ci.herokuapp.com/) - Was used to ensure the code adheres to PEP 8 standards
+- [Chrome DevTools](https://developer.chrome.com/docs/devtools/open/) - Was used for debugging
+- [LightHouse](https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=sv&pli=1) - Was used to test and optimize website performance, best practices and accessibility
+- [JSHint](https://jshint.com/) - Was used to lint JavaScript code.
+- [W3C Markup Validation Service](https://validator.w3.org/) - Was used to validate HTML.
+- [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Was used to validate CSS.
+
+### Design
+- [Neumorphism.io](https://neumorphism.io/#ffffff) - Was used to generate box-shadows for CSS.
+- [Creately](https://app.creately.com/d/start/dashboard) - Was used to create the ERD diagram.
+- [FontAwesome](https://fontawesome.com/) - Was used to create icons for the website.
+- [Favicon generator](https://favicon.io/favicon-generator/) - Was used to create the website's favicon.
+- [Adobe Illustrator](https://www.adobe.com/se/products/illustrator) - Was used to create the website logo and custom graphics.
+- [Colormind](http://colormind.io/) - Was used to generate the colour scheme for the website.
+- [Figma](https://www.figma.com/) - Was used to create wireframes and the information architecture diagram.
+
+### Other:
+- [Summernote](https://summernote.org/) - Was used as a text editor for the Django admin panel.
+- [gunicorn](https://gunicorn.org/) - Was used as the webserver to run the website.
+- [psycopg2](https://www.psycopg.org/) - Was used as the database adapter.
+- [pre-commit](https://pre-commit.com/) - Was used to ensure code was not pushed to GitHub that would not pass existing tests, or in DEBUG mode.
+- [VSCode](https://code.visualstudio.com/) - Was used as the IDE.
+- [Git](https://git-scm.com/) - Was used for version control.
+
+
 <a id="deployment"></a>
 ## Deployment
 

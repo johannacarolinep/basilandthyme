@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from recipe_book.models import Recipe, Favourite
-from recipe_book.views import FavouritesList
 
 
 # Create your tests here.
