@@ -449,6 +449,11 @@ label {
     color: #9b969e;
 }
 
+/* to increase priority */
+.red.small {
+    color: #a90606;
+}
+
 /* ------------------------------------ Ratings */
 .selected {
     color: #008B20;

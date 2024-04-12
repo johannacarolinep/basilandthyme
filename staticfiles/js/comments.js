@@ -365,6 +365,8 @@ function editCommentAction(data, status, newComment, commentId) {
         message.className = "small brand-green mt-2";
         message.innerText = "Comment was updated!";
         const container = editBtn.closest(".comment-container");
+        container.classList.remove("comment-inactive");
+        container.querySelector(".small.red").remove();
         container.querySelector("div").appendChild(message);
         const commentBody = editBtn.closest(".comment-body");
         commentBody.querySelector("p").innerText = newComment;
