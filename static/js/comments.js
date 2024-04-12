@@ -31,7 +31,7 @@ function initializeCommentScript() {
 /**
  * Wrapper function to prepare data to post and help pass variables from the
  * POST request in submitCommentForm.
- * @param {*} event - click to submit comment form 
+ * @param {*} event - comment form submit while in post mode
  */
 async function prepSubmitComment(event) {
     // Prepare data to post
@@ -111,7 +111,7 @@ function startEditComment(event) {
 
     // Switch out event listener on form button to use form for editing
     commentForm.removeEventListener("submit", prepSubmitComment);
-    commentForm.addEventListener("submit", editCommentForm);
+    commentForm.addEventListener("submit", prepEditComment);
 
     // Set forms textare to existing comment body text
     formTextArea.value = commentBody;
@@ -125,8 +125,31 @@ function startEditComment(event) {
 
 
 /**
- * Prepares and submits the comment form data to the server with an AJAX POST request.
- * Handles the response data.
+ * Wrapper function to prepare data for PUT edit comment request and help pass
+ * variables from the PUT request in editCommentForm.
+ * @param {*} event - comment form submit while in edit mode
+ */
+async function prepEditComment(event) {
+    const commentForm = document.getElementById("comments-input");
+    // Get commentId from the forms attribute 
+    const commentId = commentForm.getAttribute("data-comment-id");
+    // Create FormData object with data from the form
+    const formData = new FormData(commentForm);
+    // Convert the form data to JSON and add commentId
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    data['commentId'] = commentId;
+    const address = commentForm.action;
+    const editCommentResult = await editCommentForm(event, data, address);
+    editCommentAction(editCommentResult[0], editCommentResult[1], data['body'], commentId);
+}
+
+
+/**
+ * Submits the comment form data to the server with an AJAX POST request.
+ * Returns the response data.
  * 
  * @param {Event} submission of comment form while in submit mode (vs edit mode)
  * @returns {void}
@@ -134,10 +157,6 @@ function startEditComment(event) {
 async function submitCommentForm(event, commentForm, formData) {
     // Prevent default form submission behaviour
     event.preventDefault();
-
-    // const commentForm = document.getElementById("comments-input");
-    // Prepare data to post
-    // const formData = new FormData(commentForm);
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // https://testdriven.io/blog/django-ajax-xhr/
@@ -295,38 +314,22 @@ function deleteCommentAction(data, status, commentId) {
 
 
 /**
- * Handles the submission of an edited comment form with AJAX. Prepares the data
- * to send, does a PUT request, and handles the response, updating the frontend
- * to reflect a successful or unsuccessful edit of a comment. Finally, displays
- * a toast message, and resets the form.
+ * Handles the submission of an edited comment form with AJAX. Does a PUT
+ * request, returns the response data.
  * 
  * @param {Event} form submitted while in "edit mode"
- * @param {HTMLFormElement} commentForm - the form element containing the comment data
+ * @param {Object} data - the form data
+ * @param {String} address - the URL for the PUT request
  * @returns {void}
  */
-function editCommentForm(event) {
+async function editCommentForm(event, data, address) {
     // Prevent default form submission behaviour
     event.preventDefault();
-
-    const commentForm = document.getElementById("comments-input");
-    // Get commentId from the forms attribute 
-    const commentId = commentForm.getAttribute("data-comment-id");
-    // Create FormData object with data from the form
-    const formData = new FormData(commentForm);
-    // Convert the form data to JSON and add commentId
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-    data['commentId'] = commentId;
-
-    // Save the submitted form "body"
-    const newComment = data['body'];
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // Credit: https://testdriven.io/blog/django-ajax-xhr/
     // Send PUT request to update the comment
-    fetch(commentForm.action, {
+    return await fetch(address, {
             method: "PUT",
             credentials: "same-origin",
             headers: {
@@ -338,36 +341,51 @@ function editCommentForm(event) {
         })
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
-            // Handle server response
-            if (status === 200) {
-                // Add success message and update comment body
-                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
-                const message = document.createElement("p")
-                message.className = "small brand-green mt-2";
-                message.innerText = "Comment was updated!";
-                const container = editBtn.closest(".comment-container");
-                container.querySelector("div").appendChild(message);
-                const commentBody = editBtn.closest(".comment-body");
-                commentBody.querySelector("p").innerText = newComment;
-                // scroll to the comment body
-                commentBody.scrollIntoView({
-                    block: "center"
-                });
-
-            } else {
-                // Add failure message and
-                const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
-                const message = document.createElement("p")
-                message.className = "small red mt-2";
-                message.innerText = "Comment was not updated!";
-                const container = editBtn.closest(".comment-container");
-                container.querySelector("div").appendChild(message);
-            }
-            // Display toast
-            displayToast("comment-toast", data.message, status)
-            // Reset form:
-            resetForm();
+            return [data, status]
         });
+}
+
+
+/**
+ * Handles the response from the server after attempting to edit a comment.
+ * Updates the UI according to the result and displays a toast message.
+ * Resets the form back to "posting mode".
+ * 
+ * @param {Object} data - The response data from the PUT request.
+ * @param {number} status - The HTTP status code of the response.
+ * @param {string} newComment - The updated comment text.
+ * @param {string} commentId - The ID of the comment being edited.
+ */
+function editCommentAction(data, status, newComment, commentId) {
+    // Handle server response
+    if (status === 200) {
+        // Add success message and update comment body
+        const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+        const message = document.createElement("p")
+        message.className = "small brand-green mt-2";
+        message.innerText = "Comment was updated!";
+        const container = editBtn.closest(".comment-container");
+        container.querySelector("div").appendChild(message);
+        const commentBody = editBtn.closest(".comment-body");
+        commentBody.querySelector("p").innerText = newComment;
+        // scroll to the comment body
+        commentBody.scrollIntoView({
+            block: "center"
+        });
+
+    } else {
+        // Add failure message and
+        const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
+        const message = document.createElement("p")
+        message.className = "small red mt-2";
+        message.innerText = "Comment was not updated!";
+        const container = editBtn.closest(".comment-container");
+        container.querySelector("div").appendChild(message);
+    }
+    // Display toast
+    displayToast("comment-toast", data.message, status)
+    // Reset form:
+    resetForm();
 }
 
 
@@ -386,7 +404,7 @@ function resetForm() {
     submitBtn.innerText = "Send";
     submitBtn.className = submitBtn.className.replace("border-btn-yellow", "border-btn-green");
     // Switch event listener back, to post comments
-    commentForm.removeEventListener("submit", editCommentForm);
+    commentForm.removeEventListener("submit", prepEditComment);
     commentForm.addEventListener("submit", prepSubmitComment);
 }
 
