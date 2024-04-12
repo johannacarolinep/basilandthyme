@@ -86,6 +86,13 @@ function sendPostRequest(postAddress, data) {
 }
 
 
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        sendPostRequest
+    };
+}
+
+
 /**
  * Opens a modal by applying the correct classes/styles. Sets aria attributes
  * to reflect the modal is open. Calls function to trap the tab-focus inside modal.

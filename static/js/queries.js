@@ -79,6 +79,8 @@ function updateOrAppendQueryParam(param, value) {
     window.location.href = url.toString();
 }
 
-module.exports = {
-    updateOrAppendQueryParam
-};
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        updateOrAppendQueryParam
+    };
+}
