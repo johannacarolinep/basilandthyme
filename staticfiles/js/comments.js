@@ -53,11 +53,13 @@ function confirmCommentDeletion(event) {
     cancelModalBtn.addEventListener('click', () => closeModal(modal, button));
 
     // Add event listener to confirm delete btn, pass through named function to remove event listener
-    function prepDeleteComment() {
-        deleteComment(commentId);
+    async function prepDeleteComment() {
         // close modal and remove event listener
         closeModal(modal);
         confirmDeleteBtn.removeEventListener('click', prepDeleteComment);
+        const deleteCommentResult = await deleteComment(commentId);
+        // call function to update UI based on response fr delete request
+        deleteCommentAction(deleteCommentResult[0], deleteCommentResult[1], deleteCommentResult[2]);
     }
 
     confirmDeleteBtn.addEventListener('click', prepDeleteComment);
@@ -188,8 +190,8 @@ function buildComment(data) {
         <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
             <p class="text-break fst-italic fs-small">${data.body}</p>
             <div>
-                <button class="py-1 px-2 comment-edit me-1" aria-label="Edit comment" data-edit-comment-id="${data.comment_id}">Edit</button>
-                <button class="py-1 px-2 comment-delete delete mx-1" aria-label="Edit comment" data-delete-comment-id="${data.comment_id}">Delete</button>
+                <button class="py-1 px-2 comment-edit border-btn-yellow btn-rounded btn-shadow me-1" aria-label="Edit comment" data-edit-comment-id="${data.comment_id}">Edit</button>
+                <button class="py-1 px-2 comment-delete border-btn-red btn-rounded btn-shadow mx-1" aria-label="Edit comment" data-delete-comment-id="${data.comment_id}">Delete</button>
             </div>
         </div>`;
 
@@ -207,14 +209,14 @@ function buildComment(data) {
 
 
 /**
- * Handles the request to delete a comment with AJAX using a DELETE request.
- * Creates the reuqest URL by attaching the commentId as a parameter to the forms
- * action url. Handles the request response, updating the frontend to reflect a 
- * successful deletion.
+ * Handles the request to delete a comment using a DELETE request. Creates the
+ * reuqest URL by attaching the commentId as a parameter to the form's
+ * action url. Returns the request reponse.
+ * 
  * @param {string} commentId - the comments unique identifier
  * @returns {void}
  */
-function deleteComment(commentId) {
+async function deleteComment(commentId) {
 
     // Create the delete request URL
     const commentForm = document.getElementById("comments-input");
@@ -225,7 +227,7 @@ function deleteComment(commentId) {
 
     // https://testdriven.io/blog/django-ajax-xhr/
     // Send a delete request to delete the comment
-    fetch(url, {
+    return await fetch(url, {
             method: "DELETE",
             credentials: "same-origin",
             headers: {
@@ -235,21 +237,36 @@ function deleteComment(commentId) {
         })
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
-            // Handle the response data
-            if (status === 200) {
-                // If comment deleted, update frontend to reflect deletion
-                const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
-                const comment = deleteButton.closest(".comment-container");
-                comment.innerHTML = '<p class="mx-auto mb-0 text-center brand-green">Comment was successfully deleted.</p>';
-            } else {
-                // If comment not deleted, add paragraph to signal to user
-                const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
-                const comment = deleteButton.closest(".comment-container");
-                comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
-            }
-            // Display toast
-            displayToast("comment-toast", data.message, status)
+            return [data, status, commentId];
         });
+}
+
+/**
+ * Handles the response of a comment deletion request, updating the UI to
+ * reflect the result. If the deletion is successful (status code 200),
+ * the comment element is removed from the DOM and a success message is shown.
+ * If the deletion fails, an error message is appended to the comment element.
+ * In both cases a toast message is displayed to inform the user.
+ * 
+ * @param {Object} data, response data received from the deletion request.
+ * @param {number} status, the status code of the HTTP response.
+ * @param {String} commentId, the ID of the comment being deleted.
+ */
+function deleteCommentAction(data, status, commentId) {
+    // Handle the response data
+    if (status === 200) {
+        // If comment deleted, update frontend to reflect deletion
+        const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
+        const comment = deleteButton.closest(".comment-container");
+        comment.innerHTML = '<p class="mx-auto mb-0 text-center brand-green">Comment was successfully deleted.</p>';
+    } else {
+        // If comment not deleted, add paragraph to signal to user
+        const deleteButton = document.querySelector(`[data-delete-comment-id="${commentId}"]`);
+        const comment = deleteButton.closest(".comment-container");
+        comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
+    }
+    // Display toast
+    displayToast("comment-toast", data.message, status)
 }
 
 

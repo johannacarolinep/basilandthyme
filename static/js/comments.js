@@ -209,10 +209,10 @@ function buildComment(data) {
 
 
 /**
- * Handles the request to delete a comment with AJAX using a DELETE request.
- * Creates the reuqest URL by attaching the commentId as a parameter to the forms
- * action url. Handles the request response, updating the frontend to reflect a 
- * successful deletion.
+ * Handles the request to delete a comment using a DELETE request. Creates the
+ * reuqest URL by attaching the commentId as a parameter to the form's
+ * action url. Returns the request reponse.
+ * 
  * @param {string} commentId - the comments unique identifier
  * @returns {void}
  */
@@ -241,9 +241,18 @@ async function deleteComment(commentId) {
         });
 }
 
-
+/**
+ * Handles the response of a comment deletion request, updating the UI to
+ * reflect the result. If the deletion is successful (status code 200),
+ * the comment element is removed from the DOM and a success message is shown.
+ * If the deletion fails, an error message is appended to the comment element.
+ * In both cases a toast message is displayed to inform the user.
+ * 
+ * @param {Object} data, response data received from the deletion request.
+ * @param {number} status, the status code of the HTTP response.
+ * @param {String} commentId, the ID of the comment being deleted.
+ */
 function deleteCommentAction(data, status, commentId) {
-    console.log("inside action", data, status, commentId);
     // Handle the response data
     if (status === 200) {
         // If comment deleted, update frontend to reflect deletion

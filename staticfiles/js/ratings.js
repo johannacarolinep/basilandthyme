@@ -67,14 +67,16 @@ function initalizeRating(event) {
 
 
 /**
- * Calls function to delete rating, passing the recipe id, before removing the
- * event listener from the clicked delete button.
+ * Calls function to delete rating, passing the recipe id, and removes the
+ * event listener from the clicked delete button. Calls function to update UI
+ * based on response from DELETE request.
  * @param {Event} click on delete button in ratings modal 
  * @returns {void}
  */
-function prepRatingDelete(event) {
-    deleteRating(event.currentTarget.getAttribute("data-recipe-id"));
+async function prepRatingDelete(event) {
     event.currentTarget.removeEventListener('click', prepRatingDelete);
+    const deleteRatingResult = await deleteRating(event.currentTarget.getAttribute("data-recipe-id"));
+    deleteRatingAction(deleteRatingResult[0], deleteRatingResult[1], deleteRatingResult[2]);
 }
 
 
@@ -135,14 +137,13 @@ function buildRatingModal(userRating) {
 
 /**
  * Submits a DELETE request for a rating, for a particular recipe. Prepares the
- * request and sends it. Updates the ratings display based on the response,
- * closes the modal and displays a toast message.
+ * request and sends it. Returns the response data and the recipeId.
  *
  * @param {string} recipeId - The ID of the recipe for which the rating deletion
  * is being requested.
  * @returns {void}
  */
-function deleteRating(recipeId) {
+async function deleteRating(recipeId) {
     // Create the delete request URL
     const url = "/delete-rating/" + "?recipeId=" + recipeId;
 
@@ -151,7 +152,7 @@ function deleteRating(recipeId) {
 
     // https://testdriven.io/blog/django-ajax-xhr/
     // Send a delete request to delete the comment
-    fetch(url, {
+    return await fetch(url, {
             method: "DELETE",
             credentials: "same-origin",
             headers: {
@@ -161,26 +162,36 @@ function deleteRating(recipeId) {
         })
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
-            data.status = status;
-            // grab ratingsDisplay based on location
-            let ratingsDisplay;
-            if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/" || window.location.pathname === "/") {
-                const recipeCard = document.getElementById(recipeId);
-                ratingsDisplay = recipeCard.querySelector(".init-rate-btn");
-            } else {
-                ratingsDisplay = document.querySelector(".init-rate-btn");
-            }
-            // Handle the response data
-            if (data.status === 200) {
-                // If rating deleted, update frontend to reflect deletion
-                ratingsDisplay.setAttribute("data-user-rating", "None")
-                updateRatingsDisplay(data, ratingsDisplay);
-            }
-            // close modal and display toast message
-            const modal = document.getElementById("ratings-modal");
-            closeModal(modal, ratingsDisplay);
-            displayToast("toast", data.message, data.status);
+            return [data, status, recipeId];
         });
+}
+
+/**
+ * Updates the ratings display based on the response recived from the DELETE
+ * request (passed as parameters). Closes the ratings-modal and displays a
+ * toast message.
+ * @param {Object} data, response data received from the DELETE request.
+ * @param {number} status, status code of the HTTP response.
+ * @param {string}, recipeId, the id of the recipe
+ */
+function deleteRatingAction(data, status, recipeId) {
+    let ratingsDisplay;
+    if (window.location.pathname === "/recipes/" || window.location.pathname === "/favourites/" || window.location.pathname === "/") {
+        const recipeCard = document.getElementById(recipeId);
+        ratingsDisplay = recipeCard.querySelector(".init-rate-btn");
+    } else {
+        ratingsDisplay = document.querySelector(".init-rate-btn");
+    }
+    // Handle the response data
+    if (status === 200) {
+        // If rating deleted, update frontend to reflect deletion
+        ratingsDisplay.setAttribute("data-user-rating", "None")
+        updateRatingsDisplay(data, ratingsDisplay);
+    }
+    // close modal and display toast message
+    const modal = document.getElementById("ratings-modal");
+    closeModal(modal, ratingsDisplay);
+    displayToast("toast", data.message, status);
 }
 
 
@@ -296,4 +307,11 @@ function updateRatingsDisplay(data, ratingsDisplay) {
         }
         counter++;
     }
+}
+
+// Exporting function for jest tests
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        deleteRating
+    };
 }

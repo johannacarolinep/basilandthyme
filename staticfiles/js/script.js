@@ -150,3 +150,11 @@ function trapFocusInModal(modal) {
     // When the modal is open, move focus to the first focusable element
     firstFocusableElement.focus();
 }
+
+
+// Exporting function for jest tests
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        sendPostRequest
+    };
+}
