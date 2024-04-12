@@ -79,6 +79,7 @@ function updateOrAppendQueryParam(param, value) {
     window.location.href = url.toString();
 }
 
+// Exporting function for jest tests
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         updateOrAppendQueryParam

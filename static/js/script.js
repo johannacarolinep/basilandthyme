@@ -86,13 +86,6 @@ function sendPostRequest(postAddress, data) {
 }
 
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        sendPostRequest
-    };
-}
-
-
 /**
  * Opens a modal by applying the correct classes/styles. Sets aria attributes
  * to reflect the modal is open. Calls function to trap the tab-focus inside modal.
@@ -156,4 +149,12 @@ function trapFocusInModal(modal) {
 
     // When the modal is open, move focus to the first focusable element
     firstFocusableElement.focus();
+}
+
+
+// Exporting function for jest tests
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        sendPostRequest
+    };
 }

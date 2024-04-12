@@ -194,11 +194,6 @@ function deleteRatingAction(data, status, recipeId) {
     displayToast("toast", data.message, status);
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        deleteRating
-    };
-}
 
 /**
  * Handles the selection of a rating for a recipe. Activates the submit rating
@@ -312,4 +307,11 @@ function updateRatingsDisplay(data, ratingsDisplay) {
         }
         counter++;
     }
+}
+
+// Exporting function for jest tests
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        deleteRating
+    };
 }
