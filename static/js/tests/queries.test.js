@@ -11,7 +11,7 @@ const {
  * 
  * Tests the behavior of the updateOrAppendQueryParam function, which is
  * responsible for adding/updating query parameters to the URL (used for
- * searching and sorting recipes)
+ * searching and sorting recipes).
  * 
  * The function should update an existing query parameter if is already in the
  * URL, or add it if it isn't.
