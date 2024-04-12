@@ -365,3 +365,11 @@ function resetForm() {
     commentForm.removeEventListener("submit", editCommentForm);
     commentForm.addEventListener("submit", submitCommentForm);
 }
+
+
+// Exporting function for jest tests
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        deleteComment
+    };
+}
