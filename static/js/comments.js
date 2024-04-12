@@ -9,7 +9,7 @@ function initializeCommentScript() {
 
     const commentForm = document.getElementById("comments-input");
     if (commentForm) {
-        commentForm.addEventListener("submit", submitCommentForm);
+        commentForm.addEventListener("submit", prepSubmitComment);
     }
 
     const commentDeleteBtns = document.getElementsByClassName("comment-delete");
@@ -27,6 +27,19 @@ function initializeCommentScript() {
     }
 }
 
+
+/**
+ * Wrapper function to prepare data to post and help pass variables from the
+ * POST request in submitCommentForm.
+ * @param {*} event - click to submit comment form 
+ */
+async function prepSubmitComment(event) {
+    // Prepare data to post
+    const commentForm = document.getElementById("comments-input");
+    const formData = new FormData(commentForm);
+    const submitCommentResult = await submitCommentForm(event, commentForm, formData);
+    submitCommentAction(submitCommentResult[0], submitCommentResult[1])
+}
 
 /**
  * Handles the confirmation of comment deletion. Displays modal, and adds event
@@ -97,7 +110,7 @@ function startEditComment(event) {
     formTextArea.focus();
 
     // Switch out event listener on form button to use form for editing
-    commentForm.removeEventListener("submit", submitCommentForm);
+    commentForm.removeEventListener("submit", prepSubmitComment);
     commentForm.addEventListener("submit", editCommentForm);
 
     // Set forms textare to existing comment body text
@@ -116,21 +129,20 @@ function startEditComment(event) {
  * Handles the response data.
  * 
  * @param {Event} submission of comment form while in submit mode (vs edit mode)
- * @param {HTMLFormElement} commentForm - The comment form element
  * @returns {void}
  */
-function submitCommentForm(event) {
+async function submitCommentForm(event, commentForm, formData) {
     // Prevent default form submission behaviour
     event.preventDefault();
 
-    const commentForm = document.getElementById("comments-input");
+    // const commentForm = document.getElementById("comments-input");
     // Prepare data to post
-    const formData = new FormData(commentForm);
+    // const formData = new FormData(commentForm);
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // https://testdriven.io/blog/django-ajax-xhr/
     // Send a POST request to create a comment with the form data
-    fetch(commentForm.action, {
+    return await fetch(commentForm.action, {
             method: "POST",
             credentials: "same-origin",
             headers: {
@@ -141,17 +153,29 @@ function submitCommentForm(event) {
         })
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
-            // Handle the response
-            if (status === 200) {
-                // If comment was created, call function to update frontend
-                buildComment(data.data);
-            }
-            // display toast message
-            displayToast("comment-toast", data.message, status);
-            // clear the form
-            document.getElementById("id_body").value = "";
+            return [data, status]
         });
 };
+
+
+/**
+ * Handles the response of a comment post request, updating the UI to
+ * reflect the result and displays a toast message.
+ * 
+ * @param {Object} data, response data received from the deletion request.
+ * @param {number} status, the status code of the HTTP response.
+ */
+function submitCommentAction(data, status) {
+    // Handle the response
+    if (status === 200) {
+        // If comment was created, call function to update frontend
+        buildComment(data.data);
+    }
+    // display toast message
+    displayToast("comment-toast", data.message, status);
+    // clear the form
+    document.getElementById("id_body").value = "";
+}
 
 
 /**
@@ -363,13 +387,14 @@ function resetForm() {
     submitBtn.className = submitBtn.className.replace("border-btn-yellow", "border-btn-green");
     // Switch event listener back, to post comments
     commentForm.removeEventListener("submit", editCommentForm);
-    commentForm.addEventListener("submit", submitCommentForm);
+    commentForm.addEventListener("submit", prepSubmitComment);
 }
 
 
 // Exporting function for jest tests
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
-        deleteComment
+        deleteComment,
+        submitCommentForm
     };
 }
