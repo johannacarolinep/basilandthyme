@@ -154,13 +154,15 @@ class RecipeDetailView(DetailView):
                 {'message': "Comment not updated, no change was made"},
                 status=400)
 
-        elif data["body"] != "":
-            comment.body = data["body"]
-            if not comment.approved:
-                comment.approved = True
-            comment.save()
+        if not comment.approved:
+            comment.approved = True
+        form = CommentForm(data, instance=comment)  # Create a form instance
+
+        if form.is_valid():
+            form.save()  # Updates the comment
             return JsonResponse(
                 {'message': "Comment successfully updated!"}, status=200)
 
-        return JsonResponse(
-            {'message': "Sorry, comment not updated"}, status=400)
+        else:
+            return JsonResponse(
+                {'message': "Sorry, comment not updated"}, status=400)
