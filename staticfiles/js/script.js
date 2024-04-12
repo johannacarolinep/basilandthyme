@@ -100,6 +100,7 @@ function openModal(modal) {
     trapFocusInModal(modal);
 }
 
+
 /**
  * Closes a modal by adjusting css styles/classes. Adjusts aria to reflect modal
  * is closed. Sets the focus on the element passed as parameter lastFocusElement

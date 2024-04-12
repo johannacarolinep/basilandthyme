@@ -1,6 +1,7 @@
 // Wait until document is loaded before calling initializeFavouriteScript()
 document.addEventListener("DOMContentLoaded", initializeFavouriteScript);
 
+
 /**
  * Adds event listeners to favouriting buttons
  */
