@@ -16,7 +16,9 @@
         - [Logo](#logo)
         - [Design wireframes](#design-wireframes)
     - [Agile methodology](#agile-methodology)
+    - [Future improvements](#future-improvements)
 - [Tools and technologies](#tools-and-technologies)
+- [Code description](#code-description)
 - [Deployment](#deployment)
 - [Testing](#testing)
 - [Bugs](#bugs)
@@ -327,6 +329,8 @@ Velocity: 16.66
 ![Sprint 7](documentation/sprint7.png)
 
 
+<a id="future-improvements"></a>
+### Future improvements
 
 
 <a id="tools-and-technologies"></a>
@@ -375,6 +379,10 @@ Velocity: 16.66
 - [pre-commit](https://pre-commit.com/) - Was used to ensure code was not pushed to GitHub that would not pass existing tests, or in DEBUG mode.
 - [VSCode](https://code.visualstudio.com/) - Was used as the IDE.
 - [Git](https://git-scm.com/) - Was used for version control.
+
+
+<a id="code-description"></a>
+## Code description TBC
 
 
 <a id="deployment"></a>
@@ -724,7 +732,7 @@ class Meta:
 
 
 <a id="credits"></a>
-## Credits
+## Credits WIP
 
 - Adding extra context: https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/#adding-extra-context
 - AssertRaises: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises
@@ -732,4 +740,4 @@ class Meta:
 - date formatting: https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date
 
 <a id="acknowledgements"></a>
-## Acknowledgements
+## Acknowledgements TBC

@@ -51,16 +51,16 @@ Click on the links below to see screenshots of the website opened on different b
 </details>
 
 <a id="responsiveness"></a>
-## Responsiveness testing
+## Responsiveness testing TBC
 
 <a id="manual-testing"></a>
-## Manual testing
+## Manual testing TBC
 
 <a id="manual-test-functionality"></a>
-### Manual testing of core functionality
+### Manual testing of core functionality TBC
 
 <a id="user-story-testing"></a>
-### Manual testing of user stories
+### Manual testing of user stories TBC
 
 <a id="automated-tests"></a>
 ## Automated tests
@@ -109,10 +109,10 @@ These tests can be found in the *static*/*js*/*tests* directory. The tests are s
 </details>
 
 <a id="lighthouse"></a>
-## Lighthouse tests
+## Lighthouse tests TBC
 
 <a id="html-validation"></a>
-## Validation of HTML
+## Validation of HTML TBC
 
 <a id="css-validation"></a>
 ## Validation of CSS
@@ -149,7 +149,7 @@ Visiting Bootstrap's website, I found the following text, providing an explanati
 </details>
 
 <a id="python-lint"></a>
-## Linting of Python code
+## Linting of Python code TBC
 
 <a id="js-lint"></a>
 ## Linting of JavaScript code
