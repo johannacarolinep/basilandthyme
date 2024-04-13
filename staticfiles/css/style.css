@@ -267,11 +267,14 @@ label {
 }
 
 /* Custom buttons */
+.searchbar .btn {
+    border: none;
+}
+
 .searchbar .btn:hover,
 .searchbar .btn:focus,
 .searchbar .btn:active {
     background-color: #008B20;
-    border-color: #008B20;
 }
 
 .category-btns .btn:hover,

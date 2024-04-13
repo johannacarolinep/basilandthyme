@@ -85,6 +85,37 @@ These tests can be found in the *static*/*js*/*tests* directory. The tests are s
 <a id="css-validation"></a>
 ## Validation of CSS
 
+CSS was validated using [W3C's CSS Validation Service](https://jigsaw.w3.org/css-validator/validator).
+
+<details>
+<summary>Click to see CSS validation details</summary>
+
+### Validating *style.css*
+
+Validating the custom CSS by uploading the file *style.css* results in no errors.
+
+![Validation style.css](documentation/css-validation-file.png)
+
+The tool raises 11 warnings:
+![Validation warnings style.css](documentation/css-validation-file-warnings.png)
+
+The first warning just implies the tool does not access my Bootstrap CSS, as expected.
+
+The remaining warnings relate to the use of vendor extensions. 
+I am aware these may not be supported across all browsers. However, their application is not crucial to using the website. These vendor extensions are used for two purposes in the CSS file:
+1. To truncate the title and teaser text in recipe cards. Without the truncation, the overflow is instead hidden. 
+2. To increase the visibility of the heart buttons on the recipe cards. Given that these buttons are overlaid on top of an image, it was difficult to find a style that would stand out well on a multitude of backgrounds. If the *text-stroke* is not applied, the style is a simple white, which may be hard to see depending on the background image. However, the user can in this case reach the same functionality (favouriting the recipe) from the individual recipe's detail page.
+
+### A note on validating the website by URL
+
+When validating the website by URL, the tool raises errors, as well as a multitude of warnings. However, all errors and all errors except the ones mentioned above relate to Bootstrap.
+
+Visiting Bootstrap's website, I found the following text, providing an explanation for these errors and warnings.
+
+![Bootstrap validators](documentation/bootstrap-validators.png)
+
+</details>
+
 <a id="python-lint"></a>
 ## Linting of Python code
 
