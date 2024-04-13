@@ -439,6 +439,15 @@ label {
     width: 90%;
 }
 
+/* --------------------------------- Recipe detail page */
+.recipe-instructions li {
+    margin-top: 20px;
+}
+
+.recipe-instructions li::marker {
+    font-weight: 600;
+}
+
 /* ------------------------------------ Comments */
 
 #comments-input textarea {
