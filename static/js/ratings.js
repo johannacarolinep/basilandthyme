@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 // Wait until document has loaded before initializing the script
 document.addEventListener("DOMContentLoaded", initializeRatingsScript);
 
@@ -10,7 +11,7 @@ function initializeRatingsScript() {
     const openRatingsBtns = document.getElementsByClassName("init-rate-btn");
     if (openRatingsBtns) {
         for (let btn of openRatingsBtns) {
-            btn.addEventListener('click', initalizeRating)
+            btn.addEventListener('click', initalizeRating);
         }
     }
 }
@@ -50,7 +51,7 @@ function initalizeRating(event) {
 
         // add event listener to star buttons
         for (let btn of starBtns) {
-            btn.addEventListener('click', (event) => selectRating(event, recipeId));
+            btn.addEventListener('click', prepSelectRating);
         }
 
         deleteBtn.setAttribute("data-recipe-id", recipeId);
@@ -62,6 +63,11 @@ function initalizeRating(event) {
         const closeModalBtn = document.getElementById("close-modal-btn");
         openModal(modal);
         closeModalBtn.addEventListener('click', () => closeModal(modal, clickedRatingDisplay));
+    }
+
+    // Small function to help pass recipeId with the event
+    function prepSelectRating(event) {
+        selectRating(event, recipeId);
     }
 }
 
@@ -185,7 +191,7 @@ function deleteRatingAction(data, status, recipeId) {
     // Handle the response data
     if (status === 200) {
         // If rating deleted, update frontend to reflect deletion
-        ratingsDisplay.setAttribute("data-user-rating", "None")
+        ratingsDisplay.setAttribute("data-user-rating", "None");
         updateRatingsDisplay(data, ratingsDisplay);
     }
     // close modal and display toast message
@@ -226,7 +232,7 @@ function selectRating(event, recipeId) {
     submitRatingBtn.setAttribute("data-rating-value", selectedRating);
 
     // Add event listener to submitbutton
-    submitRatingBtn.addEventListener('click', prepRatingSubmit)
+    submitRatingBtn.addEventListener('click', prepRatingSubmit);
 }
 
 /**
@@ -235,7 +241,7 @@ function selectRating(event, recipeId) {
  * @param {Event} click - Click on the submit button in the ratings modal.
  */
 function prepRatingSubmit(event) {
-    submitRating(event.currentTarget.getAttribute("data-rating-value"), event.currentTarget.getAttribute("data-recipe-id"))
+    submitRating(event.currentTarget.getAttribute("data-rating-value"), event.currentTarget.getAttribute("data-recipe-id"));
     event.currentTarget.removeEventListener('click', prepRatingSubmit);
 }
 
@@ -272,7 +278,7 @@ async function submitRating(rating, recipeId) {
     }
     // update ratingsdisplay if action successful
     if (postResponse.status === 200) {
-        ratingsDisplay.setAttribute("data-user-rating", rating)
+        ratingsDisplay.setAttribute("data-user-rating", rating);
         updateRatingsDisplay(postResponse, ratingsDisplay); // update ratingsdisplay
     }
     // close modal and display toast message
@@ -295,9 +301,9 @@ function updateRatingsDisplay(data, ratingsDisplay) {
     const starIcons = ratingsDisplay.querySelectorAll("i");
     const ratingsCount = ratingsDisplay.querySelector(".ratings-count");
     ratingsCount.innerHTML = `(${data.count})`;
-    averageRating = data.average;
+    const averageRating = data.average;
     let counter = 1;
-    for (icon of starIcons) {
+    for (let icon of starIcons) {
         if (averageRating >= counter) {
             icon.className = "fa-solid fa-star"; // Add a full star
         } else if (averageRating > counter - 1) {

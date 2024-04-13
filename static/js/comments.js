@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 // Wait until document is loaded before calling initializeCommentScript()
 document.addEventListener("DOMContentLoaded", initializeCommentScript);
 
@@ -38,7 +39,7 @@ async function prepSubmitComment(event) {
     const commentForm = document.getElementById("comments-input");
     const formData = new FormData(commentForm);
     const submitCommentResult = await submitCommentForm(event, commentForm, formData);
-    submitCommentAction(submitCommentResult[0], submitCommentResult[1])
+    submitCommentAction(submitCommentResult[0], submitCommentResult[1]);
 }
 
 /**
@@ -140,10 +141,10 @@ async function prepEditComment(event) {
     formData.forEach((value, key) => {
         data[key] = value;
     });
-    data['commentId'] = commentId;
+    data.commentId = commentId;
     const address = commentForm.action;
     const editCommentResult = await editCommentForm(event, data, address);
-    editCommentAction(editCommentResult[0], editCommentResult[1], data['body'], commentId);
+    editCommentAction(editCommentResult[0], editCommentResult[1], data.body, commentId);
 }
 
 
@@ -172,9 +173,9 @@ async function submitCommentForm(event, commentForm, formData) {
         })
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
-            return [data, status]
+            return [data, status];
         });
-};
+}
 
 
 /**
@@ -248,7 +249,7 @@ function buildComment(data) {
     // Add event listeners to the new comment's buttons
     commentsList.querySelector(`[data-edit-comment-id="${data.comment_id}"]`).addEventListener("click", startEditComment);
     commentsList.querySelector(`[data-delete-comment-id="${data.comment_id}"]`).addEventListener("click", confirmCommentDeletion);
-};
+}
 
 
 /**
@@ -309,7 +310,7 @@ function deleteCommentAction(data, status, commentId) {
         comment.innerHTML = comment.innerHTML + '<p class="mx-auto mb-0 text-center">Comment could not be deleted.</p>';
     }
     // Display toast
-    displayToast("comment-toast", data.message, status)
+    displayToast("comment-toast", data.message, status);
 }
 
 
@@ -341,7 +342,7 @@ async function editCommentForm(event, data, address) {
         })
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
-            return [data, status]
+            return [data, status];
         });
 }
 
@@ -361,12 +362,14 @@ function editCommentAction(data, status, newComment, commentId) {
     if (status === 200) {
         // Add success message and update comment body
         const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
-        const message = document.createElement("p")
+        const message = document.createElement("p");
         message.className = "small brand-green mt-2";
         message.innerText = "Comment was updated!";
         const container = editBtn.closest(".comment-container");
         container.classList.remove("comment-inactive");
-        container.querySelector(".small.red").remove();
+        if (container.querySelector(".small.red")) {
+            container.querySelector(".small.red").remove();
+        }
         container.querySelector("div").appendChild(message);
         const commentBody = editBtn.closest(".comment-body");
         commentBody.querySelector("p").innerText = newComment;
@@ -378,14 +381,14 @@ function editCommentAction(data, status, newComment, commentId) {
     } else {
         // Add failure message and
         const editBtn = document.querySelector(`[data-edit-comment-id="${commentId}"]`);
-        const message = document.createElement("p")
+        const message = document.createElement("p");
         message.className = "small red mt-2";
         message.innerText = "Comment was not updated!";
         const container = editBtn.closest(".comment-container");
         container.querySelector("div").appendChild(message);
     }
     // Display toast
-    displayToast("comment-toast", data.message, status)
+    displayToast("comment-toast", data.message, status);
     // Reset form:
     resetForm();
 }

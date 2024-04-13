@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 /* Wait for page to load before initializing script */
 document.addEventListener("DOMContentLoaded", initializeQueriesScript);
 
@@ -30,7 +31,7 @@ function initializeQueriesScript() {
  */
 function addCategoryQuery(event) {
     const category = event.currentTarget.value;
-    updateOrAppendQueryParam("q", category)
+    updateOrAppendQueryParam("q", category);
 }
 
 
@@ -43,7 +44,7 @@ function addCategoryQuery(event) {
  */
 function addSortQuery(event) {
     const sortCriteria = event.currentTarget.value;
-    updateOrAppendQueryParam("s", sortCriteria)
+    updateOrAppendQueryParam("s", sortCriteria);
 }
 
 

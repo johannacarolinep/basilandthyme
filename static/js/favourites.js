@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 // Wait until document is loaded before calling initializeFavouriteScript()
 document.addEventListener("DOMContentLoaded", initializeFavouriteScript);
 
