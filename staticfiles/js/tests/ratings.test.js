@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 /**
  * Test for the deleteRating function.
  * 

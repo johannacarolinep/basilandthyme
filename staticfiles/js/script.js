@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 /* Wait for page to load before initializing script */
 document.addEventListener("DOMContentLoaded", initializeScript);
 
@@ -7,8 +8,8 @@ document.addEventListener("DOMContentLoaded", initializeScript);
 function initializeScript() {
     const navbarCollapse = document.querySelector(".navbar-collapse");
     if (navbarCollapse) {
-        navbarCollapse.addEventListener('show.bs.collapse', () => toggleHeaderBanner(true))
-        navbarCollapse.addEventListener('hidden.bs.collapse', () => toggleHeaderBanner(false))
+        navbarCollapse.addEventListener('show.bs.collapse', () => toggleHeaderBanner(true));
+        navbarCollapse.addEventListener('hidden.bs.collapse', () => toggleHeaderBanner(false));
     }
 }
 
@@ -45,7 +46,7 @@ function displayToast(toastId, message, status) {
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
     const toastBody = toast.querySelector(".toast-body");
     toastBody.innerText = message;
-    toastBootstrap.show()
+    toastBootstrap.show();
     if (status === 200) {
         toast.querySelector(".success-img").classList.remove("d-none");
         toast.querySelector(".fail-img").classList.add("d-none");
@@ -81,8 +82,8 @@ function sendPostRequest(postAddress, data) {
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, status]) => {
             data.status = status;
-            return data // Return the response data
-        })
+            return data; // Return the response data
+        });
 }
 
 

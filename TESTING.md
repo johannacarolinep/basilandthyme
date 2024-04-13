@@ -91,6 +91,46 @@ These tests can be found in the *static*/*js*/*tests* directory. The tests are s
 <a id="js-lint"></a>
 ## Linting of JavaScript code
 
+All JS code was linted using [JSHint](https://jshint.com/) to ensure code validity.
+
+Given that several JS files were used in the project, both Bootstrap and custom JS files, the files all contained undefined/unused variables. For example, there is a function `openModal()` in *script.js*, which is never called within *script.js*, but is called in most of the other JS files. So *openModal* was showing as an *unused variable* in *script.js* and an *undefined variable* in the other files.
+
+After making sure that all undefined variables and unused variables were of this type, or a global type (e.g. *module*), I changed the JSHint configuration to not display warnings of this type before proceeding.
+
+![JSHint unused variables](documentation/jshint-unused-variables.png)
+![JSHint undefined variables](documentation/jshint-undefined-variables.png)
+
+<details>
+<summary>Click to see screenshots of linting results per file</summary>
+
+- script.js
+    ![script.js](documentation/jshint-script.png)
+
+- favourites.js
+    ![favourites.js](documentation/jshint-favourites.png)
+
+- comments.js
+    ![comments.js](documentation/jshint-comments.png)
+
+- queries.js
+    ![queries.js](documentation/jshint-queries.png)
+
+- ratings.js
+    ![ratings.js](documentation/jshint-ratings.png)
+
+- script.test.js
+    ![script.test.js](documentation/jshint-test-script.png)
+
+- ratings.test.js
+    ![ratings.test.js](documentation/jshint-test-ratings.png)
+
+- queries.test.js
+    ![queries.test.js](documentation/jshint-test-queries.png)
+
+- comments.test.js
+    ![comments.test.js](documentation/jshint-comments.png)
+
+</details>
 
 
 
