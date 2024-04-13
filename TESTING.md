@@ -24,22 +24,30 @@ Click on the links below to see screenshots of the website opened on different b
 
 <details>
 <summary>Chrome</summary>
+
 ![Chrome screenshot](documentation/browser-chrome.png)
+
 </details>
 
 <details>
 <summary>Safari</summary>
+
 ![Safari screenshot](documentation/browser-safari.png)
+
 </details>
 
 <details>
 <summary>Microsoft Edge</summary>
+
 ![Microsoft Edge screenshot](documentation/browser-edge.png)
+
 </details>
 
 <details>
 <summary>Firefox</summary>
+
 ![Firefox screenshot](documentation/browser-firefox.png)
+
 </details>
 
 <a id="responsiveness"></a>
