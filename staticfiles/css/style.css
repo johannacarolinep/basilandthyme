@@ -358,7 +358,7 @@ label {
 /* -------------------------------- Hero section with content overlay */
 .hero-section {
     height: 550px;
-    background: #008B20 url("../images/hero.webp") no-repeat center top/cover;
+    background: #008B20 url("../images/hero-small.webp") no-repeat center top/cover;
 }
 
 .hero-section-wallpaper {
@@ -494,6 +494,12 @@ label {
     }
 
     /* --------------------------------- SPECIFIC STYLES - Medium screens */
+    /* -------------------------------- Hero section with content overlay */
+    .hero-section {
+        height: 550px;
+        background: #008B20 url("../images/hero.webp") no-repeat center top/cover;
+    }
+
     /* --------------------------------- Recipe detail page */
     .recipe-instructions {
         border-left: 2.5px solid #008B20;
