@@ -37,6 +37,7 @@ class RecipeListView(ListView):
                 models.Avg('rating_recipe__rating'), models.Value(0.0)),
             ratings_count=models.Count('rating_recipe'),
         )
+
         # if logged in user, annotate recipes with users rating of recipe
         user = self.request.user
         if user.is_authenticated:
@@ -79,6 +80,9 @@ class RecipeListView(ListView):
                 base_queryset = base_queryset.order_by('created_on')
             elif self.sort == "highest-rating":
                 base_queryset = base_queryset.order_by('-avg_rating')
+        else:
+            # order queryset by newest by default
+            base_queryset = base_queryset.order_by('-created_on')
 
         return base_queryset
 
