@@ -18,13 +18,12 @@ def page_not_found_view(request, exception):
 
 def server_error_view(request):
     """
-    View to render a custom 404 page.
+    View to render a custom 500 page.
 
     Args:
         request (HttpRequest): The HTTP request object.
-        exception (Exception): The exception that triggered the 404 error.
 
     Returns:
-        HttpResponseNotFound: HTTP response with the rendered 404 page.
+        HttpResponseNotFound: HTTP response with the rendered 500 page.
     """
     return HttpResponseNotFound(render(request, "errors/500.html", {}))
