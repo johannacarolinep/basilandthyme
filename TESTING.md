@@ -222,7 +222,11 @@ Visiting Bootstrap's website, I found the following text, providing an explanati
 </details>
 
 <a id="python-lint"></a>
-## Linting of Python code TBC
+## Linting of Python code
+
+All Python code was linted using Code Institute's [CI Python Linter](https://pep8ci.herokuapp.com/) with no errors or warnings.
+
+Screenshots of the results per file can be found in this [pdf](documentation/linting-results.pdf).
 
 <a id="js-lint"></a>
 ## Linting of JavaScript code
