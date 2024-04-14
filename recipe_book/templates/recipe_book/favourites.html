@@ -16,6 +16,12 @@ Discover your new favourite recipes at Basil&Thyme! Save your favourite recipes 
 {% block metakeywords %}
 save recipes, recipe collection, favourite recipes, basil&thyme favourites, b&t favourites
 {% endblock metakeywords %}
+<!-- Preload hero image -->
+{% block preload %}
+<link rel="preload" fetchpriority="high" as="image"
+    href="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713094260/pattern-white_bdituv.webp"
+    type="image/webp">
+{% endblock preload %}
 
 {% block content %}
 <section class="hero-section-wallpaper container-fluid d-flex align-items-center">
