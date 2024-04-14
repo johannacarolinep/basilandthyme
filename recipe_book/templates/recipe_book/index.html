@@ -19,6 +19,12 @@ basil&thyme, basil & thyme, basil and thyme, b&t, basil and thyme recipes, recip
 recipes to try, cooking, home cooking, easy cooking, dinner recipes, lunch
 recipes, vegetarian recipes
 {% endblock metakeywords %}
+<!-- Preload hero image on mobile -->
+{% block preload %}
+<link rel="preload" fetchpriority="high" as="image"
+    href="https://res.cloudinary.com/deceun0wd/image/upload/q_auto:good/v1713091288/hero-small_llutpr.webp"
+    type="image/webp">
+{% endblock preload %}
 
 {% block topbanner %}
 <div class="container-fluid m-0 py-1 text-center header-banner bg-banner">
@@ -103,7 +109,8 @@ recipes, vegetarian recipes
             </div>
             <div class="col-md-4 mt-4 mt-md-0 d-flex justify-content-center align-items-center">
                 <div class="square-220 square-l-300 d-flex">
-                    <img class="img-cover img-round" src="{% static 'images/basil-hearts.webp' %}"
+                    <img class="img-cover img-round"
+                        src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto:good/v1713093837/basil-hearts_wipb33.webp"
                         alt="Basil leaves and heart shaped pasta pieces on a blue background." loading="lazy">
                 </div>
             </div>

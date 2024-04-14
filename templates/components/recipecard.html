@@ -6,7 +6,9 @@
         <p class="d-none fs-rem-130 text-center text-white">Recipe removed from favourites</p>
         {% endif %}
         {% if "placeholder" in recipe.feature_image.url %}
-        <img class="card-img-top img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
+        <img class="card-img-top img-cover"
+            src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713093927/default-image_mekium.webp"
+            alt="placeholder image">
         {% else %}
         {% load cloudinary %}
         {% with classes="card-img-top img-cover" %}

@@ -33,9 +33,9 @@
     </noscript>
     <!-- Custom CSS stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="preload" fetchpriority="high" as="image"
-        href="https://res.cloudinary.com/deceun0wd/image/upload/q_auto:good/v1713091288/hero-small_llutpr.webp"
-        type="image/webp">
+    <!-- Preload LCP image -->
+    {% block preload %}
+    {% endblock preload %}
     <title>{% block title %}{% endblock title %}</title>
 </head>
 
@@ -47,7 +47,8 @@
                 <div class="container-xxl">
                     <a class="navbar-brand {% if request.path == home_page_url %}fw-600" aria-current="page{% endif %}"
                         href=" {% url 'home_page' %}" aria-label="Go to the home page">
-                        <img class="h-30 h-l-40" src="{% static 'images/logo-transp-center.png' %}"
+                        <img class="h-30 h-l-40"
+                            src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713094068/logo-transp-center_fuyhef.png"
                             alt="Basil & Thyme logo">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -134,8 +135,8 @@
                 </div>
                 <div class="col-lg-5 text-center mt-1 mb-3 align-self-center">
                     <a href="{% url 'home_page' %}" aria-label="Go to the home page.">
-                        <img src="{% static 'images/logo-round-transp.webp' %}" class="square-70"
-                            alt="Basil & Thyme logo" loading="lazy">
+                        <img src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713094727/logo-round-transp_depliu.webp"
+                            class="square-70" alt="Basil & Thyme logo" loading="lazy">
                     </a>
                 </div>
                 <div class="col-lg text-center text-lg-end">
