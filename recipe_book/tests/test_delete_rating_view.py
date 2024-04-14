@@ -7,7 +7,28 @@ from unittest.mock import Mock
 
 
 class DeleteRatingViewTest(TestCase):
+    """
+    A test case class to test the delete_rating view in ratings_crud.py.
+
+    Contains tests to ensure the correct behavior of the delete_rating view
+    for both authenticated and unauthenticated users, and scenarios where
+    the rating exists or does not exist.
+
+    Test methods:
+        - `setUp`: Set up mock data for the tests.
+        - `test_delete_rating_authenticated_user`: Test a delete request with
+        an authenticated user,
+        with an existing rating for recipe. Ensure getting the correct
+        response and that the rating is deleted.
+        - `test_delete_rating_not_authenticated_user`: Test a delete request
+        with an anonymous user. Ensure getting the correct response, 401, and
+        that the rating is not deleted.
+        - `test_delete_rating_does_not_exist`: Test a delete request with a
+        logged in user, but the rating does not exist. Ensure getting the
+        correct response, 400.
+    """
     def setUp(self):
+        """ Set up mock data for testing """
         self.super_user = User.objects.create_superuser(
             username="testsuperuser",
             email="testsuper@test.com",

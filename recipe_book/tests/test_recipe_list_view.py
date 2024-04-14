@@ -4,12 +4,34 @@ from django.urls import reverse
 from recipe_book.models import Recipe, Favourite
 
 
-# Create your tests here.
 class TestRecipeListView(TestCase):
+    """
+    A test case class to test the functionality of RecipeListView.
+
+    Contains tests to ensure the correct rendering of the recipe list page,
+    including pagination, search functionality, and category filtering.
+
+    Test methods:
+        - `setUp`: Sets up test mock data.
+        - `test_render_recipe_list_page`: Test rendering the recipe list page.
+        - `test_render_recipe_list_page_with_search_query`: Test rendering the
+        recipe list page with a search query.
+        - `test_render_recipe_list_page_with_no_result`: Test rendering the
+        recipe list page with a search query for which there is no matching
+        result.
+        - `test_render_recipe_list_page_with_category_search`: Test rendering
+        the recipe list page with a category search result.
+        - `test_recipe_list_page_pagination`: Test pagination on the recipe
+        list page.
+        - `test_recipe_list_page_not_paginated`: Test to ensure the recipe
+        list page is not paginated when the number of recipes is smaller than
+        the paginate_by number.
+    """
 
     def setUp(self):
         """
-        Set up test mock data including a mock user, recipe, and favorites.
+        Set up test mock data including a mock user, recipe,
+        and favorites.
         """
         # Create a mock user
         self.user = User.objects.create_user(
@@ -42,9 +64,7 @@ class TestRecipeListView(TestCase):
             user=self.user, recipe=self.recipe2)
 
     def test_render_recipe_list_page(self):
-        """
-        Test rendering the recipe list page.
-        """
+        """ Test rendering the recipe list page. """
         response = self.client.get(reverse('recipe_list_page'))
         self.assertEqual(response.status_code, 200, msg="Status code not 200")
         self.assertTemplateUsed(response, 'recipe_book/recipes.html')
@@ -95,7 +115,8 @@ class TestRecipeListView(TestCase):
 
     def test_render_recipe_list_page_with_category_search(self):
         """
-        Test rendering the recipe list page with a category search result.
+        Test rendering the recipe list page with a category
+        search result.
         """
         response = self.client.get(
             reverse('recipe_list_page'), {'q': 'chicken'})

@@ -4,10 +4,26 @@ from django.urls import reverse
 from recipe_book.models import Recipe, Favourite
 
 
-# Create your tests here.
 class TestFavouritesListView(TestCase):
+    """
+    A test case class to test the FavouritesListView.
+
+    Contains tests to ensure the correct rendering of the favourites list for
+    both authenticated and unauthenticated users.
+
+    Test methods:
+        - `setUp`: Set up mock data for the tests.
+        - `test_favourites_page_status_code`: Test the status code of the
+        favourites list page.
+        - `test_favourites_page_template_used`: Test the correct template is
+        used for the FavouritesView.
+        - `test_authenticated_user_view`: Test that the favourites page
+        displays the favourited recipes of a logged in user.
+        - `test_unauthenticated_user_view`: Test that the favourites page does
+        not contain recipe objects when the user is unauthenticated.
+    """
     def setUp(self):
-        # Create a mock user
+        """ Set up mock data for testing """
         self.user = User.objects.create_user(
             username="testuser", email="test@test.com", password="testpassword"
         )
@@ -51,9 +67,7 @@ class TestFavouritesListView(TestCase):
         self.assertEqual(response.status_code, 200, msg="Status code not 200")
 
     def test_favourites_page_template_used(self):
-        """
-        Test the correct template is used for the FavouritesView.
-        """
+        """ Test the correct template is used for the FavouritesView. """
         response = self.client.get(reverse('favourites_page'))
         self.assertTemplateUsed(response, 'recipe_book/favourites.html')
 

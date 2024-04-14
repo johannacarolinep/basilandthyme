@@ -5,11 +5,43 @@ from recipe_book.models import Recipe, Favourite
 
 
 class TestFavouriteModel(TestCase):
-    # Create mock data
+    """
+    A test case class to test the functionality of the Favourite model.
+
+    Contains tests to ensure the correct creation, deletion, and retrieval
+    of Favourite instances.
+
+    Test methods:
+        - `setUp`: Creates mock data testing.
+        - `test_favourite_creation`: Test creating a Favourite given a
+        logged-in user and a recipe.
+        - `test_unique_favourite_constraint`: Test to ensure the same user
+        cannot favourite the same recipe twice.
+        - `test_favourite_deletion`: Test that a Favourite object is deleted as
+        intended.
+        - `test_is_recipe_favourite`: Test to ensure the
+        `is_recipe_favourite()` method returns True when the given recipe is a
+        favourite of the given user, and False when not.
+        - `test_is_recipe_favourite_by_ids`: Test to ensure the method returns
+        True when passed a recipeId and userId when the recipe is a favourite
+        of the user, and False when not.
+        - `test_get_user_favourite_ids`: Test to check that
+        `get_user_favourite_ids` returns the right recipe ids given the user
+        has favourited two recipes.
+        - `test_create_favourite`: Test if the method returns True when
+        favourite is created and False when favourite is not created due to
+        either being a duplicate or recipe id does not exist.
+        - `test_delete_favourite`: Test if the method returns True when
+        favourite is deleted and False when favourite is not deleted due to
+        either not existing or if the recipe id does not exist.
+    """
     def setUp(self):
+        """ Set up mock data for testing """
         # Create a superuser
         self.super_user = User.objects.create_superuser(
-            username="testsuperuser", email="testsuper@test.com", password="supertestpassword"
+            username="testsuperuser",
+            email="testsuper@test.com",
+            password="supertestpassword"
         )
 
         # Create a mock user
@@ -30,9 +62,7 @@ class TestFavouriteModel(TestCase):
         )
 
     def test_favourite_creation(self):
-        """
-        Test creating a Favourite given a logged in user and a recipe
-        """
+        """ Test creating a Favourite given a logged in user and a recipe """
         favourite = Favourite.objects.create(
             user=self.user, recipe=self.recipe
             )
@@ -40,16 +70,15 @@ class TestFavouriteModel(TestCase):
 
     def test_unique_favourite_constraint(self):
         """
-        Test to make sure the same user can not favourite the same recipe twice
+        Test to make sure the same user can not favourite
+        the same recipe twice
         """
         Favourite.objects.create(user=self.user, recipe=self.recipe)
         with self.assertRaises(IntegrityError):
             Favourite.objects.create(user=self.user, recipe=self.recipe)
 
     def test_favourite_deletion(self):
-        """
-        Test a Favourite object is deleted as intended
-        """
+        """ Test a Favourite object is deleted as intended """
         favourite = Favourite.objects.create(
             user=self.user, recipe=self.recipe)
         self.assertIsNotNone(favourite)

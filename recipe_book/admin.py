@@ -5,7 +5,20 @@ from .models import Recipe, Comment, Favourite, Rating
 
 @admin.register(Recipe)
 class RecipeAdmin(SummernoteModelAdmin):
+    """
+    Customising the Django admin panel for the Recipe model.
 
+    Attributes:
+        list_display (tuple): Specifies the fields to display in the list view.
+        search_fields (list): Specifies the fields to search on.
+        list_filter (tuple): Specifies the fields to filter by.
+        prepopulated_fields (dict): Specifies the fields to automatically
+            populate based on another field.
+        summernote_fields (tuple): A tuple specifying the fields to use
+        summernote for text editing.
+        fieldsets (list): A list of fieldset configurations for organizing
+        fields and adding instructions in the interface.
+    """
     list_display = ('title', 'slug', 'status', 'created_on')
     search_fields = ['title', 'content']
     list_filter = ('status', 'created_on', 'category',)
@@ -41,6 +54,13 @@ class RecipeAdmin(SummernoteModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """
+    Customising the Django admin panel for the Comment model.
+
+    Attributes:
+        list_display (tuple): Specifies the fields to display in the list view.
+        list_filter (tuple): Specifies the fields to filter by.
+    """
     list_display = ('recipe', 'author', 'approved', 'created_on')
     list_filter = ('approved',)
 

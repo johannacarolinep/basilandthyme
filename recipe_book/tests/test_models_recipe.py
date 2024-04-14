@@ -7,11 +7,39 @@ from datetime import datetime
 from recipe_book.models import Recipe
 
 
-# Create your tests here.
 class TestRecipeModel(TestCase):
+    """
+    A test case class to test the functionality of the Recipe model.
+
+    Contains tests to ensure the correct creation and validation of Recipe
+    instances.
+
+    Test methods:
+        - `setUp`: Creates a mock superuser and Recipe instance for testing.
+        - `test_recipe_creation`: Test the creation of a Recipe instance.
+        - `test_unique_title`: Test that a Recipe with a duplicate title
+        cannot be created.
+        - `test_unique_slug`: Test that a Recipe with a duplicate slug cannot
+        be created.
+        - `test_title_max_length`: Test that a validation error is raised when
+        the title length exceeds the maximum limit.
+        - `test_slug_max_length`: Test that a validation error is raised when
+        the slug length exceeds the maximum limit.
+        - `test_alt_text_max_length`: Test that a validation error is raised
+        when the alt text length exceeds the maximum limit.
+        - `test_teaser_max_length`: Test that a validation error is raised when
+        the teaser length exceeds the maximum limit.
+        - `test_category_invalid_choice`: Test that a validation error is
+        raised when the category field has an invalid value.
+        - `test_status_invalid_choice`: Test that a validation error is raised
+        when the status field has an invalid value.
+    """
 
     def setUp(self):
-        # Create a superuser
+        """
+        Set up test data.
+        Creates a mock superuser and Recipe instance.
+        """
         self.user = User.objects.create_superuser(
             username="testuser", email="test@test.com", password="testpassword"
         )
@@ -27,6 +55,10 @@ class TestRecipeModel(TestCase):
         )
 
     def test_recipe_creation(self):
+        """
+        Test creating a Recipe instance. Checks if fields are set correctly
+        after creation.
+        """
         recipe = self.recipe
         self.assertEqual(
             recipe.title, "Test Recipe Model 1", msg="Title not correct")
@@ -49,7 +81,10 @@ class TestRecipeModel(TestCase):
         self.assertLessEqual(recipe.created_on, now)
 
     def test_unique_title(self):
-        # Attempt to create a recipe with the same title
+        """
+        Test that a Recipe instance cannot be created with a
+        duplicate title.
+        """
         with self.assertRaises(IntegrityError):
             Recipe.objects.create(
                 title="Test Recipe Model 1",
@@ -61,7 +96,10 @@ class TestRecipeModel(TestCase):
             )
 
     def test_unique_slug(self):
-        # Attempt to create a recipe with the same slug
+        """
+        Test that a Recipe instance cannot be created with a
+        duplicate slug.
+        """
         with self.assertRaises(IntegrityError):
             Recipe.objects.create(
                 title="Test Recipe Model Different Title",

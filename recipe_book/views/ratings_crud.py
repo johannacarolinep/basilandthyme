@@ -47,7 +47,7 @@ def add_update_rating(request):
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
                     {"message": rating_value + " star rating added to " +
-                     Recipe.objects.get(id=recipe_id).title,
+                        Recipe.objects.get(id=recipe_id).title,
                         "count": rating_count,
                         "average": recipe_average},
                     status=200)
@@ -60,7 +60,7 @@ def add_update_rating(request):
                 recipe_average = Rating.get_recipe_avg_rating(recipe_id)
                 return JsonResponse(
                     {"message": "Rating updated for " +
-                     Recipe.objects.get(id=recipe_id).title,
+                        Recipe.objects.get(id=recipe_id).title,
                         "count": rating_count,
                         "average": recipe_average},
                     status=200)

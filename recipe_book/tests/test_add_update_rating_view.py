@@ -4,7 +4,23 @@ from recipe_book.models import Recipe, Rating
 
 
 class AddUpdateRatingViewTest(TestCase):
+    """
+    A test case class to test the add-update-rating view, in ratings_crud.py.
+
+    Contains tests to ensure the correct behavior of the add-update-rating
+    view.
+
+    Test methods:
+        - `setUp`: Set up mock data for the tests.
+        - `test_add_rating_authenticated_user`: Test method is returning
+        correct response, 200, and rating is created, when request with
+        authenticated user and no existing rating for recipe.
+        - `test_update_rating_authenticated_user`: Test method is returning the
+        correct response, 200, and rating is updated with new rating value,
+        when request with an authenticated user and an existing rating.
+    """
     def setUp(self):
+        """ Set up mock data for testing """
         self.super_user = User.objects.create_superuser(
             username="testsuperuser",
             email="testsuper@test.com",

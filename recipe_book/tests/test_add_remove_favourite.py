@@ -4,7 +4,24 @@ from recipe_book.models import Recipe, Favourite
 
 
 class AddRemoveFavouriteViewTests(TestCase):
+    """
+    A test case class to test the add-remove-favourite view
+    (favourites_crud.py).
+
+    Contains tests to ensure the correct behavior of the add-remove-favourite
+    function view for adding and removing favorites by authenticated users.
+
+    Test methods:
+        - `setUp`: Set up mock data for the tests.
+        - `test_add_favourite_authenticated_user`: Test that a favourite is
+        added when the request is by a valid user and recipe, and favourite
+        does not already exist.
+        - `test_remove_favourite_authenticated_user`: Test that a favourite is
+        removed when the request is by  valid user and recipe, and favourite
+        already exists.
+    """
     def setUp(self):
+        """ Set up mock data for testing """
         self.super_user = User.objects.create_superuser(
             username="testsuperuser",
             email="testsuper@test.com",

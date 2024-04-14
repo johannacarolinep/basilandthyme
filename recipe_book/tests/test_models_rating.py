@@ -5,8 +5,32 @@ from recipe_book.models import Recipe, Rating
 
 
 class TestRatingModel(TestCase):
-    # Create mock data
+    """
+    A test case class to test the functionality of the Rating model.
+
+    Contains tests to ensure the correct creation, deletion, and getting of
+    Rating instances.
+
+    Test methods:
+        - `setUp`: Creates mock data for testing.
+        - `test_rating_creation`: Test creating a rating given a logged-in user
+        and a recipe.
+        - `test_unique_rating_constraint`: Test to ensure the same user cannot
+        rate the same recipe twice.
+        - `test_rating_deletion`: Test that a Rating object is deleted as
+        intended.
+        - `test_get_recipe_avg_rating_with_ratings`: Test to ensure the method
+        returns the average rating for a given recipe with ratings.
+        - `test_get_recipe_avg_rating_no_ratings`: Test to ensure the method
+        returns 0.0 when a given recipe has no ratings.
+        - `test_get_recipe_no_of_ratings`: Test that the method returns the
+        number of ratings for a given recipe.
+        - `test_get_user_rating_of_recipe`: Test that the method returns the
+        user's existing rating value for a given recipe, or None if the user
+        has not rated the recipe.
+    """
     def setUp(self):
+        """ Set up mock test data """
         # Create a superuser
         self.super_user = User.objects.create_superuser(
             username="testsuperuser",
@@ -40,7 +64,8 @@ class TestRatingModel(TestCase):
 
     def test_unique_rating_constraint(self):
         """
-        Test to make sure the same user can not rating the same recipe twice
+        Test to make sure the same user can not rating the same
+        recipe twice
         """
         Rating.objects.create(user=self.user, recipe=self.recipe, rating=2)
         with self.assertRaises(

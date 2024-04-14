@@ -5,12 +5,43 @@ from django.urls import reverse
 from recipe_book.models import Recipe, Favourite, Comment
 
 
-# Create your tests here.
 class TestRecipeDetailView(TestCase):
+    """
+    A test case class to test the functionality of RecipeDetailView.
+
+    Contains tests to ensure the correct rendering of the recipe detail page,
+    including rendering with logged in vs not logged in user, posting comments,
+    editing comments, and deleting comments.
+
+    Test methods:
+        - `setUp`: Sets up test mock data.
+        - `test_render_recipe_detail_page_with_invalid_slug`: Test rendering a
+        recipe detail page with an invalid slug.
+        - `test_render_recipe_detail_page_when_not_logged_in`: Test rendering a
+        recipe detail page when the user is not logged in.
+        - `test_render_recipe_detail_page_with_favourite`: Test rendering a
+        recipe detail page when the recipe is favorited by the logged-in user.
+        - `test_render_recipe_detail_page_with_nonfavourited_recipe`: Test
+        rendering a recipe detail page when the recipe is not favorited by the
+        logged-in user.
+        - `test_post_valid_comment`: Test posting a valid comment.
+        - `test_post_comment_not_authenticated`: Test posting a comment while
+        not logged in.
+        - `test_post_invalid_comment`: Test posting an invalid comment.
+        - `test_put_valid_edit_of_comment`: Test making a valid edit of a
+        comment.
+        - `test_put_invalid_edit_of_comment`: Test making an invalid edit of a
+        comment.
+        - `test_delete_comment`: Test deleting a comment through a delete
+        request.
+        - `test_delete_nonexistent_comment`: Test delete request for a
+        nonexistent comment ID.
+    """
 
     def setUp(self):
         """
-        Set up test mock data including a mock user, recipe, and favorite.
+        Set up test mock data including a mock user, recipe,
+        and favorite.
         """
         # Create a mock user
         self.user = User.objects.create_user(
@@ -32,9 +63,7 @@ class TestRecipeDetailView(TestCase):
             user=self.user, recipe=self.recipe)
 
     def test_render_recipe_detail_page_with_invalid_slug(self):
-        """
-        Test rendering a recipe detail page with an invalid slug.
-        """
+        """ Test rendering a recipe detail page with an invalid slug. """
         response = self.client.get(reverse(
             'recipe_detail', kwargs={'slug': 'non-existing-slug'}))
         self.assertEqual(
@@ -43,7 +72,8 @@ class TestRecipeDetailView(TestCase):
 
     def test_render_recipe_detail_page_when_not_logged_in(self):
         """
-        Test rendering a recipe detail page when the user is not logged in.
+        Test rendering a recipe detail page when the user is
+        not logged in.
         """
         self.client.logout()  # log out mock user
         response = self.client.get(reverse(
