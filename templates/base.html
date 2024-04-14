@@ -129,7 +129,7 @@
                 <div class="col-lg-5 text-center mt-1 mb-3 align-self-center">
                     <a href="{% url 'home_page' %}" aria-label="Go to the home page.">
                         <img src="{% static 'images/logo-round-transp.webp' %}" class="square-70"
-                            alt="Basil & Thyme logo">
+                            alt="Basil & Thyme logo" loading="lazy">
                     </a>
                 </div>
                 <div class="col-lg text-center text-lg-end">
@@ -160,7 +160,7 @@
     <script src="https://kit.fontawesome.com/a0a89111ce.js" crossorigin="anonymous" defer></script>
 
     <!-- Custom javascript -->
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
     {% block customscript %}
     {% endblock customscript %}
 </body>

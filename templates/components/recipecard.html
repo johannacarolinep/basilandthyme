@@ -9,7 +9,9 @@
         <img class="card-img-top img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
         {% else %}
         {% load cloudinary %}
-        {% cloudinary recipe.feature_image quality='auto' class="card-img-top img-cover" alt=recipe.alt_text %}
+        {% with classes="card-img-top img-cover" %}
+        {% cloudinary recipe.feature_image quality='auto' class=classes loading="lazy" alt=recipe.alt_text %}
+        {% endwith %}
         {% endif %}
         <div class="card-heart-icon d-flex align-items-center text-center m-2">
             <p class="mb-0 me-1"></p>
