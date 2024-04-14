@@ -137,6 +137,7 @@ label {
 
 .img-round {
     border-radius: 50%;
+    aspect-ratio: 1/1;
 }
 
 /* ------------------------------------ Font sizes */
@@ -358,7 +359,7 @@ label {
 /* -------------------------------- Hero section with content overlay */
 .hero-section {
     height: 550px;
-    background: #008B20 url("../images/hero-small.webp") no-repeat center top/cover;
+    background: #008B20 url("https://res.cloudinary.com/deceun0wd/image/upload/q_auto:good/v1713091288/hero-small_llutpr.webp") no-repeat center top/cover;
 }
 
 .hero-section-wallpaper {
