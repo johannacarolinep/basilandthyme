@@ -109,7 +109,80 @@ These tests can be found in the *static*/*js*/*tests* directory. The tests are s
 </details>
 
 <a id="lighthouse"></a>
-## Lighthouse tests TBC
+## Lighthouse tests
+
+The website's different pages were tested using Lighthouse, to ensure performance and accessibility.
+
+<details>
+<summary>Click to see screenshots of test results on mobile</summary>
+
+- Home page
+    ![Home page results](documentation/lighthouse/lighthouse-mobile-home.png)
+
+- Recipes page
+    ![Recipes page results](documentation/lighthouse/lighthouse-mobile-recipes.png)
+
+- Recipe detail page (example)
+    ![Recipe detail page results](documentation/lighthouse/lighthouse-mobile-recipe-page.png)
+
+- Favourites page
+    ![Favourites page results](documentation/lighthouse/lighthouse-mobile-favourites.png)
+
+- Sign up page
+    ![Sign up page results](documentation/lighthouse/lighthouse-mobile-signup.png)
+
+- Sign out page
+    ![Sign out page results](documentation/lighthouse/lighthouse-mobile-signout.png)
+
+- Sign in page
+    ![Sign in page results](documentation/lighthouse/lighthouse-mobile-signin.png)
+
+</details>
+
+<details>
+<summary>Click to see screenshots of test results on desktop</summary>
+
+- Home page
+    ![Home page results](documentation/lighthouse/lighthouse-desktop-home.png)
+
+- Recipes page
+    ![Recipes page results](documentation/lighthouse/lighthouse-desktop-recipes.png)
+
+- Recipe detail page (example)
+    ![Recipe detail page results](documentation/lighthouse/lighthouse-desktop-recipe-page.png)
+
+- Favourites page
+    ![Favourites page results](documentation/lighthouse/lighthouse-desktop-favourites.png)
+
+- Sign up page
+    ![Sign up page results](documentation/lighthouse/lighthouse-desktop-signup.png)
+
+- Sign out page
+    ![Sign out page results](documentation/lighthouse/lighthouse-desktop-signout.png)
+
+- Sign in page
+    ![Sign in page results](documentation/lighthouse/lighthouse-desktop-signin.png)
+
+</details>
+
+### Performance optimisation
+I initially had a lower performance score, mainly due to LCP (Largest Contentful Paint) and FCP (First Contentful Paint). These issues appeared when testing the deployed version of the website, while scores were high when testing in the local environment.
+
+I implemented the following optimisations to improve the score, including:
+- Lazy loading of images that would not appear above the fold
+- Deferring non-critical resources
+- Using Cloudinary for all of my images (previously I had only used Cloudinary to store the images belonging to the recipes).
+
+After taking these actions, the highest impact suggestion raised by the Lighthouse report was to preload my LCP image.
+
+![Lighthouse suggesting preload](documentation/lighthouse/lighthouse-preload.png)
+
+Testing this resulted in a significantly higher score. However, I would sometimes get a warning in the console, about preloading a resource and then not using it within the first few seconds.
+
+Reading up on this warning, I came to the understanding it might be appearing in situations when the browser has cached the image, in which case the preload is unnecessary.
+
+Given that the score was significantly higher with the preload, and the warning seemingly explained by the possibility of the image being cached, I decided to keep preloading the image.
+
 
 <a id="html-validation"></a>
 ## Validation of HTML TBC
