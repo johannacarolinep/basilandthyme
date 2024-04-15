@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% block title %}
+Basil&Thyme - Error
+{% endblock title %}
 {% block content %}
-
 <!-- 500 user error message -->
 <div class="container-xl h-100 d-flex justify-content-center align-items-center">
     <section class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle mx-auto w-full max-w-900">
@@ -10,5 +12,4 @@
         <a href="{% url 'home_page' %}" class="standard-link brand-dark fw-bold">Go to the home page &raquo;</a>
     </section>
 </div>
-
 {% endblock content %}
