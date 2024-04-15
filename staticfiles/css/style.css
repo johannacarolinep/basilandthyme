@@ -477,6 +477,10 @@ label {
     color: #a90606;
 }
 
+form.signup div {
+    margin-top: 10px;
+}
+
 /* ------------------------------------Footer */
 .line-top {
     border-top: 0.5px solid white;
