@@ -38,7 +38,7 @@ Basil&Thyme - Recipe page
                             <button class="init-rate-btn icon-button" data-user-rating="{{ user_rating }}"
                                 data-recipe-id="{{ recipe.id }}"
                                 data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
-                                aria-label="Avg rating is {{ recipe.avg_rating }}. Click to rate recipe. This will open a modal.">
+                                aria-label="Avg rating is {{ recipe.avg_rating }}, based on {{ rating_count }} ratings. Click to rate recipe. This will open a modal.">
                                 {% for i in stars_range %}
                                 {% if avg_rating >= i %}
                                 <i class="fa-solid fa-star" aria-hidden="true"></i>
@@ -48,24 +48,21 @@ Basil&Thyme - Recipe page
                                 <i class="fa-regular fa-star" aria-hidden="true"></i>
                                 {% endif %}
                                 {% endfor %}
-                                <span class="ratings-count">({{ rating_count }})</span>
+                                <span class="ratings-count" aria-hidden="true">({{ rating_count }})</span>
                             </button>
                         </div>
-
                     </div>
                     <div class="col-auto fs-rem-150 brand-brown">
                         {% if recipe.category == 1 %}
-                        <i class="fa-solid fa-drumstick-bite" aria-hidden="true"
-                            aria-label="Recipe category is 'chicken'"></i>
+                        <i class="fa-solid fa-drumstick-bite" title="Recipe category is 'chicken'"></i>
                         {% elif recipe.category == 2 %}
-                        <i class="fa-solid fa-bacon" aria-hidden="true" aria-label="Recipe category is 'pork'"></i>
+                        <i class="fa-solid fa-bacon" title="Recipe category is 'pork'"></i>
                         {% elif recipe.category == 3 %}
-                        <i class="fa-solid fa-cow" aria-hidden="true" aria-label="Recipe category is 'beef'"></i>
+                        <i class="fa-solid fa-cow" title="Recipe category is 'beef'"></i>
                         {% elif recipe.category == 4 %}
-                        <i class="fa-solid fa-fish" aria-hidden="true" aria-label="Recipe category is 'fish'"></i>
+                        <i class="fa-solid fa-fish" title="Recipe category is 'fish'"></i>
                         {% elif recipe.category == 5 %}
-                        <i class="fa-brands fa-pagelines" aria-hidden="true"
-                            aria-label="Recipe category is 'vegetarian'"></i>
+                        <i class="fa-brands fa-pagelines" title="Recipe category is 'vegetarian'"></i>
                         {% endif %}
                     </div>
                 </div>
