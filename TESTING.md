@@ -71,6 +71,170 @@ The review was documented in the PDFs below, split per reviewed page:
 <a id="manual-test-functionality"></a>
 ### Manual testing of core functionality TBC
 
+#### Main navigation
+
+<details>
+<summary>Click for manual tests of the main navigation</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|------- | ------------- | -----------| :----------: |  ------------ |
+| Header navbar | Page render | Main navigation link corresponding to current page is bold  | Y | - |
+| - | Hover on one of the main navigation links | Link turns into a light green colour  | Y | - |
+| - | Clicking on hamburger icon (mobile) | Opens and closes navigation | Y | - |
+| - | Clicking on logo | Opens home page | Y | - |
+| - | Clicking on "Home" | Opens home page | Y | - |
+| - | Clicking on "Recipes" | Opens Recipes page, with all recipes displaying | Y | - |
+| - | Clicking on "Favourites" | Opens Favourites page | Y | - |
+| - | Clicking on "Sign up" | Opens Sign up page | Y | - |
+| - | Clicking on "Sign in" | Opens Sign in page | Y | - |
+| - | Clicking on "Sign out" | Opens Sign out page | Y | - |
+| Header navbar on Recipes page and home page | Click on "Sign up" in banner attached to header on home and recipes page (while not logged in) | Opens Sign up page | Y | - |
+
+</details>
+
+#### Searching and sorting
+
+<details>
+<summary>Click for tests of search and sort functionality</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|------- | ------------- | -----------| :----------: |  ------------ |
+| Home page and recipes page | Page render | Search bar and category buttons display | Y | - |
+| - | Hover on searchbar button | Button styled green | Y | - |
+| - | Click on searchbar button with no field input | Recipes page open, displaying all recipes | Y | - |
+| - | Click on searchbar button with input | Recipes page opens, with results matching query | Y | - |
+| - | Click on "Chicken" | Recipes page opens, with results in "chicken" category | Y | - |
+| - | Click on "Beef" | Recipes page opens, with results in "beef" category | Y | - |
+| - | Click on "Pork" | Recipes page opens, with results in "pork" category | Y | - |
+| - | Click on "Fish" | Recipes page opens, with results in "fish" category | Y | - |
+| - | Click on "Vegetarian" | Recipes page opens, with results in "vegetarian" category | Y | - |
+| - | Click on "See all" | Recipes page opens, displaying all recipes | Y | - |
+| Recipes page | Click on "Sort" button | Dropdown with sorting options display | Y | - |
+| - | Click on "By date: newest first" | Sorts results by date, newest first | Y | - |
+| - | Click on "By date: oldest first" | Sorts results by date, oldest first | Y | - |
+| - | Click on "By rating: high to low" | Sorts results by rating, highest first | Y | - |
+| - | Sorting, after searching | Sorts existing search results | Y | - |
+| - | Searching, after sorting | Presents new results, keeping the sorting | Y | - |
+
+</details>
+
+#### Sign in/Sign out/Sign up pages and forms
+
+<details>
+<summary>Click for tests of login functionality and related pages</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|------- | ------------- | -----------| :----------: |  ------------ |
+| Form on Sign in, Sign out, and Sign up pages | Submit form with required fields left empty | Form is not submitted and user feedback is displayed | Y | - |
+| - | Submit form with incorrectly formatted fields | Form is not submitted when field values fail HTML5 validation (e.g. email not formatted as email address | Y | - |
+| - | Submit form with invalid data, passing HTML5 validation, e.g. passwords not matching or username does not exist | User feedback is displayed | Y | - |
+| - | Hover on form button | Style changes from outlined button to filled in | Y | - |
+| Sign in, Sign out, and Sign up pages | Hover on link buttons (not in form) | Style changes from outlined button to filled in | Y | - |
+| Sign up page | Click on Sign in link | Opens sign in page | Y | - |
+| Sign in page | Click on Sign up link | Opens sign up page | Y | - |
+| Form on Sign in, Sign out, and Sign up pages | On successful sign in, sign out, or sign up | 1. Opens home page. Banner displays "You're logged in as [Username]". <br> 2. Options in main navigation has updated, reflecting the login status. | Y | - |
+
+</details>
+
+#### Ratings
+
+<details>
+<summary>Click for tests of ratings functionality</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|------- | ------------- | -----------| :----------: |  ------------ |
+| Recipe card | Clicking on the stars while logged in | The ratings modal opens | Y | - |
+| Recipe detail page | Clicking on the stars while logged in | The ratings modal opens | Y | - |
+| Ratings modal | On opening | 1. The ratings modal correctly shows if the user has previously rated the recipe.<br>2. If there is no existing rating, there is a cancel and submit button.<br>3. If there is an existing rating, there is additionally a delete button.<br>4. The submit button is disabled. | Y | - |
+|  | Clicking "X" | Closes the modal | Y | - |
+|  | Clicking cancel | Closes the modal | Y | - |
+|  | Clicking a star | 1. Stars are styled to reflect selection.<br>2. Submit button is enabled. | Y | - |
+|  | Clicking the submit button | 1. Submits a rating.<br>2. Closes modal<br>3. Displays a toast message<br>4. Updates the avg rating/stars display for the recipe.  | Y | - |
+|  | Clicking the delete button | 1. Deletes the rating.<br>2. Closes modal.<br>3. Displays a toast message.<br>4. Updates the avg rating/stars display for the recipe. | Y | - |
+|  | Pressing Tab | Focus is trapped in modal | Y | - |
+|  | Clicking a star, then cancel, then open modal again by clicking on the stars dislpay | 1. Modal is reset when opened again.<br>2. Previous selection is not reflected.<br>3. Submit button is again disabled. | Y | - |
+|  |  |  | Y | - |
+| Recipe card | Clicking on the stars while __not__ logged in | "Sign in"-modal opens | Y | - |
+| Recipe detail page | Clicking on the stars while __not__ logged in | "Sign in"-modal opens | Y | - |
+
+</details>
+
+#### Favouriting
+
+<details>
+<summary>Click for tests of favouriting functionality</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|---------- | ---------- | ---------------------| :-------: | ------------ |
+| Recipe card | Page is rendered | 1. A heart is displayed in the upper right corner of the card. <br> 2. The heart is filled in if the recipe is a favourite of the user. <br> 3. The heart is not filled in if the recipe is not a favourite of the user.<br>4. No hearts are filled in if user is not logged in. | Y | - |
+| Recipe detail page | Page is rendered | 1. A heart is displayed in the upper part of the Recipe article. 2. The heart is filled in if the recipe is a favourite of the user, and not filled in otherwise. | Y | - |
+| Recipe cards (Recipes page and Home page)<br><br> & Recipe detail page | Clicking on a heart that is not filled in | 1. Toast message confirms the recipe is added to favourites. <br> 2. The heart changes to a filled in heart. <br>3. A text appears next to the heart confirming recipe was saved. | Y | - |
+| Recipe cards (Recipes page and Home page)<br><br> & Recipe detail page | Clicking on a heart that is filled in | 1. Toast message confirms the recipe is removed from favourites. <br> 2. The heart changes to a non filled in heart. <br>3. A text appears next to the heart confirming recipe was removed. | Y | - |
+| Recipe cards (Recipes page and Home page)<br><br> & Recipe detail page | Clicking on a heart while not logged in | Opens the "Sign in" modal | Y | - |
+| Favourites page | Page is rendered | For any recipe cards on the favourites page, the heart is filled in | Y | - |
+| Favourites page | Clicking on a heart | 1. A toast message is displayed to confirm favourite removal. <br> 2. The recipe card is styled to indicate the recipe has been removed from favourites.<br>3. The recipe card is no longer focusable.<br>4. The recipe card is gone from the page on reload. | Y | - |
+| Favourites page | Page is rendered, not logged in | 1. The hero section contains links for Sign in and Sign up. | Y | - |
+| Favourites page | Hover and click on Sign in link | 1. Link is styled differently on hover<br> 2. Link leads to "Sign in" page | Y | - | 
+| Favourites page | Hover and click on Sign up link | 1. Link is styled differently on hover<br> 2. Link leads to "Sign up" page | Y | - | 
+
+</details>
+
+#### Commenting
+
+<details>
+<summary>Click for tests of sign in/sign up modal</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|---------- | ---------- | ---------------------| :-------: | ------------ |
+| Recipe detail page | Viewing page as non logged in user | Comment form is not showing | Y | - |
+| - | Click on "Sign in" (visible when not logged in) | Opens sign in page | Y | - |
+| - | Click on "Sign up" (visible when not logged in) | Opens sign up page | Y | - |
+| - | Viewing page as logged in user | Comment form is showing | Y | - |
+| - | Hover on "Send" button in form | Button style changes from outlined to filled in | Y | - |
+| - | Submitting form with no input | HTML5 field validation stops submission | Y | - |
+| - | Submitting form with valid input | 1. Submits the comment.<br>2. Displays a toast message.<br>3. Comment is inserted at top of list of comments.<br>4. Page scrolls to put new comment in focus. | Y | - |
+| - | Comment displaying | Comment contains edit and delete buttons if the user is the comment author | Y | - |
+| - | Hover on edit and delete buttons | Buttons update styles on hover | Y | - |
+| - | - | Comment does not contain edit and delete buttons if the user is not the comment author | Y | - |
+| - | Click on "Edit" | 1. Page scrolls, putting the form into focus.<br>2. Form paragraph updates to prompt edit.<br>3. Form is filled in with the existing comment body.<br>4. Form submit button changes styles and text to "Update". | Y | - |
+| - | Click on "Update" with no change made to form | 1. Toast message shows no update was made<br>2. A red paragraph is added to the existing comment, informing the user further.<br>3. Form changes back to original state (for posting). | Y | - |
+| - | Click on "Update" with valid comment edit made | 1. Toast success message.<br>2. Comment is updated.<br>3. A green paragraph is added to comment container to further inform the user.<br>4. Page scrolls putting the edited comment into focus. | Y | - |
+| - | Edit a disapproved comment | The comment is approved after edit is made | Y | - |
+
+</details>
+
+#### Sign in/Sign up modal
+
+<details>
+<summary>Click for tests of sign in/sign up modal</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|---------- | ---------- | ---------------------| :-------: | ------------ |
+| Home, Recipes, Recipe detail pages | Click on rating stars when not logged in | Opens "Sign in" modal | Y | - |
+| - | Click on favouriting button/heart when not logged in | Opens "Sign in modal | Y | - |
+| Sign in modal | Pressing tab | Focus is trapped in modal | Y | - |
+| - | Hover links (styled as buttons) in modal | Links react/change styles on hover | Y | - |
+| - | Click on Sign in link | Opens sign in page | Y | - |
+| - | Click on Sign up link | Opens sign up page | Y | - |
+| - | Click on "X" | Closes modal | Y | - |
+
+</details>
+
+#### Other
+
+<details>
+<summary>Click for uncategorized manual tests</summary>
+
+| __Where?__| __Action__ | __Expected outcome__ | __Pass?__ | __Comments__ |
+|---------- | ---------- | ---------------------| :-------: | ------------ |
+| Recipes page | Display 8+ results (e.g. when displaying all recipes | Pagination is used to display 8 results per page | Y | - |
+| - | - | 1. Pagination buttons show at bottom of the page. <br> 2. The current page button is styled green | Y | - |
+| - | Hover on pagination buttons at the bottom of the page | Buttons slightly change style on hover | Y | - |
+| - | Click pagination buttons | Navigating to "next/previous/specific page" with pagination control buttons work | Y | - |
+| Home page | Click on "See all" links | Opens Recipes page | Y | - |
+| Recipe cards | Click on Recipe title/teaser in cards | Opens the corresponding Recipe page | Y | - |
+
+</details>
 
 
 <a id="user-story-testing"></a>
