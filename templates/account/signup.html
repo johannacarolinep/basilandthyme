@@ -24,7 +24,7 @@ Basil&Thyme create account, Basil&Thyme sign up, B&T sign up, Basil and thyme si
         <!-- Sign up form -->
         <form class="signup my-4" id="signup_form" method="post" action="{% url 'account_signup' %}">
           {% csrf_token %}
-          {{ form.as_p }}
+          {{ form.as_div }}
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
