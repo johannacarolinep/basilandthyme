@@ -89,8 +89,8 @@ label {
     height: 30px;
 }
 
-.h-300 {
-    height: 300px;
+.h-min-300 {
+    min-height: 300px;
 }
 
 .max-w-370 {
@@ -546,8 +546,8 @@ label {
         height: 40px;
     }
 
-    .h-l-400 {
-        height: 400px;
+    .h-l-min-400 {
+        min-height: 400px;
     }
 
     .max-h-l-450 {
