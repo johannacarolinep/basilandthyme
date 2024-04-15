@@ -185,7 +185,49 @@ Given that the score was significantly higher with the preload, and the warning 
 
 
 <a id="html-validation"></a>
-## Validation of HTML TBC
+## Validation of HTML
+
+All pages were validated using W3C's Markup Validation Service, with no errors or warnings.
+
+<details>
+<summary>Click for screenshots of validation results per page</summary>
+
+- Home page (index.html)
+    ![HTML validation - home page](documentation/html-validation/html-validate-index.png)
+
+- Recipes page (with results)
+    ![HTML validation - recipes page](documentation/html-validation/html-validate-recipes.png)
+
+- Recipes page (with no results)
+    ![HTML validation - recipes page with no results](documentation/html-validation/html-validate-recipes-no-results.png)
+
+- Favourites page (while not logged in)
+    ![HTML validation - favourites page](documentation/html-validation/html-validate-favourites.png)
+
+- Recipe page - Chicken yellow curry
+    ![HTML validation - chicken yellow curry](documentation/html-validation/html-validate-recipe-page-chicken-curry.png)
+
+- Recipe page - Seafood pasta
+    ![HTML validation - seafood pasta](documentation/html-validation/html-validate-recipe-page-seafood-pasta.png)
+
+- Sign-up page
+    ![HTML validation - Sign-up page](documentation/html-validation/html-validate-signup.png)
+
+- Sign-in page
+    ![HTML validation - Sign-in page](documentation/html-validation/html-validate-login.png)
+
+In addition to the above, the following were validated by copying the entirety of the page source code, and validating by direct input:
+- The log-out page (/account/logout/)
+- The favourites page while logged in, with no recipes favourited
+- The favourites page while logged in, with recipes favourited
+- A recipe detail page, while logged in, with comments posted
+- The 404 and 500 pages
+
+</details>
+
+*Note*
+All HTML code validated with no error or warnings. On pages that contain recipe cards, the tool did raise an "Info"-type message. The recipe cards utilize a Cloudinary tag to insert the images. This allows for using Cloudinary features such as automatically optimizing image quality. However, it seems the *img* tags that get inserted as a result contain a trailing "/". Since this cannot be easily changed, without losing the optimisation feature, and since the messages are of the type "info" rather than "warning", I will not take action to change this.
+
 
 <a id="css-validation"></a>
 ## Validation of CSS
