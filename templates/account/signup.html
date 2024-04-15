@@ -1,26 +1,27 @@
 {% extends "base.html" %}
-
-
+<!-- Page title -->
 {% block title %}
 Basil&Thyme - Sign Up
 {% endblock title %}
+<!-- Page description -->
 {% block metadescr %}
 Discover your new favourite recipes at Basil&Thyme! Sign up for a free account to add recipes to favourites, rate
 recipes, and leave
 comments!
 {% endblock metadescr %}
+<!-- Page meta keywords -->
 {% block metakeywords %}
 Basil&Thyme create account, Basil&Thyme sign up, B&T sign up, Basil and thyme sign up, Basil and thyme account
 {% endblock metakeywords %}
-
+<!-- Page main content -->
 {% block content %}
 <div class="container-xl h-100 d-flex justify-content-center align-items-center">
-  <div class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle">
+  <section class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle">
     <div class="row">
       <h1 class="mb-3">Sign Up</h1>
       <div class="bg-brand-green h-line mb-3"> </div>
       <div class="col-lg-6">
-
+        <!-- Sign up form -->
         <form class="signup my-4" id="signup_form" method="post" action="{% url 'account_signup' %}">
           {% csrf_token %}
           {{ form.as_p }}
@@ -31,7 +32,6 @@ Basil&Thyme create account, Basil&Thyme sign up, B&T sign up, Basil and thyme si
             &raquo;</button>
         </form>
       </div>
-
       <div class="col-lg-6 d-flex">
         <div class="bg-brand-gray p-4 w-100 h-100 text-center d-flex flex-column justify-content-center">
           <p class="fs-5">Already have an account? Then please <span class="fw-bold">sign in</span> instead.</p>
@@ -43,9 +43,7 @@ Basil&Thyme create account, Basil&Thyme sign up, B&T sign up, Basil and thyme si
           </div>
         </div>
       </div>
-
     </div>
-  </div>
+  </section>
 </div>
-
 {% endblock content %}

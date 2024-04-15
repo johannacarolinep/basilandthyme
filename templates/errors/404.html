@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- 404 user error message -->
 <div class="container-xl h-100 d-flex justify-content-center align-items-center">
-    <div class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle mx-auto w-full max-w-900">
+    <section class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle mx-auto w-full max-w-900">
         <h1>Oops - Page not found !</h1>
         <div class="bg-brand-green h-line mb-3"> </div>
         <p>Let's get you back to safer grounds.</p>
         <a href="{% url 'home_page' %}" class="standard-link brand-dark fw-bold">Go to the home page &raquo;</a>
-    </div>
+    </section>
 </div>
 
 {% endblock content %}

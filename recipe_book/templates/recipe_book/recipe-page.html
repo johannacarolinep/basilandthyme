@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-
+<!-- CSRF token -->
 {% block token %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock token %}
@@ -18,11 +18,13 @@ Basil&Thyme - Recipe page
 {% elif recipe.category == 4 %}recipe with fish, fish recipe, fish dishes, seafood recipe
 {% elif recipe.category == 5 %}vegetarian recipe, recipe veggie, recipe vegetarian, vegetarian dishes{% endif %}
 {% endblock metakeywords %}
-
+<!-- Page main content -->
 {% block content %}
 <div class="container-xl g-0">
+    <!-- Article for recipe and potential comments -->
     <article class="m-3 my-md-4 m-lg-4 p-4 bg-white shadow white-container">
         <div class="row">
+            <!-- Recipe image or placeholder -->
             <div class="max-h-370 max-h-l-450 d-flex col-md-7">
                 {% if "placeholder" in recipe.feature_image.url %}
                 <img class="img-cover" src="{% static 'images/default-image.webp' %}" alt="placeholder image">
@@ -34,7 +36,7 @@ Basil&Thyme - Recipe page
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto fs-rem-150 d-flex">
                         <div class="me-1">
-                            <!-- Button to open modal -->
+                            <!-- Button to open ratings modal, clickable ratings display -->
                             <button class="init-rate-btn icon-button" data-user-rating="{{ user_rating }}"
                                 data-recipe-id="{{ recipe.id }}"
                                 data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
@@ -52,6 +54,7 @@ Basil&Thyme - Recipe page
                             </button>
                         </div>
                     </div>
+                    <!-- Recipe category icon -->
                     <div class="col-auto fs-rem-150 brand-brown">
                         {% if recipe.category == 1 %}
                         <i class="fa-solid fa-drumstick-bite" title="Recipe category is 'chicken'"></i>
@@ -71,6 +74,7 @@ Basil&Thyme - Recipe page
                 <p class="lead mt-2 fs-rem-110 fs-rem-lg-125">{{ recipe.teaser }}</p>
                 <div class="d-flex justify-content-end align-items-baseline mt-auto brand-green">
                     <p class="m-0"></p>
+                    <!-- Favouriting button -->
                     <button class="heart-btn icon-button icon-button-stroke"
                         data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
                         data-recipe-id="{{ recipe.id }}"
@@ -84,11 +88,13 @@ Basil&Thyme - Recipe page
         <div class="bg-brand-green h-line mx-auto mt-3"> </div>
         <div class="bg-brand-green h-line mx-auto mt-1 mb-3"> </div>
         <div class="row">
+            <!-- Ingredients section -->
             <section class="col-md-5 col-lg-4">
                 <h2 class="fs-rem-130 fs-rem-lg-160">Ingredients:</h2>
                 {{ recipe.ingredients | safe }}
                 <div class="d-md-none bg-brand-green h-line mx-auto my-3"> </div>
             </section>
+            <!-- Instructions section -->
             <section class="col-md-7 col-lg-8 ps-md-3 recipe-instructions">
                 <h2 class="fs-rem-130 fs-rem-lg-160">Instructions:</h2>
                 {{ recipe.content | safe }}
@@ -142,7 +148,7 @@ Basil&Thyme - Recipe page
                 </div>
                 {% endif %}
             </div>
-            <!-- Existing comments, show unapproved comments only if user = comment author -->
+            <!-- Existing comments -->
             <div id="comments-list">
                 {% for comment in comments %}
                 {% if comment.approved or comment.author == user %}
@@ -167,7 +173,7 @@ Basil&Thyme - Recipe page
                     </div>
                     <div class="col-12 col-md-9 mt-2 mt-md-0 comment-body d-flex flex-column justify-content-between">
                         <p class="text-break fst-italic fs-small">{{ comment.body }}</p>
-                        <!-- Comment edit and delete button, show only if user is comment author -->
+                        <!-- Comment edit and delete button, show for comment author -->
                         {% if comment.author == user %}
                         <div>
                             <button class="py-1 px-2 comment-edit border-btn-yellow btn-rounded btn-shadow me-1"
@@ -229,6 +235,7 @@ Basil&Thyme - Recipe page
 {% include 'components/toasts.html' %}
 {% endblock toasts %}
 
+<!-- Scripts -->
 {% block customscript %}
 <script src="{% static 'js/comments.js' %}"></script>
 <script src="{% static 'js/favourites.js' %}"></script>

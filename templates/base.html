@@ -33,8 +33,8 @@
     </noscript>
     <!-- Custom CSS stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- Preload LCP image -->
     {% block preload %}
+    <!-- Preload LCP image -->
     {% endblock preload %}
     <title>{% block title %}{% endblock title %}</title>
 </head>
@@ -78,7 +78,7 @@
                                     Favourites
                                 </a>
                             </li>
-                            <!-- If statement to dislay menu options based on logged in status -->
+                            <!-- Menu options based on logged in status -->
                             {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link white fs-rem-120 line-left {% if request.path == logout_url %}fw-600"
@@ -108,21 +108,19 @@
                 </div>
             </nav>
         </div>
-        <!-- Banner showing login status, on home and recipes pages -->
         {% block topbanner %}
+        <!-- Banner showing login status, on home and recipes pages -->
         {% endblock topbanner %}
     </header>
     <main>
         {% block content %}
         <!-- Page content gets inserted here -->
         {% endblock content %}
-
         {% block modal %}
         <!-- Modals get inserted here -->
         {% endblock modal %}
-
         {% block toasts %}
-        <!-- Toasts go in here -->
+        <!-- Toasts get inserted here -->
         {% endblock toasts %}
     </main>
     <!-- Footer -->
@@ -157,7 +155,6 @@
         </div>
     </footer>
 
-
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"
@@ -169,6 +166,7 @@
     <!-- Custom javascript -->
     <script src="{% static 'js/script.js' %}" defer></script>
     {% block customscript %}
+    <!-- Page specific javascript -->
     {% endblock customscript %}
 </body>
 

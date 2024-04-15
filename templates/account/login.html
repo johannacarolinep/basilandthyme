@@ -1,25 +1,28 @@
 {% extends "base.html" %}
-
+<!-- Page title -->
 {% block title %}
 Basil&Thyme - Sign In
 {% endblock title %}
+<!-- Meta description -->
 {% block metadescr %}
 Discover your new favourite recipes at Basil&Thyme! Sign in to add recipes to favourites, rate recipes, and leave
 comments!
 {% endblock metadescr %}
+<!-- Meta keywords -->
 {% block metakeywords %}
 cooking online community, recipe site community, Basil&Thyme log in, Basil&Thyme sign in, B&T log in, Basil and thyme
 log in, Basil and thyme sign in
 {% endblock metakeywords %}
-
+<!-- Page main content -->
 {% block content %}
-
 <div class="container-xl h-100 d-flex justify-content-center align-items-center">
-  <div class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle">
+  <!-- Sign in section -->
+  <section class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle">
     <div class="row">
       <div class="col-md-6">
         <h1 class="mb-3">Sign in</h1>
         <div class="bg-brand-green h-line mb-3"> </div>
+        <!-- Sign in form -->
         <form class="login my-4" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
           {{ form.as_p }}
@@ -44,6 +47,6 @@ log in, Basil and thyme sign in
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 {% endblock content %}

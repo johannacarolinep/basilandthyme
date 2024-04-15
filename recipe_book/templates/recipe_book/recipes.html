@@ -24,7 +24,7 @@ basil&thyme search
     href="https://res.cloudinary.com/deceun0wd/image/upload/q_auto:good/v1713091288/hero-small_llutpr.webp"
     type="image/webp">
 {% endblock preload %}
-
+<!-- Banner in header clarifying user login status -->
 {% block topbanner %}
 <div class="container-fluid m-0 py-1 text-center header-banner bg-banner">
     <p class="m-0 text-white fw-light small">
@@ -40,9 +40,11 @@ basil&thyme search
 </div>
 {% endblock topbanner %}
 
+<!-- Page main content -->
 {% block content %}
+<!-- Hero section with searchbar -->
 {% include 'components/searchbar.html' %}
-
+<!-- Section with search results, or all if no search query -->
 <section class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
         <div class="row my-2">
@@ -52,6 +54,7 @@ basil&thyme search
         </div>
         <div class="bg-brand-green h-line mb-2"> </div>
         {% if object_list %}
+        <!-- Sort button -->
         <div class="dropdown text-end mb-3">
             <button class="btn btn-yellow dropdown-toggle btn-shadow" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -63,13 +66,14 @@ basil&thyme search
                 <li><button class="dropdown-item btn-sort" value="highest-rating">By rating: high to low</button></li>
             </ul>
         </div>
-
+        <!-- Results (recipes) -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             {% for recipe in object_list %}
             {% include 'components/recipecard.html' %}
             {% endfor %}
         </div>
         {% else %}
+        <!-- Content displaying when no results -->
         <div class="h-300 h-l-400 d-flex flex-grow-1 justify-content-center align-items-center">
             <div class="text-center">
                 <img class="square-150 square-l-200 mx-auto"
@@ -79,6 +83,7 @@ basil&thyme search
             </div>
         </div>
         {% endif %}
+        <!-- Pagination -->
         {% if is_paginated %}
         <nav class="mt-4" aria-label="Navigation for recipes split over multiple pages.">
             <ul class="pagination justify-content-center">
@@ -115,6 +120,7 @@ basil&thyme search
 {% include 'components/toasts.html' %}
 {% endblock toasts %}
 
+<!-- Scripts -->
 {% block customscript %}
 <script src="{% static 'js/favourites.js' %}"></script>
 <script src="{% static 'js/ratings.js' %}"></script>

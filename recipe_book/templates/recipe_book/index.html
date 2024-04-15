@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+<!-- CSRF token -->
 {% block token %}
 <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock token %}
@@ -25,7 +25,7 @@ recipes, vegetarian recipes
     href="https://res.cloudinary.com/deceun0wd/image/upload/q_auto:good/v1713091288/hero-small_llutpr.webp"
     type="image/webp">
 {% endblock preload %}
-
+<!-- Banner in header clarifying user login status -->
 {% block topbanner %}
 <div class="container-fluid m-0 py-1 text-center header-banner bg-banner">
     <p class="m-0 text-white fw-light small">
@@ -41,11 +41,12 @@ recipes, vegetarian recipes
 </div>
 {% endblock topbanner %}
 
+<!-- Page main content -->
 {% block content %}
 <!-- Top section, with searchbar -->
 {% include 'components/searchbar.html' %}
 
-<!-- Section with top rated recipes -->
+<!-- Section with top rated recipes (cards) -->
 <section id="top-rated-section" class="container-fluid bg-brand-gray py-4">
     <div class="container-xl">
         <div class="row my-2">
@@ -66,7 +67,7 @@ recipes, vegetarian recipes
     </div>
 </section>
 
-<!-- Section with latest published recipes -->
+<!-- Section with latest published recipes (cards)-->
 <section id="latest-section" class="container-fluid bg-white py-4">
     <div class="container-xl">
         <div class="row my-2">
@@ -130,6 +131,7 @@ recipes, vegetarian recipes
 {% include 'components/toasts.html' %}
 {% endblock toasts %}
 
+<!-- Scripts -->
 {% block customscript %}
 <script src="{% static 'js/favourites.js' %}"></script>
 <script src="{% static 'js/ratings.js' %}"></script>

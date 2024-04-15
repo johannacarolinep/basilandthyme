@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 <!-- Page meta description -->
 {% block metadescr %}
 Leaving us so soon? On this page you can log out from your Basil&Thyme account.
@@ -8,14 +7,15 @@ Leaving us so soon? On this page you can log out from your Basil&Thyme account.
 {% block title %}
 Basil&Thyme - Sign Out
 {% endblock title %}
-
+<!-- Page main content -->
 {% block content %}
 <div class="container-xl h-100 d-flex justify-content-center align-items-center">
-  <div class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle mx-auto w-full max-w-900">
+  <!-- Sign out section -->
+  <section class="my-3 my-md-4 m-lg-4 p-4 bg-white shadow border-subtle mx-auto w-full max-w-900">
     <h1>Sign out</h1>
     <div class="bg-brand-green h-line mb-3"> </div>
     <p>Are you sure you want to sign out?</p>
-
+    <!-- Sign out form -->
     <form method="post" action="{% url 'account_logout' %}">
       {% csrf_token %}
       {% if redirect_field_value %}
@@ -23,6 +23,6 @@ Basil&Thyme - Sign Out
       {% endif %}
       <button type="submit" class="border-btn-yellow btn-shadow btn-rounded p-2 px-3 fw-bold fs-5">Sign Out</button>
     </form>
-  </div>
+  </section>
 </div>
 {% endblock content %}

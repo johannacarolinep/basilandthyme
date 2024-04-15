@@ -1,3 +1,4 @@
+<!-- Hero section for home page and recipes page -->
 <section class="hero-section container-fluid d-flex align-items-center">
     <div class="container-xl">
         <div class="row">
@@ -6,10 +7,12 @@
                 <h1 class="text-white text-center">Welcome to Basil & Thyme!</h1>
                 <h2 class="text-white text-center">Search for your new favourite recipes below:</h2>
                 {% else %}
+                <!-- Dynamic heading when searching on recipes page -->
                 <h1 class="text-white text-center">{{ searchHeading }}</h1>
                 {% endif %}
             </div>
         </div>
+        <!-- Search bar -->
         <div class="row">
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto searchbar-outline">
                 <form class="input-group input-group-lg searchbar" method="GET" action="{% url 'recipe_list_page' %}">
@@ -21,6 +24,7 @@
                 </form>
             </div>
         </div>
+        <!-- Category buttons -->
         <div class="row">
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto text-center category-btns">
                 <button class="btn btn-rounded bg-brand-yellow mx-2 mt-3 btnCategory"

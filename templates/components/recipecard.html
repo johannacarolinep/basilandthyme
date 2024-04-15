@@ -1,10 +1,11 @@
 {% load static %}
-
+<!-- Recipe card -->
 <div class="col">
     <article class="card border-subtle shadow h-100 max-w-370 mx-auto" style="position: relative;" id="{{ recipe.id }}">
         {% if request.path == favourites_url %}
         <p class="d-none fs-rem-130 text-center text-white">Recipe removed from favourites</p>
         {% endif %}
+        <!-- Card image: recipe image or placeholder -->
         {% if "placeholder" in recipe.feature_image.url %}
         <img class="card-img-top img-cover"
             src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713093927/default-image_mekium.webp"
@@ -15,6 +16,7 @@
         {% cloudinary recipe.feature_image quality='auto:eco' class=classes loading="lazy" alt=recipe.alt_text %}
         {% endwith %}
         {% endif %}
+        <!-- Button to favourite/unfavourite recipe -->
         <div class="card-heart-icon d-flex align-items-center text-center m-2">
             <p class="mb-0 me-1"></p>
             <button class="icon-button me-2 heart-btn"
@@ -27,7 +29,7 @@
         </div>
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="rating">
-                <!-- Button to open modal -->
+                <!-- Button to open ratings modal (clickable ratings display)-->
                 <button class="icon-button init-rate-btn" data-user-rating="{{ recipe.user_rating }}"
                     data-recipe-id="{{ recipe.id }}"
                     data-logged-in="{% if user.is_authenticated %}true{% else %}false{% endif %}"
@@ -46,6 +48,7 @@
                     </span>
                 </button>
             </div>
+            <!-- Recipe category icon -->
             <div class="category fs-rem-120">
                 {% if recipe.category == 1 %}
                 <i class="fa-solid fa-drumstick-bite" title="Recipe category is chicken"></i>
@@ -61,6 +64,7 @@
             </div>
         </div>
         <div class="card-body">
+            <!-- Clickable title and teaser text -->
             <a class="brand-dark standard-link" href="{% url 'recipe_detail' recipe.slug %}"
                 aria-label="Recipe title: {{ recipe.title }} Click to open detailed recipe page">
                 <h3 class="fs-rem-130 truncate-two-lines">{{ recipe.title }}</h3>

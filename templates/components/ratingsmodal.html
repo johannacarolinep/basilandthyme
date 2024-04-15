@@ -1,5 +1,5 @@
 {% load static %}
-
+<!-- Ratings modal -->
 <div class="modal fade bg-modal" id="ratings-modal" role="dialog" tabindex="-1" aria-labelledby="ratings-modal-label"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -8,12 +8,14 @@
                 <h3 class="modal-title fs-4 fw-bold" id="ratings-modal-label">
                     Rate this recipe
                 </h3>
+                <!-- X button -->
                 <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" id="close-rating-btn"
                     aria-label="Close"></button>
                 <p id="rate-modal-intro"></p>
                 <div id="rate-modal-stars" class="d-flex fs-1 my-3 justify-content-center">
                 </div>
                 <p id="rate-modal-delete-instr"></p>
+                <!-- Buttons to cancel, delete existing rating, submit new rating -->
                 <div class="d-flex mt-3 justify-content-center flex-wrap">
                     <button class="btn mt-2 d-inline-block me-2 border-btn-gray btn-shadow btn-rounded"
                         aria-label="Cancel and close modal" id="cancel-rating-btn">

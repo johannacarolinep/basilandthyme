@@ -1,6 +1,8 @@
 <!-- TOASTS -->
 {% load static %}
+<!-- Container to stack toasts when several displaying -->
 <div class="toast-container position-fixed top-0 end-0 p-3 below-header">
+    <!-- Toast: Ratings -->
     <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="toast">
         <div class="toast-header">
             <img src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713094527/logo-round-small-green_qnavae.webp"
@@ -13,6 +15,7 @@
         </div>
         <div class="toast-body bg-toast"></div>
     </div>
+    <!-- Toast: Favouriting -->
     <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="fave-toast">
         <div class="toast-header">
             <img src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713094527/logo-round-small-green_qnavae.webp"
@@ -25,6 +28,7 @@
         </div>
         <div class="toast-body bg-toast"></div>
     </div>
+    <!-- Toast: Commenting -->
     <div class="toast" role="status" aria-live="polite" aria-atomic="true" id="comment-toast">
         <div class="toast-header">
             <img src="https://res.cloudinary.com/deceun0wd/image/upload/q_auto/v1713094527/logo-round-small-green_qnavae.webp"
