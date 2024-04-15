@@ -580,6 +580,44 @@ Please find documentation related to testing and validation in [TESTING.md](TEST
 
 ### Solved bugs
 
+#### 2024-04-15: Incorrect value annotated to objects in RecipeListView - part 2
+*Note:* This bug relates to a previous bug:
+    - 2024-03-30: Incorrect value annotated to objects in RecipeListView
+
+<details>
+<summary>Click to see bug details</summary>
+
+After rating multiple recipes with multiple users I noticed that the previous solution (see Bug report: *2024-03-30: Incorrect value annotated to objects in RecipeListView*) unfortunately returned duplicate objects of the rated recipes for every other user that rated a recipe. This would happen only when a user was logged in.
+
+Steps taken:
+- Due to this breaking intended behavior, I checked the documentation again.
+- The solution that passed all edge cases was one that used subqueries instead.
+
+Solution:
+- Basing my new solution largely on this post from the [Django models page](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#subquery-expressions) I wrote the following piece of code.
+
+```python
+if user.is_authenticated:
+			ratings_subquery = Rating.objects.filter(
+                recipe=models.OuterRef('pk'),
+                user=user
+            ).values('rating')[:1]
+
+            base_queryset = base_queryset.annotate(
+                user_rating=models.Subquery(
+                    ratings_subquery,
+                    output_field=models.IntegerField(default=None))
+            )
+```
+
+In the above example, the use of `models.F` previously has been replaced by `models.Subquery`. After the subquery resolves it is placed inside of an annotate with `ratings_subquery` as the subquery.
+
+Finally, I redeployed the website and tried rating recipes as different logged-in users, to ensure the code was now working as intended.
+
+
+ </details>
+</details>
+
 #### 2024-03-30: Incorrect value annotated to objects in RecipeListView
 
 <details>

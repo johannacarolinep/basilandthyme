@@ -399,6 +399,8 @@ All Python code was linted using Code Institute's [CI Python Linter](https://pep
 
 Screenshots of the results per file can be found in this [pdf](documentation/linting-results.pdf).
 
+*Note:* Files recipe_list.py, features_list.py, and favourites_list.py were re-linted after recent bug fix, with no difference in linting results.
+
 <a id="js-lint"></a>
 ## Linting of JavaScript code
 
