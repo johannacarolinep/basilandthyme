@@ -1,7 +1,7 @@
 from django.db import models
 from django.views.generic import ListView
 from django.db.models import Q
-from ..models import Recipe, Favourite
+from ..models import Recipe, Favourite, Rating
 
 
 class RecipeListView(ListView):
@@ -41,14 +41,18 @@ class RecipeListView(ListView):
         # if logged in user, annotate recipes with users rating of recipe
         user = self.request.user
         if user.is_authenticated:
+            # create a subquery to get the user's rating for each recipe
+            ratings_subquery = Rating.objects.filter(
+                recipe=models.OuterRef('pk'),
+                user=user
+            ).values('rating')[:1]
+
+            # Annotate the queryset
             base_queryset = base_queryset.annotate(
-                user_rating=models.Case(
-                    models.When(rating_recipe__user=user,
-                                then=models.F('rating_recipe__rating')),
-                    default=None,
-                    output_field=models.IntegerField()
-                )
-                )
+                user_rating=models.Subquery(
+                    ratings_subquery,
+                    output_field=models.IntegerField(default=None))
+            )
 
         # if there's a search query, filter recipes by it
         if self.query:

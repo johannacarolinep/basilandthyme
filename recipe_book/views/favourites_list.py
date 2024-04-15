@@ -1,6 +1,6 @@
 from django.db import models
 from django.views.generic import ListView
-from ..models import Recipe, Favourite
+from ..models import Recipe, Favourite, Rating
 
 
 class FavouritesList(ListView):
@@ -43,9 +43,21 @@ class FavouritesList(ListView):
             # https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate
             queryset = base.annotate(
                 avg_rating=models.Avg('rating_recipe__rating'),
-                ratings_count=models.Count('rating_recipe'),
-                user_rating=models.F('rating_recipe__rating')
+                ratings_count=models.Count('rating_recipe')
             )
+            # create a subquery to get the user's rating for each recipe
+            ratings_subquery = Rating.objects.filter(
+                recipe=models.OuterRef('pk'),
+                user=user
+            ).values('rating')[:1]
+
+            # Annotate the queryset with user's rating
+            queryset = queryset.annotate(
+                user_rating=models.Subquery(
+                    ratings_subquery,
+                    output_field=models.IntegerField(default=None))
+            )
+
             return queryset
 
         else:

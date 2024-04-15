@@ -71,6 +71,8 @@ The review was documented in the PDFs below, split per reviewed page:
 <a id="manual-test-functionality"></a>
 ### Manual testing of core functionality TBC
 
+
+
 <a id="user-story-testing"></a>
 ### Manual testing of user stories WIP
 
