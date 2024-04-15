@@ -580,6 +580,33 @@ Please find documentation related to testing and validation in [TESTING.md](TEST
 
 ### Solved bugs
 
+#### 2024-04-15: Possible misuse of ARIA labels.
+
+When validating the HTML for the website, the validation tool raised a warning about possible misuse of ARIA-labels on the icons used to indicate a recipe's category (in recipe cards and on recipe detail pages).
+
+**Steps taken:**
+- I had initially tried to include a *span* or *paragraph* next to the icons that would be hidden visually but read by screenreaders, to make the recipe categorization available to these users. However, this lead to issues with layout shift and a confusing UX, since I did not manage to avoid the text appearing on screen before it was hidden.
+- At a later stage I therefore decided to use a combination of ARIA-labels and ARIA hidden instead, thinking this could be a valid way to communicate the meaning of the icons to screenreader users.
+- Seeing the warnings I went back to [FontAwesome's documentation](https://docs.fontawesome.com/web/dig-deeper/accessibility/#font-awesome-icons-and-accessibility) and found instructions for how to use their "auto-accessibility" features for icons with semantic meaning.
+
+
+**Solution:** 
+Following the documentation, I removed `aria-hidden='true'` from the icons and added a title attribute to each icon instead.
+
+I then confirmed both in the local environment and on the deployed site that the result was as expected:
+
+Example of icon in my HTML code:
+```
+<i class="fa-solid fa-drumstick-bite" title="Recipe category is 'chicken'"></i>
+```
+
+Inspecting the icon in *Google dev tools* on the rendered page:
+![Inspecting the icon](documentation/icon-rendered.png)
+
+*FontAwesome* interprets the use of the title on an icon as an icon with semantic importance. It automatically adds `aria-hidden="true"` and a visually hidden *span* with the title text.
+
+Finally, I confirmed that the HTML now passed validation.
+
 #### 2024-04-15: Incorrect value annotated to objects in RecipeListView - part 2
 *Note:* This bug relates to a previous bug:
     - 2024-03-30: Incorrect value annotated to objects in RecipeListView
@@ -768,6 +795,10 @@ class Meta:
 ``````
 
 </details>
+
+### Unsolved bugs
+
+I am not aware of any currently unsolved bugs.
 
 
 <a id="credits"></a>
