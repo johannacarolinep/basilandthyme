@@ -51,7 +51,19 @@ Click on the links below to see screenshots of the website opened on different b
 </details>
 
 <a id="responsiveness"></a>
-## Responsiveness testing TBC
+## Responsiveness testing
+
+The website was reviewed with [Responsive Viewer](https://chromewebstore.google.com/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb), to test responsiveness and ensure a good and consistent user experience across device types.
+
+The review was documented in the PDFs below, split per reviewed page:
+- [Home page](documentation/responsiveness/responsive-home.pdf)
+- [Recipes page](documentation/responsiveness/responsive-recipes.pdf)
+- [Recipe detail page](documentation/responsiveness/responsive-recipe-page.pdf)
+- [Favourites page](documentation/responsiveness/responsive-favourites.pdf)
+- [Sign up page](documentation/responsiveness/responsive-signup.pdf)
+- [Sign in page](documentation/responsiveness/responsive-signin.pdf)
+- [Sign out page](documentation/responsiveness/responsive-signout.pdf)
+
 
 <a id="manual-testing"></a>
 ## Manual testing TBC

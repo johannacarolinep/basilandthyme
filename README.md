@@ -362,6 +362,7 @@ Velocity: 16.66
 - [JSHint](https://jshint.com/) - Was used to lint JavaScript code.
 - [W3C Markup Validation Service](https://validator.w3.org/) - Was used to validate HTML.
 - [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Was used to validate CSS.
+- [Responsive Viewer](https://chromewebstore.google.com/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb) - Was used to review the responsiveness of the website.
 
 ### Design
 - [Neumorphism.io](https://neumorphism.io/#ffffff) - Was used to generate box-shadows for CSS.
