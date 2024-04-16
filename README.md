@@ -668,6 +668,39 @@ Below are all of the defined user stories listed, with their acceptance criteria
 <a id="future-improvements"></a>
 ### Future improvements
 
+2 user stories initially intended for this project remain in the backlog, since they were recategorised as "out of scope". These should be considered as future improvements, since I still believe they would greatly benefit the user (see reflections in sprint 5 for more context).
+
+Additionally, there are a few more features/functionalities I have identified as potential improvements.
+
+<details>
+<summary>See list of future improvements</summary>
+
+- `USER STORY`: As a **Site User** signing up for an account I can verify my email so that I can feel more secure and trust that my account is protected. <mark>Moved to *Future Improvements*</mark>
+    - **Acceptance criteria 1:** Upon completing the signup process, the user receives an email containing a verification link.
+    - **Acceptance criteria 2:** Clicking on the verification link directs the user to a confirmation page confirming that their email has been successfully verified.
+    - **Acceptance criteria 3:** If the user attempts to log in without verifying their email, they receive a prompt reminding them to verify their email.
+    - **Acceptance criteria 4:** The verification link expires after a specified period to ensure the security of the verification process.
+    - **Acceptance criteria 5:** Users have the option to request a new verification email if they did not receive the initial one or if the link has expired.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can register an account using an existing social media account so that I can have a faster and smoother registration and login experience.<mark>Moved to *Future Improvements*</mark>
+    - **Acceptance criteria 1:** A user can register an account with selected social media accounts (min requirement, Google or Facebook).
+    - **Acceptance criteria 2:** Given a user has registered an account using their social media account, they can log in using that account.
+    - **Acceptance criteria 3:** Then the user can log out.
+
+<br>
+
+- Redirecting users to the previous visited page after signing in, instead of the home page. I believe this would improve the user experience. A user may be prompted to sign in, in order to e.g. leave a comment on a specific recipe. With the current setup, the user would get redirected to the home page after signing in, and would then need to navigate back to the specific recipe.
+
+- Improve instructions given on Favourites page for unauthenticated users. Due to time constraints, the instructions are given in the form of paragraphs, with very little styling. I would like to instead create a visual instruction, using graphics describing how the favouriting of recipes work. This could not be prioritised for the project due to time constraints. 
+
+- Further improvements to the admin panel/A completely custom admin page. In spite of that some efforts were made to improve the UX for the superuser in the admin panel, I still believe it is not as user friendly as it could be. A future improvement should be at the very least to further enhance the admin panel UI. I would also like to investigate the possibility of building a custom admin page.
+
+</details>
+
+
+
 <a id="features"></a>
 ## Features
 
