@@ -641,8 +641,6 @@ In the above example, the use of `models.F` previously has been replaced by `mod
 
 Finally, I redeployed the website and tried rating recipes as different logged-in users, to ensure the code was now working as intended.
 
-
- </details>
 </details>
 
 #### 2024-03-30: Incorrect value annotated to objects in RecipeListView
@@ -802,12 +800,66 @@ I am not aware of any currently unsolved bugs.
 
 
 <a id="credits"></a>
-## Credits WIP
+## Credit
 
-- Adding extra context: https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/#adding-extra-context
-- AssertRaises: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises
-- full_clean(): https://docs.djangoproject.com/en/5.0/ref/forms/validation/
-- date formatting: https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date
+### Images:
+
+__The following images were taken from [Pixabay](https://pixabay.com/)__
+- [Hero image - vegetables on wooden background](https://pixabay.com/photos/mediterranean-cuisine-eat-food-2378758/)
+- [About us image (basil leaves with pasta hearts)](https://pixabay.com/photos/spaghetti-noodles-pasta-basil-2210680/)
+-[Lasagna](https://pixabay.com/illustrations/lasagna-snack-to-have-lunch-food-7577748/)
+- [Bolognese](https://pixabay.com/illustrations/ai-generated-spaghetti-pasta-8665555/)
+- [Carbonara](https://pixabay.com/illustrations/ai-generated-carbonara-pasta-8545202/)
+- [Grilled salmon fillet](https://pixabay.com/photos/salmon-fish-grilled-fish-grill-1485014/)
+- [Pork fillet with potato gratin](https://pixabay.com/photos/fillet-pig-asparagus-736458/)
+- [Goulash](https://pixabay.com/illustrations/ai-generated-gulash-soup-goulash-8317423/)
+- [Yellow chicken curry](https://pixabay.com/photos/food-indian-curry-healthy-cooking-4073884/)
+
+__The following images were taken from [Pexels](https://www.pexels.com/)__
+- [Tomato soup](https://www.pexels.com/photo/brown-soup-in-white-ceramic-bowl-539451/)
+- [Vegetarian stir fry noodles:](https://www.pexels.com/photo/stir-fry-noodles-in-bowl-2347311/)
+- [Chicken cale salad](https://www.pexels.com/photo/top-view-photo-of-food-on-top-of-baking-rack-2741448/)
+- [Spicy noodle soup](https://www.pexels.com/photo/spicy-noodle-soup-in-a-ceramic-bowl-5409027/)
+- [Shrimp soup](https://www.pexels.com/photo/bowl-of-shrimp-soup-on-brown-wooden-surface-688802/)
+- [Spicy tomato pasta](https://www.pexels.com/photo/pasta-with-green-leaf-and-chili-pepper-1460872/)
+- [Oven-roasted chicken](https://www.pexels.com/photo/person-holding-a-ceramic-plate-of-roasted-chicken-6163267/)
+- [Steak with pepper sauce](https://www.pexels.com/photo/steak-food-769289/)
+- [Porkloin with red wine sauce](https://www.pexels.com/photo/photo-of-cooked-food-3659862/)
+- [Schnitzel and baked potatoes](https://www.pexels.com/photo/schnitzel-with-baked-potatoes-and-arugula-salad-19396433/)
+- [Caprese salad](https://www.pexels.com/photo/salad-on-a-plate-13241736/)
+- [Grilled cod](https://www.pexels.com/photo/brown-and-white-dish-on-white-ceramic-plate-5713767/)
+
+__The below image was taken from [Unsplash](https://unsplash.com/)__
+- [Seafood pasta](https://unsplash.com/photos/cooked-noodles-with-shrimps-r01ZopTiEV8)
+
+
+### Fonts
+- The *Poppins* font used on the website was taken from [Google fonts](https://fonts.google.com/)
+
+### Design
+The design of the website was inspired by a multitude of existing recipe websites, but one that I referenced especially was:
+- [Recept.se](https://recept.se/)
+
+### Code resources
+
+__Main resources__:
+- The official [Django documentation](https://docs.djangoproject.com/en/5.0/) has been a great help throughout the project, and has been consulted frequently. A few pages I referenced in particular were:
+	- [Adding extra context](https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/#adding-extra-context): Thought me in the beginning of the project how to return additional information from a view.
+	- [Annotate](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#annotate): I used this for annotating additional information to objects returned in my list views.
+	- [SubQuery() expressions](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#subquery-expressions): I used this to annotate the user's rating of recipes in list views.
+	- [Form and field validation](https://docs.djangoproject.com/en/5.0/ref/forms/validation/): A helpful resource to understand form validation
+	- [date](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#date): I used this to format dates displayed in the comments
+- [Python.org's documentation of the Unit testing framework](https://docs.python.org/3/library/unittest.html#module-unittest): Was my main reference when writing automated tests for my Python code.
+- [Bootstrap documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/): Was used frequently to understand styles and components.
+- [Code Institute resources](https://codeinstitute.net/): Especially the module 4 walkthrough project (Codestar blog), was an important resource. Particularly in the beginning of the project, when I was not very acquainted with the Django framework, it was extremely helpful to be able to go back and revisit the tutorials of this project.
+
+__Resources with more specific use cases:__
+- [Cloudinary documentation](https://cloudinary.com/documentation): Was referenced especially for image optimisation.
+- [FontAwesome documentation](https://docs.fontawesome.com/): Was used, especially to understand how to make Font Awesome icons more accessible to visually impaired users.
+- [Truncate text with CSS](https://blog.logrocket.com/ways-truncate-text-css/): I followed this resource for how to truncate text in my recipe cards.
+- [Article on working with AJAX in Django](https://testdriven.io/blog/django-ajax-xhr/): I referenced this article for making POST, PUT and DELETE requests.
+- [Mdn Web Docs Article on SearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams): Was referenced when building the JavaScript functions responsible for appending search and sort queries to the URL.
+
 
 <a id="acknowledgements"></a>
 ## Acknowledgements TBC
