@@ -862,4 +862,6 @@ __Resources with more specific use cases:__
 
 
 <a id="acknowledgements"></a>
-## Acknowledgements TBC
+## Acknowledgements
+- I would be amiss not to acknowledge my amazing Code Institute mentor, [Iuliia Konovalova](https://github.com/IuliiaKonovalova), who is without fail __always__ 100% present and engaged during our meetings, and who is a tremendous help to me.
+- I would also like to acknowledge the Code Institute Slack Community, and especially the #community-sweden channel, for all of the support as well as good vibes.
