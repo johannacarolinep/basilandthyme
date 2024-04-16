@@ -2,11 +2,16 @@
 
 # Basil and Thyme
 
+Basil and Thyme is a recipe website where users can search for and browse recipes. For signed in users, the website offers functionality such as favouriting recipes, rating recipes, and commenting.
+
+The deployed website can be found [here](https://basil-and-thyme-e544c9b02aa3.herokuapp.com/).
+
+---
+
 **Table of content**
 
 - [Planning and methodology](#planning)
     - [Site goals and strategy](#strategy)
-    - [User stories](#user-stories)
     - [Information Architecture](#ia)
         - [Wireframes showing CRUD functionality and Dynamic content](#dynamic-crud)
     - [Database ERD](#erd)
@@ -16,6 +21,7 @@
         - [Logo](#logo)
         - [Design wireframes](#design-wireframes)
     - [Agile methodology](#agile-methodology)
+    - [User stories](#user-stories)
     - [Future improvements](#future-improvements)
 - [Features](#features)
 - [Tools and technologies](#tools-and-technologies)
@@ -37,6 +43,9 @@
 
 The fictive company *Basil & Thyme* wants to build a large user base for their recipe website, by providing a delightful, useful, and engaging experience for their users.
 
+<details>
+<summary>Click for details</summary>
+
 Building a large user base opens up future monetization opportunities, in the form of e.g. ad placements and/or partnerships with brands in the industry looking to promote their products. Basil & Thyme could charge for recommending the use of specific brands in their recipes, or for releasing editorial content on the site in partnership with these brands.
 
 *Basil & Thyme's* strategy for building their user base, in their audience of home chefs, relies on building a website that is appealing to this audience, and engaging enough to make users want to come back for more.
@@ -49,9 +58,7 @@ Another important aspect of creating their user base is to be able to continuall
 
 To avoid negative experiences that could severely damage user retention, the website must be built to a high standard. Comprehensive testing should be used to minimise the risk of changes breaking the website when pushed to production.
 
-
-<a id="user-stories"></a>
-### User stories
+</details>
 
 
 <a id="ia"></a>
@@ -60,7 +67,6 @@ To avoid negative experiences that could severely damage user retention, the web
 The diagram displays the intended consumption of information on the website, and how a typical user may navigate through the site.
 
 ![Information architecture diagram](documentation/ia-diagram.png)
-
 
 
 <a id="dynamic-crud"></a>
@@ -151,10 +157,29 @@ A simple logo was created for the project, consisting of the company name comple
 <a id="agile-methodology"></a>
 ### Agile methodology
 
+Agile methodologies were used to develop this project.
+
+<details>
+<summary>Click for description of agile methodology in the project</summary>
+
+In the planning phase a set of user stories were defined in order to ensure the project focused on adding value to its users. The user stories represented small/bite sized features to be implemented, allowing for the work to stay focused.
+
+The user stories were also split up into EPICS reflecting larger features or sets of features on the site.
+
+All user stories, as well as PBI’s that fell outside of the user stories (such as project setup and documentation) were added to a backlog, and given a points score to estimate the relative work required for implementation. The backlog was maintained throughout the project, meaning regular prioritisation of the PBI’s.
+
+The project was split into 7 sprints/iterations of one week each. Before each sprint, the PBI’s with the highest priority were added to the iteration, and prioritised according to MoSCoW method, with a maximum of 60% of points having a “Must Have” status for the iteration. The PBI’s added to the iteration were also added to a board, making it easier to keep track and focus only on the PBI’s in scope for the iteration. At the end of each iteration, any user story/PBI for which all acceptance criteria had been met was closed, and any user story that had not been completed was moved back to the backlog, before reprioritising and defining the next sprint.
+
+In keeping with Agile philosophies, new user stories and PBI's were allowed to enter the backlog throughout the project. Time was set aside at the end of each sprint, to reflect on the need to add new stories/edit existing ones.
+
+</details>
+
 #### Sprint 1
 
 <details>
 <summary>Click to see details of sprint 1</summary>
+
+Sprint 1 milestone:
 
 ![Sprint 1 milestone](documentation/sprint1.png)
 
@@ -182,6 +207,8 @@ Velocity: 17
 
 <details>
 <summary>Click to see details of sprint 2</summary>
+
+Sprint 2 milestone:
 
 ![Sprint 2 milestone](documentation/sprint2.png)
 
@@ -218,11 +245,15 @@ Velocity: 16.5
 
 <details>
 <summary>Click to see details of sprint 3</summary>
+
+Sprint 3 milestone:
+
 ![Sprint 3 milestone](documentation/sprint3.png)
 
 ##### Sprint 3 wrap-up
 
 Project board at end of sprint 3:
+
 ![End of sprint 3 project board](documentation/project-board-spr-3.png)
 
 Points completed: 18
@@ -240,6 +271,8 @@ Velocity: 17
 
 <details>
 <summary>Click to see details of sprint 4</summary>
+
+Sprint 4 milestone:
 
 ![Sprint 4 milestone](documentation/sprint4.png)
 
@@ -268,11 +301,14 @@ Velocity: 16.25
 <details>
 <summary>Click to see details of sprint 5</summary>
 
+Sprint 5 milestone:
+
 ![Sprint 5 milestone](documentation/sprint5.png)
 
 ##### Sprint 5 wrap-up:
 
 Project board at end of sprint 5:
+
 ![Project board at end of sprint 5](documentation/project-board-spr-5.png)
 
 Points completed in sprint: 21
@@ -303,6 +339,7 @@ Furthermore, on closer reflection, I believe the implementation of this function
 <details>
 <summary>Click to see details of sprint 6</summary>
 
+Sprint 6 milestone:
 ![Sprint 6 milestone](documentation/sprint6.png)
 
 ##### Sprint 6 wrap-up
@@ -324,8 +361,13 @@ Velocity: 16.66
 
 #### Sprint 7
 
+Sprint 7 milestone:
+
 ![Sprint 7](documentation/sprint7.png)
 
+
+<a id="user-stories"></a>
+### User stories
 
 <a id="future-improvements"></a>
 ### Future improvements
@@ -763,7 +805,7 @@ The following are found in the root directory:
 	- js: In this folder I store javascript code. This code is included in the HTML pages to enhance the responsiveness of the webpage and provide a better user experience.
 	    - Inside the js folder is a tests folder, in which I store the JEST tests for javascript functions.
     
-2. __staticfiles:__ The staticfiles folder is where the static files are collected from the static folder and are then able to be served in the live server. Before deployment of changes the command line `python manage.py collectstatic` needs to have been run so any changes to the static folder are correctly added in the staticfiles folder.
+2. __staticfiles:__ The staticfiles folder is where the static files are collected from the static folder and are then able to be served in the live server. Before deployment of changes the command `python manage.py collectstatic` needs to have been run so any changes to the static folder are correctly added in the staticfiles folder.
 
 3. __templates:__ The templates folder holds files that are responsible for serving templates. The following are found in this folder:
 	- __base.html__ - the base template which holds the code that is shared by all pages, such as the main navigation and footer, as well the HTML head element. All other html files in the project extend this template, directly or indirectly.
