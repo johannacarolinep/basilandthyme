@@ -361,10 +361,23 @@ Velocity: 16.66
 
 #### Sprint 7
 
+<details>
+<summary>Click to see details of sprint 7</summary>
+
 Sprint 7 milestone:
 
 ![Sprint 7](documentation/sprint7.png)
 
+##### Sprint 7 wrap-up
+
+Project board at end of sprint 7:
+![Project board, end of sprint 7](documentation/project-board-spr-7.png)
+
+Points finished: 30
+
+Velocity: 18.57
+
+</details>
 
 <a id="user-stories"></a>
 ### User stories (and other backlog items)
