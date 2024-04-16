@@ -3,7 +3,7 @@
 # Basil and Thyme
 
 **Table of content**
-- [Features](#features)
+
 - [Planning and methodology](#planning)
     - [Site goals and strategy](#strategy)
     - [User stories](#user-stories)
@@ -17,6 +17,7 @@
         - [Design wireframes](#design-wireframes)
     - [Agile methodology](#agile-methodology)
     - [Future improvements](#future-improvements)
+- [Features](#features)
 - [Tools and technologies](#tools-and-technologies)
 - [Code description](#code-description)
 - [Deployment](#deployment)
@@ -26,9 +27,6 @@
 - [Acknowledgements](#acknowledgements)
 
 ---
-
-<a id="features"></a>
-## Features
 
 
 <a id="planning"></a>
@@ -331,6 +329,357 @@ Velocity: 16.66
 
 <a id="future-improvements"></a>
 ### Future improvements
+
+<a id="features"></a>
+## Features
+
+### Main navigation
+
+The website features a global, responsive, navigation.
+
+<details>
+<summary>Click to see details</summary>
+
+The main navigation has a fixed position at the top of the screen and is present across all pages. 
+
+As a signed in user, the main navigation links are *Home, Recipes, Favourites, and Sign Out*.
+
+![Main navigation - signed in](documentation/features/feat-nav-signed-in.png)
+
+As a user who is not signed in, the options are instead *Home, Recipes, Favourites, Sign Up, and Sign In*.
+
+The links are visually enhanced with icons, to make them more distinguishable from one another. 
+
+The current page link is styled bold.
+
+![Main navigation - signed out](documentation/features/feat-nav-signed-out.png)
+
+The navigation is responsive. On Mobile it is hidden behind a hamburger icon, which is used to open and close the menu. The links are the same, and appear in the same order as on desktop.
+
+![Main navigation - mobile, collapsed](documentation/features/feat-nav-mobile-collapse.png)
+
+![Main navigation - mobile](documentation/features/feat-nav-mobile.png)
+
+</details>
+
+### Footer
+
+The website has a global footer. 
+
+<details>
+<summary>Click to see details</summary>
+
+The footer contains:
+- Copyright info
+- An email address, providing a way to contact the website owner
+- A clickable logo image, linking to the home page.
+- A disclaimer about the project purpose
+- Links to my social media
+
+![Footer](documentation/features/feat-bt-footer.png)
+
+</details>
+
+
+### Home page
+
+The home page provides an engaging introduction to the website, with featured recipes.
+
+![Home page](documentation/features/feat-home.png)
+
+<details>
+<summary>Click to see details</summary>
+
+The home page features a hero section at the top, with a background image.
+
+Overlaying the background image is the page heading, as well as a search bar and category buttons. Searching or clicking on a category will open the *Recipes page*.
+
+![Home page - hero section](documentation/features/feat-home-searchbar.png)
+
+Below the hero section, the home page features two sections with featured recipes.
+
+In these sections, the 4 highest rated, and 4 latest published, recipes are displayed. Each section also contains a "See all" link, which leads to the *Recipes page*.
+
+![Home page - top rated](documentation/features/feat-home-top-rated.png)
+
+![Home page - latest published](documentation/features/feat-home-latest-published.png)
+
+Lastly, the home page features a brief "about" section, mainly meant to build rapport with the website's visitors.
+
+![Home page - about us](documentation/features/feat-home-about.png)
+
+</details>
+
+### Recipe card
+
+Across several pages on the website, recipes are presented in card format.
+
+<details>
+<summary>Click to see details</summary>
+
+The recipe card is meant to present the recipe in an appealing way to the user, providing an overview/glimpse of the recipe. It is also a way to present several recipes on the same page without overwhelming the user.
+
+The user can get an overview of multiple recipes and decide which recipe they may want to see in full.
+
+The recipe card consists of the following:
+- The recipe image (or placeholder image if the recipe does not have a custom image)
+- The recipe title and teaser text, which are clickable and links to the corresponding recipe detail page.
+    - These are truncated when they are above a certain length, to keep the pages using recipe cards as digestible as possible.
+- An icon symbolising the recipe category. A recipe can have no category, in which case the icon is left out.
+- A clickable heart icon in the upper right corner, for favouriting recipes.
+- The ratings display (A button with 5 stars and a number in parenthesis).
+    - The stars visually present the average rating the given recipe has received.
+    - The number represents the count of ratings the recipe has received.
+    - Clicking the button will open a modal in which users can rate the recipe, if logged in. If the user is not logged in, clicking the button will instead open a modal prompting to sign in or sign up.
+
+![Recipe card](documentation/features/feat-recipe-card.png)
+
+</details>
+
+### Recipes page
+
+The recipes page is in many ways the real main page of the website. This is where the user can see all recipes displayed, as well as recipes matching their search criteria.
+
+<details>
+<summary>Click to see details</summary>
+
+The recipes page features a very similar hero section to the one on the home page, with a heading, search bar and category buttons.
+
+One difference is that the heading is dynamic on this page.
+
+It has a default heading, encouraging users to search for recipes.
+
+![Recipes page - default heading](documentation/features/feat-recipes-search-defaultheading.png)
+
+If the user has performed a search, the heading will reflect this.
+
+![Recipes page - results heading](documentation/features/feat-recipes-search-resultsheading.png)
+
+Below the hero section is the results section. Here recipes matching the users search criteria will be displayed, or by default, all recipes.
+
+The section heading will give an indication of the number of results to view (if there was a query).
+
+![Recipes page - results section](documentation/features/feat-recipes-results-section.png)
+
+The recipes page is paginated, when there are more than 8 recipes to display.
+
+When that is the case, there will be control buttons to navigate the results pages at the bottom of the section.
+
+![Recipes page - pagination controls](documentation/features/feat-recipes-pagination.png)
+
+When there are no results to display, the results section will contain a brief message and an image.
+
+![Recipes page - results section with no recipes](documentation/features/feat-recipes-results-section-none.png)
+
+</details>
+
+### Header banner on Home page and Recipes page
+
+The header banner is part of the page header, and is present on the Home page and Recipes page.
+
+<details>
+<summary>Click to see details</summary>
+
+The banner has a dual purpose:
+- 1. Prompt sign-ups
+- 2. Reflect sign-in status to the user
+
+When a user is not signed in, the banner will prompt for Sign up and highlight the benefits of signing up.
+
+![Header banner when not signed in](documentation/features/feat-header-banner-signed-out.png)
+
+When a user is signed in, the banner will instead reflect this to the user. Upon signing up or signing in, the user is redirected to the home page, where the banner is present.
+
+![Header banner when signed in](documentation/features/feat-header-banner-signed-in.png)
+
+</details>
+
+### Recipe detail page
+
+This page features the full detail view of a recipe. On this page, signed in users can also leave comments.
+
+<details>
+<summary>Click to see details</summary>
+
+The recipe detail page consists of a long article, including the recipe in full as well as any comments belonging the the recipe.
+
+At the top of the article, the recipe image, title and teaser text is displayed, making for an engaging introduction to the page.
+
+Here is also the ratings display stars, and the favouriting button (heart), which both function in the same way as already described in the section about the *Recipe card*. 
+
+![Top of recipe article](documentation/features/feat-recipe-page-top.png)
+
+Below is the main content of the recipe, the ingredients and instructions.
+
+![Ingredients and instructions](documentation/features/feat-recipe-page-instructions.png)
+
+Towards the bottom of the page is the comments section, containing the commenting form, as well as any existing comments on the recipe. The commenting form will only display if the user is logged in. If they are not, there will instead be a prompt to sign up or sign in, in its place.
+
+The existing comments can be read by all users, given they are approved comments.
+
+If the user is the author of a comment, that comment will contain buttons to "Edit" and "Delete" the comment.
+
+If the user is the author, the comment will display even if it is disapproved. It is then styled to indicate the disapproval to the user, and contains a paragraph further clarifying this.
+
+![Recipe comments](documentation/features/feat-recipe-page-comments.png)
+
+When clicking "Edit" on a comment, the commenting form is adjusted into "editing mode". The paragraph changes to clarify to the user that they can now edit the comment, and the button is changed to a "Update" button.
+
+![Comments update form](documentation/features/feat-recipe-page-update-form.png)
+
+Upon successfully editing a comment, the comment is updated in the UI and a green paragraph is added to inform the user.
+
+![Comment updated](documentation/features/feat-recipe-page-comment-updated.png)
+
+When clicking the delete button on a comment, the user will be prompted to confirm deletion in a modal.
+
+![Confirm modal for comment deletion](documentation/features/feat-recipe-page-comment-delete-modal.png)
+
+Once a comment is successfully deleted, the comment is removed from the UI and replaced with a paragraph informing the user.
+
+![Comment deleted](documentation/features/feat-recipe-page-comment-deleted.png)
+
+</details>
+
+### Favourites page
+
+On the favourites page, logged in users can see all of their favourited recipes, in card form.
+
+<details>
+<summary>Click to see details</summary>
+
+The favourites page features a hero section, with a simple background image. The overlaid content will be different depending on log-in status of the user.
+
+If the user is logged in, the hero section contains a heading, clarifying to the user this is where they will find their favourited recipes.
+
+![Hero section - logged in](documentation/features/feat-favourites-hero-signed-in.png)
+
+If the user is not logged in, the hero section will instead prompt for sign up or sign in, and contain links (styles as buttons) leading to the sign up and sign in pages. The heading explains the user will be able to benefit from the favourites page with an account.
+
+![Hero section - not logged in](documentation/features/feat-favourites-hero-signed-out.png)
+
+Below the hero section, the favourites page contains a section for displaying the users favourited recipes.
+
+![Favourites page displaying recipes](documentation/features/feat-favourites-recipes.png)
+
+If the logged in user does not have any favourited recipes yet, this section will contain a brief message prompting the user to start favouriting recipes.
+
+![Favourites page with no favourites](documentation/features/feat-favourites-none.png)
+
+If the user is not logged in, this section will instead contain more detailed explanation/instructions for how favouriting works.
+
+![Favourites page instructions](documentation/features/feat-favourites-instructions.png)
+
+</details>
+
+### Toast messages
+
+Throughout the website, where ratings, favouriting and commenting functionality is present, there is also toast messages. These will appear as a response to user actions, in the upper right corner of the screen. 
+
+<details>
+<summary>Click to see details</summary>
+
+They automatically disappear after a few seconds. They are meant to provide extra user feedback, confirming back to the user what action was taken, and whether it was successful or not.
+
+If the action was successful, the toast will include a green image. If unsuccessful, the image will instead be red.
+
+There are 3 separate toasts on the website, one for comments, one for ratings and one for favouriting. This is because a user could technically leave a rating and then quickly after, favourite a recipe. In these cases, the two toast messages should be displayed simultaneously, stacked on top of each other.
+
+![Example toast](documentation/features/feat-toast.png)
+
+</details>
+
+### Ratings modal
+
+The ratings modal display when a logged in user clicks on the ratings display (stars) on either a recipe card or on the recipe detail page.
+
+<details>
+<summary>Click to see details</summary>
+
+The ratings modal, as a default, contains the following:
+- A heading, and instructions.
+- X-button: closes the modal
+- Cancel-button: closes the modal
+- 5 star-buttons.
+- A Submit-button, which is disabled when the modal opens.
+
+Clicking one of the star buttons selects a rating. The star buttons change colours to reflect the selection, from black to green.
+
+When a rating is selected, the submit button is enabled.
+
+![Ratings modal, no prior rating](documentation/features/feat-ratings-modal.png)
+
+If the user has already rated a recipe, this will be reflected in the ratings modal.
+- The modal heading and instructions clarify the status to the user.
+- The stars are initially styled to reflect the current rating the user has given the recipe.
+- A delete button is showing, through which the user can delete the existing rating.
+- Submitting a new rating will overwrite the existing one.
+
+![Ratings modal, with prior rating](documentation/features/feat-ratings-modal-existing.png)
+
+</details>
+
+### Sign in/Sign up modal
+
+The sign in/sign up modal will display when users who are not logged in clicks on the favouriting buttons (hearts) or ratingsdisplay buttons (stars).
+
+<details>
+<summary>Click to see details</summary>
+
+The sign up modal is meant to prompt users to sign up or sign in.
+
+It highlights the benefits of creating an account.
+
+It contains links (styled as buttons) to the Sign Up page and Sign In page.
+![Sign up modal](documentation/features/feat-signin-modal.png)
+
+</details>
+
+### Sign up/Sign In/Sign Out pages
+
+Simple pages for account login functionality, utilizing Django Allauth templates.
+
+<details>
+<summary>Click to see details</summary>
+
+The account pages, using the templates provided by Django Allauth, all contain simple forms for their respective purpose.
+
+The forms have been styles to look consistent with the rest of the website.
+
+The forms all provide user feedback when input is invalid.
+
+![Sign up page](documentation/features/feat-signup.png)
+
+![Sign in page](documentation/features/feat-signin.png)
+
+![Sign out page](documentation/features/feat-signout.png)
+
+</details>
+
+### Admin panel
+
+<details>
+<summary>Click to see details</summary>
+
+The superuser (site admin) can access the Django admin panel to publish/unpublish, create, edit and delete recipes. While this is the main functionality intended to be used by the superuser, they can also add/delete users, comments, favourites, and ratings. The main purpose would be to step in to help website visitors who may have encountered issues.
+
+The main part of the admin panel intended to be used is for creating, editing and deleting recipes.
+
+Efforts were made to make customisations to this part of the admin panel, to make this functionality more intuitive.
+
+For the recipes list admin page, the list display was edited to include more useful information (title, slug, status and date of creation), and filters were added.
+
+![Admin panel - recipes](documentation/features/feat-admin-recipes.png)
+
+On the create/edit page for recipes, fields were split into fieldsets, allowing for easier overview of the page, grouping related fields into sections. This also allowed for the addition of instructions at the top of fieldsets, which seemed more helpful than the field helptexts (which appear in small print underneath the field).
+
+The summernote editor was included to provide better options for editing the content-heavy textfields (Ingredients and Content).
+
+![Admin panel - fieldsets](documentation/features/feat-admin-sections.png)
+
+![Admin panel - summernote](documentation/features/feat-admin-summernote.png)
+
+</details>
 
 
 <a id="tools-and-technologies"></a>
