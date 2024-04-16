@@ -19,7 +19,7 @@
     - [Future improvements](#future-improvements)
 - [Features](#features)
 - [Tools and technologies](#tools-and-technologies)
-- [Code description](#code-description)
+- [Repository description](#repo-description)
 - [Deployment](#deployment)
 - [Testing](#testing)
 - [Bugs](#bugs)
@@ -731,9 +731,49 @@ The summernote editor was included to provide better options for editing the con
 - [Git](https://git-scm.com/) - Was used for version control.
 
 
-<a id="code-description"></a>
-## Code description TBC
+<a id="repo-description"></a>
+## Repository description
 
+<details>
+<summary>Click for outline of repository structure and files</summary>
+
+This is not an exhaustive list of all folders and files in the project, but is meant as a helping guide to understand how the project repository is structured.
+
+The repository and the django project are both named basilandthyme. In the project folder the following can be found:
+
+- settings.py: contains project level configuration settings and parameters.
+- urls.py: project level url configuration
+
+In the repo I have created only one app, called *recipe_book*. This was due to the design choice of wanting to have everything that was closely related with the core entity, *Recipe*, in one app.
+
+The recipe_book app contains the following folders/files:
+1. __migrations:__ This folder contains all the migrations done to the models inside of the app. These files are added in automatically when the command `python manage.py makemigrations recipe_book` is executed. The folders contain SQL commands for the PostgreSQL database to be able to convert edits to the models into rows and tables.
+1. __models:__ This folder contains models for the recipe_book app. The following files are found in the models directory: comment.py, favourite.py, rating.py and recipe.py. All of these files are responsible for holding one model each.
+1. __templates:__ The templates folder holds HTML files, including Django Templating Language (DTL), representing the main pages that are served by the recipe_book app. The files stored here are: index.html, favourites.html, recipes.html and recipe-page.html. These all extend base.html.
+1. __tests:__ The tests folder holds all the tests for the methods found in the models and views folders. These tests are run through the Django unittest package and are also run automatically by pre-commit when trying to perform a commit.
+1. __views:__ This folder contains the files used for serving the web pages listed before and also for providing an AJAX REST API for the frontend JavaScript to be able to communicate to the backend Django code.
+1. __admin.py:__ Used to register models in the Django admin panel, and to customise how they appear in the admin panel.
+1. __forms.py:__ Contains the CommentForm (used for posting and updating comments on the website).
+1. __urls.py:__ App-level url configuration. Defines specific URL patterns for the recipe_book app.
+   
+The following are found in the root directory:
+1. __static__: The static folder contains all of the static resources responsible for enhancing the presentation of the front end.
+    - css: This folder is responsible for holding all custom css files. Currently there is only one file called style.css but there could be other css files for other apps.
+	- favicon: This folder is used for storing favicons for different screen sizes and device types.
+	- js: In this folder I store javascript code. This code is included in the HTML pages to enhance the responsiveness of the webpage and provide a better user experience.
+	    - Inside the js folder is a tests folder, in which I store the JEST tests for javascript functions.
+    
+2. __staticfiles:__ The staticfiles folder is where the static files are collected from the static folder and are then able to be served in the live server. Before deployment of changes the command line `python manage.py collectstatic` needs to have been run so any changes to the static folder are correctly added in the staticfiles folder.
+
+3. __templates:__ The templates folder holds files that are responsible for serving templates. The following are found in this folder:
+	- __base.html__ - the base template which holds the code that is shared by all pages, such as the main navigation and footer, as well the HTML head element. All other html files in the project extend this template, directly or indirectly.
+	- __components:__ In this folder I placed HTML (and DTL) templates that do not directly extend base.html. These are not representing full pages, but smaller chunks of code that is reused in several other templates, such as recipecard.html, representing one recipe card. These are inserted into other templates using "include".
+	- __errors:__ In this folder I placed the templates for the custom 404 and 500 pages.
+	- __account:__ This folder holds the templates for the sign up, sign in, and sign out pages. The account folder was generated with Django Allauth.
+4. __.pre-commit-config.yaml__ and __check_debug.py__: The code in these files was used to set up the pre-commit hooks. 
+5. __django-summernote:__ There is an empty django-summernote folder in the root directory, which I do not think has a purpose. I am not sure how this was created, but I am unable to delete it.
+
+</details>
 
 <a id="deployment"></a>
 ## Deployment
@@ -864,28 +904,30 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 
   3. Ensure that the `DEBUG` constant is set to `True` in the *settings.py* file of the project.
 
-  4. Push the files to your repository with the following command:
+  4. Before pushing the files to your repository, you need to correctly collect the static files of the repository to he `staticfiles` folder. In the terminal, run the commend `python3 manage.py collectstatic`.
+
+  5. Push the files to your repository with the following command:
   `git push`
   
-  5. Create a Heroku account if you don't already have one here [Heroku](https://dashboard.heroku.com).
+  6. Create a Heroku account if you don't already have one here [Heroku](https://dashboard.heroku.com).
 
-  6. Create a new Heroku application on the [Heroku Apps page](https://dashboard.heroku.com/apps), by clicking "New" in the upper right corner, and selecting "Create new app":
+  7. Create a new Heroku application on the [Heroku Apps page](https://dashboard.heroku.com/apps), by clicking "New" in the upper right corner, and selecting "Create new app":
 
     ![Heroku Apps - New](documentation/heroku-apps-new.png)
 
-  7. Name the app, choose a region, and click "Create app".
+  8. Name the app, choose a region, and click "Create app".
     ![Heroku New App - Create](documentation/heroku-apps-create.png)
 
-  8. Go to the Deploy tab:
+  9. Go to the Deploy tab:
     ![Heroku - Deploy Tab](documentation/heroku-deploy-tab.png)
 
-  9. In the "Deployment method" section, click on "GitHub - Connect to GitHub". Search for your repository and connect your application.
+  10. In the "Deployment method" section, click on "GitHub - Connect to GitHub". Search for your repository and connect your application.
     ![Heroku - Connect to GitHub](documentation/heroku-connect-github.png)
 
-  10. Next, go to the Settings tab:
+  11. Next, go to the Settings tab:
   ![Heroku - Settings tab](documentation/heroku-settings-tab.png)
 
-  11. Next, in the "Config Vars" section, click "Reveal Config Vars". You will need to add 4 Config Vars
+  12. Next, in the "Config Vars" section, click "Reveal Config Vars". You will need to add 4 Config Vars
   ![Heroku - Reveal Config Vars button](documentation/heroku-reveal-config-vars.png)
 
 - Config Var number 1:
@@ -902,11 +944,11 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 
     ![Heroku - Config Vars](documentation/heroku-config-vars.png)
 
-  12. After adding the 4 Config Vars, go back to the Deploy tab:
+  13. After adding the 4 Config Vars, go back to the Deploy tab:
 
       ![Heroku - Deploy Tab](documentation/heroku-deploy-tab.png)
 
-  13. In the "Manual deploy" section, click "Deploy Branch":
+  14. In the "Manual deploy" section, click "Deploy Branch":
 
       ![Heroku - Manual deploy](documentation/heroku-manual-deploy.png)
 
@@ -914,7 +956,7 @@ Follow the instructions in the terminal, which will prompt you for an email and 
 
       ![Heroku - Manual deployment success](documentation/heroku-deployment-success.png)
 
-  14. You can now click the "View" button (in the screenshot above), to launch the application.
+  15. You can now click the "View" button (in the screenshot above), to launch the application.
 
 </details>
 
