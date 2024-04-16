@@ -367,7 +367,290 @@ Sprint 7 milestone:
 
 
 <a id="user-stories"></a>
-### User stories
+### User stories (and other backlog items)
+
+In total, 30 user stories (across 8 epics) were completed throughout the development of the project. A further 2 user stories were moved into "Future improvements" and deemed out of scope for the project.
+
+An additional 20 backlog items were completed as part of the sprints.
+
+Below are all of the defined user stories listed, with their acceptance criteria, as well as a briefer list of the other backlog items.
+
+<details> 
+<summary>1. Navigation and structure</summary>
+
+<br>
+
+- `USER STORY`: As a **Site User**, I can always see the main navigation options on the top of the page so that I can easily and intuitively find my way around the website.
+    - **Acceptance criteria 1:** Given a user is not logged in, at the top of the page, the user can see the options of “home”, “register”, “log in”, and “favourites”.
+    - **Acceptance criteria 2:** Given the user is logged in, the options showing are instead “home”, “log out”, and “favourites”.
+    - **Acceptance criteria 3:** These options are visible and reachable from all pages on the website.
+    - **Acceptance criteria 4:** The options have a hover effect to provide instant feedback to the user when navigating the site.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can see an **informative 404 page guiding me back to the main page** if I visit a page that does not exist by mistake so that I can easily get back to the home page with minimal disruption.
+    - **Acceptance criteria 1:** Given a user visits a page on the website that does not exist, they are served a custom 404 page.
+    - **Acceptance criteria 2:** The 404 page contains a link back to the home page.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can see the website's favicon so that I can easily wind the website if I have multiple tabs open.
+    - **Acceptance criteria 1:** The site has a favicon, adhering to the website design and colour scheme
+
+</details>
+
+
+<details>
+<summary>2. Account/Login</summary>
+
+<br>
+
+- `USER STORY`: As a **Site User** I can register an account with **email and password** so that I can **comment on, rate, and save recipes.**
+    - **Acceptance criteria 1:** Given an email, a user can register an account *Edit: email not mandatory*.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can see **clear instructions, get feedback, and confirmation when trying to register an account with email** so that I can sign up without unnecessary problems and enjoy the experience.
+    - **Acceptance criteria 1:** The sign up page form includes clear instructions.
+    - **Acceptance criteria 2:** Given the user submits the sign up form, the user is given confirmation on whether signup was successful.
+
+<br>
+
+- `USER STORY`: As a **Site User** with an account I can **log in** so that I can **comment on, rate, and save recipes.**
+    - **Acceptance criteria 1:** Given a registered email a user can log in. *Edit: email not mandatory.*
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can log out so that I can feel safe in that others cannot access my credentials.
+    - **Acceptance criteria 1:** Given a user is logged in, the user can click on “Log out” to log out.
+    - **Acceptance criteria 2:** Then the logged out status is reflected to the user on the page
+
+<br>
+
+- `USER STORY`: As a **Site User** signing up for an account I can verify my email so that I can feel more secure and trust that my account is protected. <mark>Moved to *Future Improvements*</mark>
+    - ~~**Acceptance criteria 1:** Upon completing the signup process, the user receives an email containing a verification link.~~
+    - ~~**Acceptance criteria 2:** Clicking on the verification link directs the user to a confirmation page confirming that their email has been successfully verified.~~
+    - ~~**Acceptance criteria 3:** If the user attempts to log in without verifying their email, they receive a prompt reminding them to verify their email.~~
+    - ~~**Acceptance criteria 4:** The verification link expires after a specified period to ensure the security of the verification process.~~
+    - ~~**Acceptance criteria 5:** Users have the option to request a new verification email if they did not receive the initial one or if the link has expired.~~
+
+<br>
+
+- `USER STORY`: As a **Site User** I can register an account using an existing social media account so that I can have a faster and smoother registration and login experience.<mark>Moved to *Future Improvements*</mark>
+    - ~~**Acceptance criteria 1:** A user can register an account with selected social media accounts (min requirement, Google or Facebook).~~
+    - ~~**Acceptance criteria 2:** Given a user has registered an account using their social media account, they can log in using that account.~~
+    - ~~**Acceptance criteria 3:** Then the user can log out.~~
+
+</details>
+
+
+<details>
+<summary>3. View recipes</summary>
+
+<br>
+
+- `USER STORY`: As a **Site User** I can see the highest rated and latest added recipes featured on the main page so that I can get inspired and get an engaging introduction to the site.
+    - **Acceptance criteria 1:** When a user opens the main page, sections displaying the highest rated recipes and latest added recipes are showing.
+    - **Acceptance criteria 2:** Then the user can click on “See more” to see a list of all recipes sorted by rating and publication date respectively.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can search or click on a category so that I can find recipes matching my criteria.
+    - **Acceptance criteria 1:** When a user opens the main page, a search bar, as well as pre selected categories/featured categories show.
+    - **Acceptance criteria 2:** When a user either searches or clicks on a category a list of recipes is seen, matching the user's criteria.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can see a paginated list of recipes so that I can select which recipe I want to view.
+    - **Acceptance criteria 1:** Given more than one recipe in the database matching the users criteria, these multiple recipes are listed.
+    - **Acceptance criteria 2:** When a user searches or clicks on a category a list of recipes is seen.
+    - **Acceptance criteria 3:** Given the number of recipes in the list is larger than 8, the list is paginated.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can sort the recipes in a list view so that I can more easily find the recipes I am looking for.
+    - **Acceptance criteria 1:** When on a list view the user can sort the list based on rating and publication date.
+
+<br>
+
+- `USER STORY`: As a **Site User** I can click on a recipe card so that I can read the recipe.
+    - **Acceptance criteria 1:** When a recipe title is clicked the detailed view of the recipe is seen.
+
+<br>
+
+</details>
+
+
+<details>
+<summary>4. Commenting</summary>
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can write comments on recipes so that I can provide feedback and share my experience with other users.
+    - **Acceptance criteria 1:** Given a user is logged in, they can leave a comment on the recipe detail page.
+    - **Acceptance criteria 2:** Then, the user is notified the comment is posted.
+    - **Acceptance criteria 3:** Then, the comment is visible for all users.
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can **modify or delete** my comment on a recipe so that I can be in control over my contribution to the conversation.
+    - **Acceptance criteria 1:** Given a logged in user, they can modify their own comment
+    - **Acceptance criteria 2:** Given a logged in user, they can delete their own comment
+    - **Acceptance criteria 3:** Then the user is notified of successful modification/deletion
+
+<br>
+
+- `USER STORY`: As a **Site Admin** I can **disapprove comments** so that I can hide controversial comments.
+    - **Acceptance criteria 1:** Given a logged in admin user, they can disapprove a comment
+    - **Acceptance criteria 2:** Then, the comment is no longer showing for users except for the comment author, for whom the comment is faded out
+    - **Acceptance criteria 3:** Then the admin user can choose to reverse the disapproval if they choose to
+
+</details>
+
+<details>
+<summary>5. Favouriting</summary>
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can **favourite and unfavourite recipes** so that I can save or remove recipes from my favourites easily.
+    - **Acceptance criteria 1:** Given a logged in user, they can click the heart button on a recipe card or the recipe details page to save a recipe to their favourites.
+    - **Acceptance criteria 2:** Given a logged in user, they can click the heart button of a previously favourited recipe to unsave it from their favourites.
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can see my favourite recipes on the favourites page so that I can **easily access my favourite recipes** when I need them.
+    - **Acceptance criteria 1:** When visiting the favourites page as a logged-in user, the user can view their saved recipes.
+    - **Acceptance criteria 2:** If the user has not saved any recipes, they instead see an informative message explaining the "Favourites" functionality.
+    - **Acceptance criteria 3:** If a user who is not logged in visits the favourites page, they are informed of the functionality and prompted to sign up or log in to use it.
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can see the status of favouriting (favourited or not) for all recipe cards and detail pages so that I can know which recipes I have favourited without visiting the favourites page.
+    - **Acceptance criteria 1:** Given a logged in user, the heart button on recipe cards and recipe detail pages are visually distinct to indicate whether the recipe is already saved.
+    - **Acceptance criteria 2:** Given a non-logged-in user, the heart button on all recipe cards and recipe detail pages indicate the recipe is not saved.
+
+<br>
+
+- `USER STORY`: As a **Non-Logged in User**, I can get informed to sign up or log in when trying to favourite a recipe so that I can **understand how to access the functionality.**
+    - **Acceptance criteria 1:** Given a non-logged-in user, they can see the heart for favouriting recipes on the recipe cards and detail pages, so that they can be aware of the functionality.
+    - **Acceptance criteria 2:** Then, if a non-logged-in user tries to favourite a recipe by clicking on the heart, they are prompted to sign up or log in.
+
+</details>
+
+<details>
+<summary>6. Rating</summary>
+
+<br>
+
+- `USER STORY`: As a **Site User** I can see the average rating a recipe has received so that I can get an understanding of the recipe's quality.
+    - **Acceptance criteria 1:** For each recipe, in the recipe details view and the card view, the recipes average rating is displayed.
+
+<br>
+
+- `USER STORY`: As a **Logged in User** I can rate a recipe so that I can provide feedback on recipes in a low effort way.
+    - **Acceptance criteria 1:** Given a user is logged in, they can click on one of five stars on any recipe detail page in order to give a rating of 1-5.
+    - **Acceptance criteria 2:** Then, the user is notified of the rating they have given.
+    - **Acceptance criteria 3:** Clicking on a rating a second time removes the rating.
+    - **Acceptance criteria 4:** Then the user is notified the rating has been removed.
+
+</details>
+
+<details>
+<summary>7. Publishing recipes</summary>
+
+<br>
+
+- `USER STORY`: As a **Site Admin** I can **create** draft recipes so that I can finish writing the content later.
+    - Acceptance criteria 1: Given a logged in admin user, they can save a draft recipe
+    - Acceptance criteria 2: Then they can finish the content at a later time
+
+<br>
+
+- `USER STORY`: As a **Site Admin** I can **create, read, update and delete** recipes so that I can manage my site content
+    - **Acceptance criteria 1:** Given a logged in admin user, they can create a recipe
+    - **Acceptance criteria 2:** Given a logged in admin user, they can edit a recipe
+    - **Acceptance criteria 3:** Given a logged in admin user, they can update a recipe
+    - **Acceptance criteria 4:** Given a logged in admin user, they can delete a recipe
+
+<br>
+
+- `USER STORY`: As a **Site Admin** I can rely on the field validation, as well as see clear instructions in the admin view so that I can trust in that the content I am publishing will be valid.
+    - **Acceptance criteria 1:** All model fields have appropriate attributes
+    - **Acceptance criteria 2:** The admin view provides explicit and helpful instructions where necessary
+
+</details>
+
+<details>
+<summary>8. Accessibility</summary>
+
+<br>
+
+- `USER STORY`: As a **Site User** utilizing a screen reader I can listen to descriptive text representing any visual element on the website so that I can be included, navigate on the website, access the content, and use all core functionality.
+    - **Acceptance criteria 1:** All images have an alt-text.
+    - **Acceptance criteria 2:** All links have either a descriptive link text or an ARIA-label
+    - **Acceptance criteria 3:** All buttons consisting of icons have an ARIA-label and the icon is hidden for screen readers.
+    - **Acceptance criteria 4:** All information communicated by a visual element on the site have a text alternative, so that screen reader users can take part of the information.
+    - **Acceptance criteria 5:** Semantic HTML elements have been used where suitable, in order to further enable screen reader users to consumer the website content.
+
+<br>
+
+- `USER STORY`: As a **Site User not able to utilise a mouse** I can **focus on and access all interactive elements on the website using a keyboard** so that I can **be included, navigate on the website, access the content, and use all core functionality**.
+    - **Acceptance criteria 1:** All interactive elements, such as buttons, form fields, and navigation, are accessible using a keyboard alone, without relying on mouse interactions.
+
+</details>
+
+
+<details>
+<summary>User stories that were not categorised in an epic</summary>
+
+<br>
+
+- `USER STORY`: As a **Site User** finding the website through a search engine I can read a descriptive search result so that I can understand if the result is relevant to me.
+    - **Acceptance criteria 1:** All pages have a meta description and keywords
+    - **Acceptance criteria 2:** All pages have a title
+
+<br>
+
+- `USER STORY`: As a **Site User** I can observe consistent styling, structure and interaction design across all pages on the website so that I can have a pleasant experience with the website.
+    - **Acceptance criteria 1:** The website adhers to the colour scheme, font choices and other design choices outlined in the README.
+    - **Acceptance criteria 2:** All interactive elements provide a reaction when interacted with.
+
+</details>
+
+<details>
+<summary>Other PBI's (not user stories)</summary>
+
+<br>
+
+- `PROJECT SETUP`: Initial setup: display hello world and log in as superuser
+    - Create the project and main app with Django
+    - Create the database and connect it to the project
+    - Create the models and migrate to the database
+    - Register models
+    - Create a superuser
+    - Deploy project to Heroku
+- `TESTING`: Add unit tests for models and functions written up until this point to enhance code quality. Add unit tests as part of pre-commit hook to prevent faulty code from being pushed to GitHub.
+- `TESTING`: Validate all HTML in the project and take action to correct any warnings/errors. Document HTML validation in TESTING.md.
+- `TESTING`: Lint all Python code written for the project using Code Institute's CI Python Linter to ensure the code is compliant with PEP 8 standards. Take action to correct any issues detected by linter.
+- `TESTING`: Lint all JavaScript code in the project with JSHint. Take action to correct any issues detected by linter and document results in TESTING.md.
+- `TESTING`: Validate custom CSS used in the project and take action to correct any warnings/errors. Document findings in TESTING.md
+- `TESTING`: Manually test core functionality to help ensure the project is working as intended. Take action to correct any issues found. Document the results.
+- `TESTING`: Write Jest tests for functionality in the JavaScript files, to increase the robustness of the code.
+- `TESTING`: Test browser compatibility and document results, to help ensure a consistent user experience across different browsers.
+- `TESTING`: Test all pages of the website with Lighthouse, to identify potential improvements for higher performance, adherence to best practices, and accessibility. Take action to improve score if possible Finally, document the results in TESTING.md.
+- `TESTING`: Review the website on different screen sizes in order to find any issues impacting users across different device types. Take action to correct found issues if possible. Document findings in TESTING.md.
+- `REFACTOR`: Review all python code and action opportunities for refactoring. Add any missing docstrings. Esp review and take action to improve the structure of the project - split into separate apps where appropriate. This will improve code readability and maintenance.
+- `REFACTOR`: Review Javascript file, to look for refactoring opportunities, and add any missing docstrings. Where suitable, split script into separate files and include only the relevant functions on each page, for better readability.
+- `DOCUMENTATION`: Document the project plan in the README.
+- `DOCUMENTATION`: Add code comments and docstrings to any classes, methods and functions written so far to improve code readability and maintainability.
+- `DOCUMENTATION`: Provide an overview/description of the purpose and functionality of code used in the project, in order to provide further clarity on the structure, and how the code works.
+- `DOCUMENTATION`: Add a description of the features of the website to **README,** to help introduce readers of the **README** document to the website and its intended usage.
+- `DOCUMENTATION`: Outline the necessary steps and configurations required in the **README**, in order to guide user to successful deployment of the project.
+- `DOCUMENTATION`: List all major tools and technologies used for the project in the **README**, to provide an overview of the tech stack used.
+- `DOCUMENTATION`: List all user stories and other backlog items completed as part of the project in the **README**, as well as any remaining backlog item. Describe planned future improvements to the project. This will provide a helpful overview of the completed work as well as future plans for the project.
+- `DOCUMENTATION`: Give credit to resources used in the development of the project, to fairly acknowledge the work of other developers, media owners etc.
+
+</details>
 
 <a id="future-improvements"></a>
 ### Future improvements
